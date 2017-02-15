@@ -126,7 +126,7 @@
         "group": "Infrastructure settings",
         "description": "The address range of the subnet static IPs are allocated from in the new VNET"
       },
-      "defaultValue": "10.0.0.0/24"
+      "defaultValue": "10.156.1.120/27"
     },
     "sqlLBIPAddress": {
       "type": "string",
