@@ -11,7 +11,7 @@
     "location": {
       "type": "string"
     },
-    "spVMSize": {
+    "geminiVMSize": {
       "type": "string"
     },
     "geminiWebAvailabilitySet": {
@@ -26,31 +26,19 @@
     "adminPassword": {
       "type": "securestring"
     },
-    "spImagePublisher": {
+    "geminiImagePublisher": {
       "type": "string"
     },
-    "spImageOffer": {
+    "geminiImageOffer": {
       "type": "string"
     },
-    "spImageSKU": {
+    "geminiImageSKU": {
       "type": "string"
     },
     "vmContainerName": {
       "type": "string"
     },
     "storageAccountNamePrefix": {
-      "type": "string"
-    },
-    "spPreparationModulesURL": {
-      "type": "string"
-    },
-    "spPreparationFunction": {
-      "type": "string"
-    },
-    "domainName": {
-      "type": "string"
-    },
-    "DNSServer": {
       "type": "string"
     }
   },
@@ -66,7 +54,7 @@
       },
       "properties": {
         "hardwareProfile": {
-          "vmSize": "[parameters('spVMSize')]"
+          "vmSize": "[parameters('geminiVMSize')]"
         },
         "availabilitySet": {
           "id": "[parameters('geminiAppAvailabilitySet')]"
@@ -78,9 +66,9 @@
         },
         "storageProfile": {
           "imageReference": {
-            "publisher": "[parameters('spImagePublisher')]",
-            "offer": "[parameters('spImageOffer')]",
-            "sku": "[parameters('spImageSKU')]",
+            "publisher": "[parameters('geminiImagePublisher')]",
+            "offer": "[parameters('geminiImageOffer')]",
+            "sku": "[parameters('geminiImageSKU')]",
             "version": "latest"
           },
           "osDisk": {
@@ -119,34 +107,7 @@
         }
       }
     },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('geminiappVMName'), copyIndex(),'/ConfigureSPAppServer')]",
-      "apiVersion": "2015-06-15",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines', concat(parameters('geminiappVMName'),copyIndex()))]"
-      ],
-      "copy": {
-        "name": "spAppPrepareLoop",
-        "count": 2
-      },
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.17",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "modulesURL": "[parameters('spPreparationModulesURL')]",
-          "wmfVersion": "4.0",
-          "configurationFunction": "[parameters('spPreparationFunction')]",
-          "properties": {
-            "DNSServer": "[parameters('DNSServer')]",
-            "DomainName": "[parameters('domainName')]"
-          }
-        }
-      }
-    },
+    
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
@@ -158,7 +119,7 @@
       },
       "properties": {
         "hardwareProfile": {
-          "vmSize": "[parameters('spVMSize')]"
+          "vmSize": "[parameters('geminiVMSize')]"
         },
         "availabilitySet": {
           "id": "[parameters('geminiWebAvailabilitySet')]"
@@ -170,9 +131,9 @@
         },
         "storageProfile": {
           "imageReference": {
-            "publisher": "[parameters('spImagePublisher')]",
-            "offer": "[parameters('spImageOffer')]",
-            "sku": "[parameters('spImageSKU')]",
+            "publisher": "[parameters('geminiImagePublisher')]",
+            "offer": "[parameters('geminiImageOffer')]",
+            "sku": "[parameters('geminiImageSKU')]",
             "version": "latest"
           },
           "osDisk": {
@@ -210,35 +171,8 @@
           }
         }
       }
-    },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('geminiwebVMName'), copyIndex(),'/ConfigureSPWebServer')]",
-      "apiVersion": "2015-06-15",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines', concat(parameters('geminiwebVMName'),copyIndex()))]"
-      ],
-      "copy": {
-        "name": "spWebPrepareLoop",
-        "count": 2
-      },
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.17",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "modulesURL": "[parameters('spPreparationModulesURL')]",
-          "wmfVersion": "4.0",
-          "configurationFunction": "[parameters('spPreparationFunction')]",
-          "properties": {
-            "DNSServer": "[parameters('DNSServer')]",
-            "DomainName": "[parameters('domainName')]"
-          }
-        }
-      }
     }
+    
   ],
   "outputs": {}
 }

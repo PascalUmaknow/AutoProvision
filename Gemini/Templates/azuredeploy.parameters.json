@@ -57,7 +57,7 @@
     //"witnessVMSize": {
     //  "value": "Standard_DS1"
     //},
-    //"spVMSize": {
+    //"geminiVMSize": {
     //  "value": "Standard_DS3"
     //},
     //"domainName": {

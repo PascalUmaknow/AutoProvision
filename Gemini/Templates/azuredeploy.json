@@ -142,7 +142,7 @@
         "group": "SQL Server settings",
         "description": "The size of the SQL VMs created"
       },
-      "defaultValue": "Standard_DS3"
+      "defaultValue": "Standard_DS1"
     },
     "adminUsername": {
       "type": "string",
@@ -157,7 +157,16 @@
         "group": "Infrastructure settings",
         "description": "The password for the administrator account of the new VMs"
       }
-    }
+    },
+
+    "geminiVMSize": {
+      "type": "string",
+      "metadata": {
+        "group": "Gemini Server settings",
+        "description": "The size of the SP VMs Created"
+      },
+      "defaultValue": "Standard_DS1"
+    },
     //,
     //"GeminiFarmName": {
     //  "type": "string",
@@ -196,14 +205,6 @@
 
 
 
-    //"spVMSize": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "group": "Gemini Server settings",
-    //    "description": "The size of the SP VMs Created"
-    //  },
-    //  "defaultValue": "Standard_DS2"
-    //},
     //"GeminiSetupUserAccountUserName": {
     //  "type": "string",
     //  "metadata": {
@@ -295,9 +296,9 @@
       "sqlImagePublisher": "MicrosoftSQLServer",
       "sqlImageOffer": "SQL2014SP1-WS2012R2",
       "sqlImageSKU": "Enterprise",
-      "spImagePublisher": "MicrosoftGemini",
-      "spImageOffer": "MicrosoftGeminiServer",
-      "spImageSKU": "2016",
+      "geminiImagePublisher": "MicrosoftGemini",
+      "geminiImageOffer": "MicrosoftGeminiServer",
+      "geminiImageSKU": "2016",
       "rdpPort": 3389,
       "spCentralAdminPort": 80,
       "windowsDiskSize": 128,
@@ -676,87 +677,71 @@
             }
           }
         }
+      },
+      {
+        "name": "CreatingGeminiVirtualMachines",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2015-01-01",
+        "dependsOn": [
+          "Microsoft.Resources/deployments/CreatingStorageAccounts",
+          "Microsoft.Resources/deployments/CreatingNetworkInterfaces",
+          "Microsoft.Resources/deployments/CreatingAvailabilitySets"
+        ],
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','provisioningGeminiVMs.json', parameters('_artifactsLocationSasToken'))]",
+            "contentVersion": "1.0.0.0"
+          },
+          "parameters": {
+            "geminiappVMName": {
+              "value": "[variables('vmSettings').geminiappVMName]"
+            },
+            "geminiwebVMName": {
+              "value": "[variables('vmSettings').geminiwebVMName]"
+            },
+            "location": {
+              "value": "[parameters('location')]"
+            },
+            "geminiVMSize": {
+              "value": "[parameters('geminiVMSize')]"
+            },
+            "geminiWebAvailabilitySet": {
+              "value": "[variables('ids').geminiWebAvailabilitySetName]"
+            },
+            "geminiAppAvailabilitySet": {
+              "value": "[variables('ids').geminiAppAvailabilitySetName]"
+            },
+            "adminUsername": {
+              "value": "[parameters('adminUsername')]"
+            },
+            "adminPassword": {
+              "value": "[parameters('adminPassword')]"
+            },
+            "geminiImagePublisher": {
+              "value": "[variables('vmSettings').geminiImagePublisher]"
+            },
+            "geminiImageOffer": {
+              "value": "[variables('vmSettings').geminiImageOffer]"
+            },
+            "geminiImageSKU": {
+              "value": "[variables('vmSettings').geminiImageSKU]"
+            },
+            "vmContainerName": {
+              "value": "[variables('vmSettings').vmContainerName]"
+            },
+            "storageAccountNamePrefix": {
+              "value": "[parameters('storageAccountNamePrefix')]"
+            }
+          }
+        }
       }
-      //{
-      //  "name": "CreatingGeminiVirtualMachines",
-      //  "type": "Microsoft.Resources/deployments",
-      //  "apiVersion": "2015-01-01",
-      //  "dependsOn": [
-      //    "Microsoft.Resources/deployments/CreatingStorageAccounts",
-      //    "Microsoft.Resources/deployments/CreatingNetworkInterfaces",
-      //    "Microsoft.Resources/deployments/CreatingAvailabilitySets"
-      //  ],
-      //  "properties": {
-      //    "mode": "Incremental",
-      //    "templateLink": {
-      //      "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','provisioningGeminiVMs.json', parameters('_artifactsLocationSasToken'))]",
-      //      "contentVersion": "1.0.0.0"
-      //    },
-      //    "parameters": {
-      //      "geminiappVMName": {
-      //        "value": "[variables('vmSettings').geminiappVMName]"
-      //      },
-      //      "geminiwebVMName": {
-      //        "value": "[variables('vmSettings').geminiwebVMName]"
-      //      },
-      //      "location": {
-      //        "value": "[parameters('location')]"
-      //      },
-      //      "spVMSize": {
-      //        "value": "[parameters('spVMSize')]"
-      //      },
-      //      "geminiWebAvailabilitySet": {
-      //        "value": "[variables('ids').geminiWebAvailabilitySetName]"
-      //      },
-      //      "geminiAppAvailabilitySet": {
-      //        "value": "[variables('ids').geminiAppAvailabilitySetName]"
-      //      },
-      //      "adminUsername": {
-      //        "value": "[parameters('adminUsername')]"
-      //      },
-      //      "adminPassword": {
-      //        "value": "[parameters('adminPassword')]"
-      //      },
-      //      "spImagePublisher": {
-      //        "value": "[variables('vmSettings').spImagePublisher]"
-      //      },
-      //      "spImageOffer": {
-      //        "value": "[variables('vmSettings').spImageOffer]"
-      //      },
-      //      "spImageSKU": {
-      //        "value": "[variables('vmSettings').spImageSKU]"
-      //      },
-      //      "vmContainerName": {
-      //        "value": "[variables('vmSettings').vmContainerName]"
-      //      },
-      //      "storageAccountNamePrefix": {
-      //        "value": "[parameters('storageAccountNamePrefix')]"
-      //      },
-      //      "spPreparationModulesURL": {
-      //        "value": "[concat(parameters('_artifactsLocation'),'/','dscv2','/','PrepareGeminiServerHA.ps1.zip', parameters('_artifactsLocationSasToken'))]"
-      //      },
-      //      "spPreparationFunction": {
-      //        "value": "PrepareGeminiServerHA.ps1\\PrepareGeminiServerHA"
-      //      },
-      //      "domainName": {
-      //        "value": "[parameters('domainName')]"
-      //      },
-      //      "DNSServer": {
-      //        "value": "[parameters('adPdcNicIPAddress')]"
-      //      }
-      //    }
-      //  }
-      //},
      
   ],
   "outputs": {
-    //"fqdn": {
-    //  "value": "[variables('GeminiWebfqdn')]",
-    //  "type": "string"
-    //},
-    //"cafqdn": {
-    //  "value": "[variables('GeminiCAfqdn')]",
-    //  "type": "string"
-    //}
+    "fqdn": {
+      "value": "[variables('GeminiWebfqdn')]",
+      "type": "string"
+    }
   }
 }
