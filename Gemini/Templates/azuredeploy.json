@@ -81,7 +81,7 @@
     },
     "virtualNetworkName": {
       "type": "string",
-      "defaultValue": "spfarmhaVNET",
+      "defaultValue": "geminiVNET",
       "metadata": {
         "group": "Infrastructure settings",
         "description": "Name of virtual network to be created"
