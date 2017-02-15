@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "spappVMName": {
+    "geminiappVMName": {
       "type": "string"
     },
     "sqlVMName": {
@@ -59,7 +59,7 @@
     "sqlServerServiceAccountPassword": {
       "type": "securestring"
     },
-    "spwebVMName": {
+    "geminiwebVMName": {
       "type": "string"
     },
     "GeminiFarmName": {
@@ -75,7 +75,7 @@
   "resources": [
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('spappVMName'),'0/ConfigureSPAppServer')]",
+      "name": "[concat(parameters('geminiappVMName'),'0/ConfigureSPAppServer')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "properties": {
@@ -134,11 +134,11 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('spappVMName'),'1/ConfigureSPAppServer')]",
+      "name": "[concat(parameters('geminiappVMName'),'1/ConfigureSPAppServer')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('spappVMName'),'0'),'ConfigureSPAppServer')]"
+        "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('geminiappVMName'),'0'),'ConfigureSPAppServer')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -193,11 +193,11 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('spwebVMName'),'0/ConfigureSPWebServer')]",
+      "name": "[concat(parameters('geminiwebVMName'),'0/ConfigureSPWebServer')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('spappVMName'),'0'), 'ConfigureSPAppServer')]"
+        "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('geminiappVMName'),'0'), 'ConfigureSPAppServer')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -253,11 +253,11 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('spwebVMName'),'1/ConfigureSPWebServer')]",
+      "name": "[concat(parameters('geminiwebVMName'),'1/ConfigureSPWebServer')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('spwebVMName'),'0'), 'ConfigureSPWebServer')]"
+        "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('geminiwebVMName'),'0'), 'ConfigureSPWebServer')]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",

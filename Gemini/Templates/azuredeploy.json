@@ -294,8 +294,8 @@
       "adBDCVMName": "ad-bdc",
       "sqlVMName": "sql-",
       "sqlwVMName": "sql-w",
-      "spwebVMName": "sps-web-",
-      "spappVMName": "sps-app-",
+      "geminiwebVMName": "sps-web-",
+      "geminiappVMName": "sps-app-",
       "windowsImagePublisher": "MicrosoftWindowsServer",
       "windowsImageOffer": "WindowsServer",
       "windowsImageSKU": "2012-R2-Datacenter",
@@ -317,9 +317,7 @@
     //"sqlAOListenerName": "[concat(variables('prefix'),'ag-listener')]",
     //"sharePath": "[concat(variables('prefix'),'-fsw')]",
     //"clusterName": "[concat(variables('prefix'),'-fc')]",
-    //"adPdcNicName": "[concat(variables('vmSettings').adPDCVMName,'-nic')]",
-    //"adBdcNicName": "[concat(variables('vmSettings').adBDCVMName,'-nic')]",
-    //"sqlwNicName": "[concat(variables('vmSettings').sqlwVMName,'-nic')]",
+    "sqlwNicName": "[concat(variables('vmSettings').sqlwVMName,'-nic')]",
     "VnetID": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
     "staticSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').staticSubnetName)]",
     "sqlSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').sqlSubnetName)]",
@@ -581,83 +579,65 @@
             }
           }
         }
+      },
+      {
+        "name": "CreatingNetworkInterfaces",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2015-01-01",
+        "dependsOn": [
+          "Microsoft.Resources/deployments/CreatingVirtualNetwork",
+          "Microsoft.Resources/deployments/SettingUpRdp",
+          "Microsoft.Resources/deployments/SettingUpLoadBalancers"
+        ],
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','creatingNICS.json', parameters('_artifactsLocationSasToken'))]",
+            "contentVersion": "1.0.0.0"
+          },
+          "parameters": {
+            "location": {
+              "value": "[parameters('location')]"
+            },
+            "staticSubnetRef": {
+              "value": "[variables('staticSubnetRef')]"
+            },
+            "sqlVMName": {
+              "value": "[variables('vmSettings').sqlVMName]"
+            },
+            "sqlSubnetRef": {
+              "value": "[variables('sqlSubnetRef')]"
+            },
+            "sqlBEAddressPoolID": {
+              "value": "[variables('derivedIds').sqlBEAddressPoolID]"
+            },
+            "geminiwebVMName": {
+              "value": "[variables('vmSettings').geminiwebVMName]"
+            },
+            "geminiWebSubnetRef": {
+              "value": "[variables('geminiWebSubnetRef')]"
+            },
+            "geminiWebBEAddressPoolID": {
+              "value": "[variables('derivedIds').geminiWebBEAddressPoolID]"
+            },
+            "geminiappVMName": {
+              "value": "[variables('vmSettings').geminiappVMName]"
+            },
+            "geminiAppSubnetRef": {
+              "value": "[variables('geminiAppSubnetRef')]"
+            },
+            "spCABEAddressPoolID": {
+              "value": "[variables('derivedIds').spCABEAddressPoolID]"
+            },
+            "geminiCANATRuleID": {
+              "value": "[variables('derivedIds').geminiCANATRuleID]"
+            },
+            "sqlwNicName": {
+              "value": "[variables('sqlwNicName')]"
+            }
+          }
+        }
       }
-      //{
-      //  "name": "CreatingNetworkInterfaces",
-      //  "type": "Microsoft.Resources/deployments",
-      //  "apiVersion": "2015-01-01",
-      //  "dependsOn": [
-      //    "Microsoft.Resources/deployments/CreatingVirtualNetwork",
-      //    "Microsoft.Resources/deployments/SettingUpRdp",
-      //    "Microsoft.Resources/deployments/SettingUpLoadBalancers"
-      //  ],
-      //  "properties": {
-      //    "mode": "Incremental",
-      //    "templateLink": {
-      //      "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','creatingNICS.json', parameters('_artifactsLocationSasToken'))]",
-      //      "contentVersion": "1.0.0.0"
-      //    },
-      //    "parameters": {
-      //      "location": {
-      //        "value": "[parameters('location')]"
-      //      },
-      //      "adPdcNicName": {
-      //        "value": "[variables('adPdcNicName')]"
-      //      },
-      //      "adPdcNicIPAddress": {
-      //        "value": "[parameters('adPdcNicIPAddress')]"
-      //      },
-      //      "staticSubnetRef": {
-      //        "value": "[variables('staticSubnetRef')]"
-      //      },
-      //      "adBEAddressPoolID": {
-      //        "value": "[variables('derivedIds').adBEAddressPoolID]"
-      //      },
-      //      "adRDPNATRuleID": {
-      //        "value": "[variables('derivedIds').adRDPNATRuleID]"
-      //      },
-      //      "adBdcNicName": {
-      //        "value": "[variables('adBdcNicName')]"
-      //      },
-      //      "adBdcNicIPAddress": {
-      //        "value": "[parameters('adBdcNicIPAddress')]"
-      //      },
-      //      "sqlVMName": {
-      //        "value": "[variables('vmSettings').sqlVMName]"
-      //      },
-      //      "sqlSubnetRef": {
-      //        "value": "[variables('sqlSubnetRef')]"
-      //      },
-      //      "sqlBEAddressPoolID": {
-      //        "value": "[variables('derivedIds').sqlBEAddressPoolID]"
-      //      },
-      //      "spwebVMName": {
-      //        "value": "[variables('vmSettings').spwebVMName]"
-      //      },
-      //      "geminiWebSubnetRef": {
-      //        "value": "[variables('geminiWebSubnetRef')]"
-      //      },
-      //      "geminiWebBEAddressPoolID": {
-      //        "value": "[variables('derivedIds').geminiWebBEAddressPoolID]"
-      //      },
-      //      "spappVMName": {
-      //        "value": "[variables('vmSettings').spappVMName]"
-      //      },
-      //      "geminiAppSubnetRef": {
-      //        "value": "[variables('geminiAppSubnetRef')]"
-      //      },
-      //      "spCABEAddressPoolID": {
-      //        "value": "[variables('derivedIds').spCABEAddressPoolID]"
-      //      },
-      //      "geminiCANATRuleID": {
-      //        "value": "[variables('derivedIds').geminiCANATRuleID]"
-      //      },
-      //      "sqlwNicName": {
-      //        "value": "[variables('sqlwNicName')]"
-      //      }
-      //    }
-      //  }
-      //},
       //{
       //  "name": "ProvisioningSQLVirtualMachines",
       //  "type": "Microsoft.Resources/deployments",
@@ -861,11 +841,11 @@
       //      "contentVersion": "1.0.0.0"
       //    },
       //    "parameters": {
-      //      "spappVMName": {
-      //        "value": "[variables('vmSettings').spappVMName]"
+      //      "geminiappVMName": {
+      //        "value": "[variables('vmSettings').geminiappVMName]"
       //      },
-      //      "spwebVMName": {
-      //        "value": "[variables('vmSettings').spwebVMName]"
+      //      "geminiwebVMName": {
+      //        "value": "[variables('vmSettings').geminiwebVMName]"
       //      },
       //      "location": {
       //        "value": "[parameters('location')]"
@@ -930,8 +910,8 @@
       //      "contentVersion": "1.0.0.0"
       //    },
       //    "parameters": {
-      //      "spappVMName": {
-      //        "value": "[variables('vmSettings').spappVMName]"
+      //      "geminiappVMName": {
+      //        "value": "[variables('vmSettings').geminiappVMName]"
       //      },
       //      "sqlVMName": {
       //        "value": "[variables('vmSettings').sqlVMName]"
@@ -990,8 +970,8 @@
       //      "sqlServerServiceAccountPassword": {
       //        "value": "[parameters('sqlServerServiceAccountPassword')]"
       //      },
-      //      "spwebVMName": {
-      //        "value": "[variables('vmSettings').spwebVMName]"
+      //      "geminiwebVMName": {
+      //        "value": "[variables('vmSettings').geminiwebVMName]"
       //      },
       //      "GeminiFarmName": {
       //        "value": "[parameters('GeminiFarmName')]"

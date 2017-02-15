@@ -5,25 +5,7 @@
     "location": {
       "type": "string"
     },
-    "adPDCNicName": {
-      "type": "string"
-    },
-    "adPDCNICIPAddress": {
-      "type": "string"
-    },
     "staticSubnetRef": {
-      "type": "string"
-    },
-    "adBEAddressPoolID": {
-      "type": "string"
-    },
-    "adRDPNATRuleID": {
-      "type": "string"
-    },
-    "adBDCNicName": {
-      "type": "string"
-    },
-    "adBDCNICIPAddress": {
       "type": "string"
     },
     "sqlVMName": {
@@ -35,7 +17,7 @@
     "sqlBEAddressPoolID": {
       "type": "string"
     },
-    "spwebVMName": {
+    "geminiwebVMName": {
       "type": "string"
     },
     "geminiWebSubnetRef": {
@@ -44,7 +26,7 @@
     "geminiWebBEAddressPoolID": {
       "type": "string"
     },
-    "spappVMName": {
+    "geminiappVMName": {
       "type": "string"
     },
     "geminiAppSubnetRef": {
@@ -153,7 +135,7 @@
       }
     },
     {
-      "name": "[concat(parameters('spwebVMName'), copyIndex(),'-nic')]",
+      "name": "[concat(parameters('geminiwebVMName'), copyIndex(),'-nic')]",
       "type": "Microsoft.Network/networkInterfaces",
       "location": "[parameters('location')]",
       "apiVersion": "2015-06-15",
@@ -181,7 +163,7 @@
       }
     },
     {
-      "name": "[concat(parameters('spappVMName'),'1-nic')]",
+      "name": "[concat(parameters('geminiappVMName'),'1-nic')]",
       "type": "Microsoft.Network/networkInterfaces",
       "location": "[parameters('location')]",
       "apiVersion": "2015-06-15",

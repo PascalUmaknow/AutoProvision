@@ -2,10 +2,10 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "spappVMName": {
+    "geminiappVMName": {
       "type": "string"
     },
-    "spwebVMName": {
+    "geminiwebVMName": {
       "type": "string"
     },
     "location": {
@@ -58,7 +58,7 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat(parameters('spappVMName'), copyIndex())]",
+      "name": "[concat(parameters('geminiappVMName'), copyIndex())]",
       "location": "[parameters('location')]",
       "copy": {
         "name": "spAppVMLoop",
@@ -72,7 +72,7 @@
           "id": "[parameters('geminiAppAvailabilitySet')]"
         },
         "osProfile": {
-          "computerName": "[concat(parameters('spappVMName'), copyIndex())]",
+          "computerName": "[concat(parameters('geminiappVMName'), copyIndex())]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
@@ -86,7 +86,7 @@
           "osDisk": {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', concat(parameters('storageAccountNamePrefix'), '3')), '2016-01-01').primaryEndpoints.blob, parameters('vmContainerName'),'/',parameters('spappVMName'), copyIndex(),'-osdisk.vhd')]"
+              "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', concat(parameters('storageAccountNamePrefix'), '3')), '2016-01-01').primaryEndpoints.blob, parameters('vmContainerName'),'/',parameters('geminiappVMName'), copyIndex(),'-osdisk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -94,9 +94,9 @@
           "dataDisks": [
             {
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', concat(parameters('storageAccountNamePrefix'), '3')), '2016-01-01').primaryEndpoints.blob, parameters('vmContainerName'),'/', parameters('spappVMName'), copyIndex(), '-Data-1.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', concat(parameters('storageAccountNamePrefix'), '3')), '2016-01-01').primaryEndpoints.blob, parameters('vmContainerName'),'/', parameters('geminiappVMName'), copyIndex(), '-Data-1.vhd')]"
               },
-              "name": "[concat(parameters('spappVMName'), copyIndex(),'-data-disk1')]",
+              "name": "[concat(parameters('geminiappVMName'), copyIndex(),'-data-disk1')]",
               "caching": "None",
               "createOption": "Empty",
               "diskSizeGB": "128",
@@ -107,7 +107,7 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',concat(parameters('spappVMName'), copyIndex(),'-nic'))]"
+              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',concat(parameters('geminiappVMName'), copyIndex(),'-nic'))]"
             }
           ]
         },
@@ -121,11 +121,11 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('spappVMName'), copyIndex(),'/ConfigureSPAppServer')]",
+      "name": "[concat(parameters('geminiappVMName'), copyIndex(),'/ConfigureSPAppServer')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines', concat(parameters('spappVMName'),copyIndex()))]"
+        "[resourceId('Microsoft.Compute/virtualMachines', concat(parameters('geminiappVMName'),copyIndex()))]"
       ],
       "copy": {
         "name": "spAppPrepareLoop",
@@ -150,7 +150,7 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat(parameters('spwebVMName'), copyIndex())]",
+      "name": "[concat(parameters('geminiwebVMName'), copyIndex())]",
       "location": "[parameters('location')]",
       "copy": {
         "name": "spWebVMLoop",
@@ -164,7 +164,7 @@
           "id": "[parameters('geminiWebAvailabilitySet')]"
         },
         "osProfile": {
-          "computerName": "[concat(parameters('spwebVMName'), copyIndex())]",
+          "computerName": "[concat(parameters('geminiwebVMName'), copyIndex())]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
@@ -178,7 +178,7 @@
           "osDisk": {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', concat(parameters('storageAccountNamePrefix'), '3')), '2016-01-01').primaryEndpoints.blob, parameters('vmContainerName'),'/',parameters('spwebVMName'), copyIndex(),'-osdisk.vhd')]"
+              "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', concat(parameters('storageAccountNamePrefix'), '3')), '2016-01-01').primaryEndpoints.blob, parameters('vmContainerName'),'/',parameters('geminiwebVMName'), copyIndex(),'-osdisk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -186,9 +186,9 @@
           "dataDisks": [
             {
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', concat(parameters('storageAccountNamePrefix'), '3')), '2016-01-01').primaryEndpoints.blob, parameters('vmContainerName'),'/', parameters('spwebVMName'), copyIndex(), '-Data-1.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', concat(parameters('storageAccountNamePrefix'), '3')), '2016-01-01').primaryEndpoints.blob, parameters('vmContainerName'),'/', parameters('geminiwebVMName'), copyIndex(), '-Data-1.vhd')]"
               },
-              "name": "[concat(parameters('spwebVMName'), copyIndex(),'-data-disk1')]",
+              "name": "[concat(parameters('geminiwebVMName'), copyIndex(),'-data-disk1')]",
               "caching": "None",
               "createOption": "Empty",
               "diskSizeGB": "128",
@@ -199,7 +199,7 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',concat(parameters('spwebVMName'), copyIndex(),'-nic'))]"
+              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',concat(parameters('geminiwebVMName'), copyIndex(),'-nic'))]"
             }
           ]
         },
@@ -213,11 +213,11 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('spwebVMName'), copyIndex(),'/ConfigureSPWebServer')]",
+      "name": "[concat(parameters('geminiwebVMName'), copyIndex(),'/ConfigureSPWebServer')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines', concat(parameters('spwebVMName'),copyIndex()))]"
+        "[resourceId('Microsoft.Compute/virtualMachines', concat(parameters('geminiwebVMName'),copyIndex()))]"
       ],
       "copy": {
         "name": "spWebPrepareLoop",
