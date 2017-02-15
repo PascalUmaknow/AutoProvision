@@ -465,33 +465,33 @@
             }
           }
         }
+      },
+      {
+        "name": "CreatingAvailabilitySets",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2015-01-01",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','availabilitySets.json', parameters('_artifactsLocationSasToken'))]",
+            "contentVersion": "1.0.0.0"
+          },
+          "parameters": {
+            "location": {
+              "value": "[parameters('location')]"
+            },
+            "sqlAvailabilitySetName": {
+              "value": "[variables('vmSettings').availabilitySets.sqlAvailabilitySetName]"
+            },
+            "geminiWebAvailabilitySetName": {
+              "value": "[variables('vmSettings').availabilitySets.geminiWebAvailabilitySetName]"
+            },
+            "geminiAppAvailabilitySetName": {
+              "value": "[variables('vmSettings').availabilitySets.geminiAppAvailabilitySetName]"
+            }
+          }
+        }
       }
-      //{
-      //  "name": "CreatingAvailabilitySets",
-      //  "type": "Microsoft.Resources/deployments",
-      //  "apiVersion": "2015-01-01",
-      //  "properties": {
-      //    "mode": "Incremental",
-      //    "templateLink": {
-      //      "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','availabilitySets.json', parameters('_artifactsLocationSasToken'))]",
-      //      "contentVersion": "1.0.0.0"
-      //    },
-      //    "parameters": {
-      //      "location": {
-      //        "value": "[parameters('location')]"
-      //      },
-      //      "sqlAvailabilitySetName": {
-      //        "value": "[variables('vmSettings').availabilitySets.sqlAvailabilitySetName]"
-      //      },
-      //      "geminiWebAvailabilitySetName": {
-      //        "value": "[variables('vmSettings').availabilitySets.geminiWebAvailabilitySetName]"
-      //      },
-      //      "geminiAppAvailabilitySetName": {
-      //        "value": "[variables('vmSettings').availabilitySets.geminiAppAvailabilitySetName]"
-      //      }
-      //    }
-      //  }
-      //}
       //{
       //  "name": "CreatingVirtualNetwork",
       //  "type": "Microsoft.Resources/deployments",
