@@ -5,24 +5,6 @@
     "location": {
       "type": "string"
     },
-    "geminiCALBName": {
-      "type": "string"
-    },
-    "geminiCALBFE": {
-      "type": "string"
-    },
-    "geminiCAResourceId": {
-      "type": "string"
-    },
-    "geminiCALBBE": {
-      "type": "string"
-    },
-    "geminiCANAT": {
-      "type": "string"
-    },
-    "geminiCALBFEConfigID": {
-      "type": "string"
-    },
     "geminiWebLBName": {
       "type": "string"
     },
@@ -76,43 +58,7 @@
     }
   },
   "resources": [
-    {
-      "apiVersion": "2015-06-15",
-      "name": "[parameters('geminiCALBName')]",
-      "type": "Microsoft.Network/loadBalancers",
-      "location": "[parameters('location')]",
-      "properties": {
-        "frontendIPConfigurations": [
-          {
-            "name": "[parameters('geminiCALBFE')]",
-            "properties": {
-              "publicIPAddress": {
-                "id": "[parameters('geminiCAResourceId')]"
-              }
-            }
-          }
-        ],
-        "backendAddressPools": [
-          {
-            "name": "[parameters('geminiCALBBE')]"
-          }
-        ],
-        "inboundNatRules": [
-          {
-            "name": "[parameters('geminiCANAT')]",
-            "properties": {
-              "frontendIPConfiguration": {
-                "id": "[parameters('geminiCALBFEConfigID')]"
-              },
-              "protocol": "tcp",
-              "frontendPort": 80,
-              "backendPort": 80,
-              "enableFloatingIP": false
-            }
-          }
-        ]
-      }
-    },
+    
     {
       "apiVersion": "2015-06-15",
       "name": "[parameters('geminiWebLBName')]",

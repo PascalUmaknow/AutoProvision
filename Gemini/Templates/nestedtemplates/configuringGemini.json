@@ -47,9 +47,6 @@
     "configDatabaseName": {
       "type": "string"
     },
-    "GeminiCAfqdn": {
-      "type": "string"
-    },
     "GeminiSetupUserAccountPassword": {
       "type": "securestring"
     },
@@ -121,8 +118,7 @@
               "[parameters('configDatabaseName')]"
             ],
             "administrationContentDatabaseName": "[parameters('administrationContentDatabaseName')]",
-            "databaseServer": "[concat(parameters('sqlVMName'),'1.',parameters('domainName'))]",
-            "configuration": "[concat('{\"roles\":[{\"type\":\"application\",\"properties\":{\"fqdn\":\"',parameters('GeminiCAfqdn'),'\",\"port\":80}}],\"configureForHa\":\"True\",\"loadBalancedSetProbePort\":8088}')]"
+            "databaseServer": "[concat(parameters('sqlVMName'),'1.',parameters('domainName'))]"
           }
         },
         "protectedSettings": {
@@ -181,8 +177,7 @@
             "sqlAlwaysOnAvailabilityGroupName": "[parameters('sqlAOAGName')]",
             "primaryReplica": "[concat(parameters('sqlVMName'),'1')]",
             "secondaryReplica": "[concat(parameters('sqlVMName'),'0')]",
-            "databaseNames": null,
-            "configuration": "[concat('{\"roles\":[{\"type\":\"application\",\"properties\":{\"fqdn\":\"',parameters('GeminiCAfqdn'),'\",\"port\":80}}],\"configureForHa\":\"True\",\"loadBalancedSetProbePort\":8088}')]"
+            "databaseNames": null
           }
         },
         "protectedSettings": {

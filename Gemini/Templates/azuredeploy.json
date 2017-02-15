@@ -257,8 +257,6 @@
     //}
   },
   "variables": {
-    "geminiCADNSPrefix": "[concat(parameters('dnsPrefix'),'admin')]",
-    "geminiCAIPAddressName": "[concat(parameters('geminiWebIPAddressName'),'admin')]",
     //"configDatabaseName": "SP_Config",
     //"administrationContentDatabaseName": "SP_AdminContent",
     //"contentDatabaseName": "spfarm_Content",
@@ -266,16 +264,12 @@
       "rdpLBFE": "rdpLBFE",
       "sqlLBFE": "sqlLBFE",
       "geminiWebLBFE": "geminiWebLBFE",
-      "geminiCALBFE": "geminiCALBFE",
       "sqlLBBE": "sqlLBBE",
       "geminiWebLBBE": "geminiWebLBBE",
-      "geminiCALBBE": "geminiCALBBE",
       "geminiWebLB": "spWeb",
-      "spCALB": "spCALB",
       "sqlLBName": "sqlLoadBalancer",
       "rdpLBName": "rdpLoadBalancer",
-      "geminiWebLBName": "spWebLoadBalancer",
-      "geminiCALBName": "spCALoadBalancer"
+      "geminiWebLBName": "geminiWebLoadBalancer",
     },
     "subnetNames": {
       "staticSubnetName": "staticSubnet",
@@ -284,7 +278,6 @@
       "geminiAppSubnetName": "geminiAppSubnet"
     },
     "RDPNAT": "RDP",
-    "geminiCANAT": "geminiCANAT",
     "SQLAOProbe": "SQLAlwaysOnEndPointProbe",
     "gemininiWebProbe": "gemininiWebProbe",
     "rdpIPAddressName": "rdpIP",
@@ -334,14 +327,11 @@
     "geminiAppSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').geminiAppSubnetName)]",
     "geminiWebResourceIdexisting": "[resourceId(parameters('geminiWebIPRGName'),concat('Microsoft.Network','/','publicIPAddresses'),parameters('geminiWebIPAddressName'))]",
     "geminiWebResourceIdnew": "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),parameters('geminiWebIPAddressName'))]",
-    "GeminiCAfqdn": "[concat(variables('geminiCADNSPrefix'),'.',toLower(trim(replace(parameters('location'),' ' ,''))),'.cloudapp.azure.com')]",
     "GeminiWebfqdn": "[concat(parameters('dnsPrefix'),'.',toLower(trim(replace(parameters('location'),' ' ,''))),'.cloudapp.azure.com')]",
     "ids": {  
       "rdplbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').rdpLBName)]",
       "geminiWebLBID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').geminiWebLBName)]",
       "sqllbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').sqlLBName)]",
-      "spCAlbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').geminiCALBName)]",
-      "geminiCAResourceId": "[resourceId('Microsoft.Network/publicIPAddresses',variables('geminiCAIPAddressName'))]",
       "sqlAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.sqlAvailabilitySetName)]",
       "geminiWebAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiWebAvailabilitySetName)]",
       "geminiAppAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiAppAvailabilitySetName)]"
@@ -353,11 +343,8 @@
       "geminiWebBEAddressPoolID": "[concat(variables('ids').geminiWebLBID,'/backendAddressPools/',variables('lbSettings').geminiWebLBBE)]",
       "sqlBEAddressPoolID": "[concat(variables('ids').sqllbID,'/backendAddressPools/',variables('lbSettings').sqlLBBE)]",
       "sqllbFEConfigID": "[concat(variables('ids').sqllbID,'/frontendIPConfigurations/',variables('lbSettings').sqlLBFE)]",
-     "sqllbProbeID": "[concat(variables('ids').sqllbID,'/probes/',variables('SQLAOProbe'))]",
-      "spCABEAddressPoolID": "[concat(variables('ids').spCAlbID,'/backendAddressPools/',variables('lbSettings').geminiCALBBE)]",
-      "geminiCALBFEConfigID": "[concat(variables('ids').spCAlbID,'/frontendIPConfigurations/',variables('lbSettings').geminiCALBFE)]",
-      "geminiCANATRuleID": "[concat(variables('ids').spCAlbID,'/inboundNatRules/',variables('geminiCANAT'))]"
-    },
+     "sqllbProbeID": "[concat(variables('ids').sqllbID,'/probes/',variables('SQLAOProbe'))]"
+     },
     "subnets": [
       {
         "name": "[variables('subnetNames').staticSubnetName]",
@@ -540,24 +527,6 @@
           "parameters": {
             "location": {
               "value": "[parameters('location')]"
-            },
-            "geminiCALBName": {
-              "value": "[variables('lbSettings').geminiCALBName]"
-            },
-            "geminiCALBFE": {
-              "value": "[variables('lbSettings').geminiCALBFE]"
-            },
-            "geminiCAResourceId": {
-              "value": "[variables('ids').geminiCAResourceId]"
-            },
-            "geminiCALBBE": {
-              "value": "[variables('lbSettings').geminiCALBBE]"
-            },
-            "geminiCANAT": {
-              "value": "[variables('geminiCANAT')]"
-            },
-            "geminiCALBFEConfigID": {
-              "value": "[variables('derivedIds').geminiCALBFEConfigID]"
             },
             "geminiWebLBName": {
               "value": "[variables('lbSettings').geminiWebLBName]"

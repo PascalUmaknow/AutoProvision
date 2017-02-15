@@ -50,12 +50,6 @@
     "geminiAppSubnetRef": {
       "type": "string"
     },
-    "spCABEAddressPoolID": {
-      "type": "string"
-    },
-    "geminiCANATRuleID": {
-      "type": "string"
-    },
     "sqlwNicName": {
       "type": "string"
     }
@@ -179,35 +173,6 @@
               "loadBalancerBackendAddressPools": [
                 {
                   "id": "[parameters('geminiWebBEAddressPoolID')]"
-                }
-              ]
-            }
-          }
-        ]
-      }
-    },
-    {
-      "name": "[concat(parameters('spappVMName'),'0-nic')]",
-      "type": "Microsoft.Network/networkInterfaces",
-      "location": "[parameters('location')]",
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "ipConfigurations": [
-          {
-            "name": "ipconfig1",
-            "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "subnet": {
-                "id": "[parameters('geminiAppSubnetRef')]"
-              },
-              "loadBalancerBackendAddressPools": [
-                {
-                  "id": "[parameters('spCABEAddressPoolID')]"
-                }
-              ],
-              "loadBalancerInboundNatRules": [
-                {
-                  "id": "[parameters('geminiCANATRuleID')]"
                 }
               ]
             }
