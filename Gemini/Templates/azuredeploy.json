@@ -355,7 +355,7 @@
       "sqllbFEConfigID": "[concat(variables('ids').sqllbID,'/frontendIPConfigurations/',variables('lbSettings').sqlLBFE)]",
      "sqllbProbeID": "[concat(variables('ids').sqllbID,'/probes/',variables('SQLAOProbe'))]",
       "spCABEAddressPoolID": "[concat(variables('ids').spCAlbID,'/backendAddressPools/',variables('lbSettings').geminiCALBBE)]",
-      "geminiCALBFEConfigID": "[concat(variables('ids').spCAlbID,'/frontendIPConfigurations/',variables('lbSettings').geminiCALBFE)]"
+      "geminiCALBFEConfigID": "[concat(variables('ids').spCAlbID,'/frontendIPConfigurations/',variables('lbSettings').geminiCALBFE)]",
       "geminiCANATRuleID": "[concat(variables('ids').spCAlbID,'/inboundNatRules/',variables('geminiCANAT'))]"
     },
     "subnets": [
