@@ -336,12 +336,11 @@
       "rdplbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').rdpLBName)]",
       "spWeblbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').spWebLBName)]",
       "sqllbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').sqlLBName)]",
-      "spCAlbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').spCALBName)]"
+      "spCAlbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').spCALBName)]",
       //"spCAResourceId": "[resourceId('Microsoft.Network/publicIPAddresses',variables('spCAIPAddressName'))]",
-      //"adAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.adAvailabilitySetName)]",
-      //"sqlAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.sqlAvailabilitySetName)]",
-      //"geminiWebAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiWebAvailabilitySetName)]",
-      //"geminiAppAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiAppAvailabilitySetName)]"
+      "sqlAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.sqlAvailabilitySetName)]",
+      "geminiWebAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiWebAvailabilitySetName)]",
+      "geminiAppAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiAppAvailabilitySetName)]"
     },
     "derivedIds": {
       "rdplbFEConfigID": "[concat(variables('ids').rdplbID,'/frontendIPConfigurations/',variables('lbSettings').rdpLBFE)]",
