@@ -144,14 +144,6 @@
       },
       "defaultValue": "Standard_DS3"
     },
-    "witnessVMSize": {
-      "type": "string",
-      "metadata": {
-        "group": "SQL Server settings",
-        "description": "The size of the witness VM created"
-      },
-      "defaultValue": "Standard_DS1"
-    },
     "adminUsername": {
       "type": "string",
       "metadata": {
@@ -289,7 +281,7 @@
         "geminiWebAvailabilitySetName": "geminiWebAvailabilitySet",
         "geminiAppAvailabilitySetName": "geminiAppAvailabilitySet"
       },
-      "noOfSqlVMs": 2,
+      "noOfSqlVMs": 1,
       "noOfspRoleVMs": 2,
       "vmContainerName": "vhds",
       "adPDCVMName": "ad-pdc",
@@ -314,11 +306,6 @@
       "spDiskSize": 128
     },
     //"prefix": "[tolower(trim(subString(concat(parameters('dnsPrefix'),'           '),0,10)))]",
-    //"sqlAOEPName": "[concat(variables('prefix'),'-hadr')]",
-    //"sqlAOAGName": "[concat(variables('prefix'),'-ag')]",
-    //"sqlAOListenerName": "[concat(variables('prefix'),'ag-listener')]",
-    //"sharePath": "[concat(variables('prefix'),'-fsw')]",
-    //"clusterName": "[concat(variables('prefix'),'-fc')]",
     "sqlwNicName": "[concat(variables('vmSettings').sqlwVMName,'-nic')]",
     "VnetID": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
     "staticSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').staticSubnetName)]",
@@ -691,136 +678,10 @@
             },
             "sqlImageSKU": {
               "value": "[variables('vmSettings').sqlImageSKU]"
-            },
-            "domainName": {
-              "value": "[parameters('domainName')]"
-            },
-            "sqlAOPrepareModulesURL": {
-              "value": "[concat(parameters('_artifactsLocation'),'/','dscv2','/','PrepareAlwaysOnSqlServer.ps1.zip', parameters('_artifactsLocationSasToken'))]"
-            },
-            "sqlAOPrepareFunction": {
-              "value": "PrepareAlwaysOnSqlServer.ps1\\PrepareAlwaysOnSqlServer"
-            },
-            "prepareClusterModulesURL": {
-              "value": "[concat(parameters('_artifactsLocation'),'/','dscv2','/','PrepareFailoverCluster.ps1.zip', parameters('_artifactsLocationSasToken'))]"
-            },
-            "prepareClusterConfigurationFunction": {
-              "value": "PrepareFailoverCluster.ps1\\PrepareFailoverCluster"
-            },
-            "sharePath": {
-              "value": "[variables('sharePath')]"
-            },
-            "witnessVMSize": {
-              "value": "[parameters('witnessVMSize')]"
-            },
-            "sqlwVMName": {
-              "value": "[variables('vmSettings').sqlwVMName]"
-            },
-            "sqlwNicName": {
-              "value": "[variables('sqlwNicName')]"
-            },
-            "fswPreparationModulesURL": {
-              "value": "[concat(parameters('_artifactsLocation'),'/','dscv2','/','PrepareFileShareWitness.ps1.zip', parameters('_artifactsLocationSasToken'))]"
-            },
-            "fswPreparationFunction": {
-              "value": "PrepareFileShareWitness.ps1\\PrepareFileShareWitness"
-            },
-            "DNSServer": {
-              "value": "[parameters('adPdcNicIPAddress')]"
             }
           }
         }
       }
-      //{
-      //  "name": "ConfiguringSQLAlwaysOnCluster",
-      //  "type": "Microsoft.Resources/deployments",
-      //  "apiVersion": "2015-01-01",
-      //  "dependsOn": [
-      //    "Microsoft.Resources/deployments/UpdatingDNSwithBackupADVM",
-      //    "Microsoft.Resources/deployments/ProvisioningSQLVirtualMachines"
-      //  ],
-      //  "properties": {
-      //    "mode": "Incremental",
-      //    "templateLink": {
-      //      "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','configuringSQLAlwaysOnCluster.json', parameters('_artifactsLocationSasToken'))]",
-      //      "contentVersion": "1.0.0.0"
-      //    },
-      //    "parameters": {
-      //      "sqlVMName": {
-      //        "value": "[variables('vmSettings').sqlVMName]"
-      //      },
-      //      "location": {
-      //        "value": "[parameters('location')]"
-      //      },
-      //      "adminUsername": {
-      //        "value": "[parameters('adminUsername')]"
-      //      },
-      //      "adminPassword": {
-      //        "value": "[parameters('adminPassword')]"
-      //      },
-      //      "domainName": {
-      //        "value": "[parameters('domainName')]"
-      //      },
-      //      "sqlAOConfigurationModulesURL": {
-      //        "value": "[concat(parameters('_artifactsLocation'),'/','dscv2','/','ConfigureAlwaysOnSqlServer.ps1.zip', parameters('_artifactsLocationSasToken'))]"
-      //      },
-      //      "sqlAOConfigurationFunction": {
-      //        "value": "ConfigureAlwaysOnSqlServer.ps1\\ConfigureAlwaysOnSqlServer"
-      //      },
-      //      "sqlAOEPName": {
-      //        "value": "[variables('sqlAOEPName')]"
-      //      },
-      //      "sqlServerServiceAccountUserName": {
-      //        "value": "[parameters('sqlServerServiceAccountUserName')]"
-      //      },
-      //      "GeminiSetupUserAccountUserName": {
-      //        "value": "[parameters('GeminiSetupUserAccountUserName')]"
-      //      },
-      //      "sqlServerServiceAccountPassword": {
-      //        "value": "[parameters('sqlServerServiceAccountPassword')]"
-      //      },
-      //      "GeminiSetupUserAccountPassword": {
-      //        "value": "[parameters('GeminiSetupUserAccountPassword')]"
-      //      },
-      //      "configureClusterModulesURL": {
-      //        "value": "[concat(parameters('_artifactsLocation'),'/','dscv2','/','ConfigureFailoverCluster.ps1.zip', parameters('_artifactsLocationSasToken'))]"
-      //      },
-      //      "configureClusterConfigurationFunction": {
-      //        "value": "ConfigureFailoverCluster.ps1\\ConfigureFailoverCluster"
-      //      },
-      //      "clusterName": {
-      //        "value": "[variables('clusterName')]"
-      //      },
-      //      "sharePath": {
-      //        "value": "[variables('sharePath')]"
-      //      },
-      //      "sqlAOAGName": {
-      //        "value": "[variables('sqlAOAGName')]"
-      //      },
-      //      "sqlAOListenerName": {
-      //        "value": "[variables('sqlAOListenerName')]"
-      //      },
-      //      "sqlLBName": {
-      //        "value": "[variables('lbSettings').sqlLBName]"
-      //      },
-      //      "sqlLBIPAddress": {
-      //        "value": "[parameters('sqlLBIPAddress')]"
-      //      },
-      //      "adPDCVMName": {
-      //        "value": "[variables('vmSettings').adPDCVMName]"
-      //      },
-      //      "sqlwVMName": {
-      //        "value": "[variables('vmSettings').sqlwVMName]"
-      //      },
-      //      "fswConfigurationModulesURL": {
-      //        "value": "[concat(parameters('_artifactsLocation'),'/','dscv2','/','ConfigureFileShareWitness.ps1.zip', parameters('_artifactsLocationSasToken'))]"
-      //      },
-      //      "fswConfigurationFunction": {
-      //        "value": "ConfigureFileShareWitness.ps1\\ConfigureFileShareWitness"
-      //      }
-      //    }
-      //  }
-      //},
       //{
       //  "name": "CreatingGeminiVirtualMachines",
       //  "type": "Microsoft.Resources/deployments",

@@ -43,98 +43,9 @@
     },
     "sqlImageSKU": {
       "type": "string"
-    },
-    "sharePath": {
-      "type": "string"
-    },
-    "witnessVMSize": {
-      "type": "string"
-    },
-    "sqlwVMName": {
-      "type": "string"
-    },
-    "sqlwNicName": {
-      "type": "string"
-    },
-    "DNSServer": {
-      "type": "string"
     }
   },
   "resources": [
-    {
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines",
-      "name": "[parameters('sqlwVMName')]",
-      "location": "[parameters('location')]",
-      "properties": {
-        "hardwareProfile": {
-          "vmSize": "[parameters('witnessVMSize')]"
-        },
-        "availabilitySet": {
-          "id": "[parameters('availabilitySet')]"
-        },
-        "osProfile": {
-          "computerName": "[parameters('sqlwVMName')]",
-          "adminUsername": "[parameters('adminUsername')]",
-          "adminPassword": "[parameters('adminPassword')]"
-        },
-        "storageProfile": {
-          "imageReference": {
-            "publisher": "[parameters('windowsImagePublisher')]",
-            "offer": "[parameters('windowsImageOffer')]",
-            "sku": "[parameters('windowsImageSKU')]",
-            "version": "latest"
-          },
-          "osDisk": {
-            "name": "osdisk",
-            "vhd": {
-              "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', concat(parameters('storageAccountNamePrefix'), '2')), '2016-01-01').primaryEndpoints.blob, parameters('vmContainerName'),'/',parameters('sqlwVMName'),'-osdisk.vhd')]"
-            },
-            "caching": "ReadWrite",
-            "createOption": "FromImage"
-          },
-          "dataDisks": [
-            {
-              "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', concat(parameters('storageAccountNamePrefix'), '2')), '2016-01-01').primaryEndpoints.blob, parameters('vmContainerName'),'/', parameters('sqlwVMName'),'-data-1.vhd')]"
-              },
-              "name": "[concat(parameters('sqlwVMName'),'-data-disk1')]",
-              "caching": "None",
-              "createOption": "Empty",
-              "diskSizeGB": "128",
-              "lun": 0
-            }
-          ]
-        },
-        "networkProfile": {
-          "networkInterfaces": [
-            {
-              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',parameters('sqlwNicName'))]"
-            }
-          ]
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": "true",
-            "storageUri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', concat(parameters('storageAccountNamePrefix'), '4')), '2016-01-01').primaryEndpoints.blob)]"
-          }
-        }
-      },
-      "resources": [
-        {
-          "type": "extensions",
-          "name": "CreateFileShareWitness",
-          "apiVersion": "2015-06-15",
-          "location": "[parameters('location')]",
-          "dependsOn": [
-            "[resourceId('Microsoft.Compute/virtualMachines/', parameters('sqlwVMName'))]"
-          ],
-          "properties": {
-          
-          }
-        }
-      ]
-    },
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",

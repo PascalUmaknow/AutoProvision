@@ -31,9 +31,6 @@
     },
     "geminiAppSubnetRef": {
       "type": "string"
-    },
-    "sqlwNicName": {
-      "type": "string"
     }
   },
   "resources": [
@@ -61,25 +58,6 @@
                   "id": "[parameters('sqlBEAddressPoolID')]"
                 }
               ]
-            }
-          }
-        ]
-      }
-    },
-    {
-      "name": "[parameters('sqlwNicName')]",
-      "type": "Microsoft.Network/networkInterfaces",
-      "location": "[parameters('location')]",
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "ipConfigurations": [
-          {
-            "name": "ipconfig1",
-            "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "subnet": {
-                "id": "[parameters('sqlSubnetRef')]"
-              }
             }
           }
         ]

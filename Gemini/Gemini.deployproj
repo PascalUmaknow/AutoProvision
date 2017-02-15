@@ -37,7 +37,6 @@
     <None Include="Templates\azuredeploy.parameters.json" />
     <None Include="Templates\nestedtemplates\availabilitySets.json" />
     <None Include="Templates\nestedtemplates\configuringGemini.json" />
-    <None Include="Templates\nestedtemplates\configuringSQLAlwaysOnCluster.json" />
     <None Include="Templates\nestedtemplates\creatingNICS.json" />
     <None Include="Templates\nestedtemplates\creatingStorageAccounts.json" />
     <None Include="Templates\nestedtemplates\nic.json" />
