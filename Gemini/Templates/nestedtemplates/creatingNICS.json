@@ -41,7 +41,7 @@
     "geminiWebSubnetRef": {
       "type": "string"
     },
-    "spWebBEAddressPoolID": {
+    "geminiWebBEAddressPoolID": {
       "type": "string"
     },
     "spappVMName": {
@@ -53,7 +53,7 @@
     "spCABEAddressPoolID": {
       "type": "string"
     },
-    "spCANATRuleID": {
+    "geminiCANATRuleID": {
       "type": "string"
     },
     "sqlwNicName": {
@@ -178,7 +178,7 @@
               },
               "loadBalancerBackendAddressPools": [
                 {
-                  "id": "[parameters('spWebBEAddressPoolID')]"
+                  "id": "[parameters('geminiWebBEAddressPoolID')]"
                 }
               ]
             }
@@ -207,7 +207,7 @@
               ],
               "loadBalancerInboundNatRules": [
                 {
-                  "id": "[parameters('spCANATRuleID')]"
+                  "id": "[parameters('geminiCANATRuleID')]"
                 }
               ]
             }

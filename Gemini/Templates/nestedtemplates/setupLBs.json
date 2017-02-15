@@ -5,49 +5,49 @@
     "location": {
       "type": "string"
     },
-    "spCALBName": {
+    "geminiCALBName": {
       "type": "string"
     },
-    "spCALBFE": {
+    "geminiCALBFE": {
       "type": "string"
     },
-    "spCAResourceId": {
+    "geminiCAResourceId": {
       "type": "string"
     },
-    "spCALBBE": {
+    "geminiCALBBE": {
       "type": "string"
     },
-    "spCANAT": {
+    "geminiCANAT": {
       "type": "string"
     },
-    "spCAlbFEConfigID": {
+    "geminiCALBFEConfigID": {
       "type": "string"
     },
-    "spWebLBName": {
+    "geminiWebLBName": {
       "type": "string"
     },
-    "spWebLBFE": {
+    "geminiWebLBFE": {
       "type": "string"
     },
     "spWebResourceId": {
       "type": "string"
     },
-    "spWebLBBE": {
+    "geminiWebLBBE": {
       "type": "string"
     },
-    "spWebLB": {
+    "geminiWebLB": {
       "type": "string"
     },
-    "spWebLBFEConfigID": {
+    "geminiWebLBFEConfigID": {
       "type": "string"
     },
-    "spWebBEAddressPoolID": {
+    "geminiWebBEAddressPoolID": {
       "type": "string"
     },
-    "spWebProbeID": {
+    "geminiWebProbeID": {
       "type": "string"
     },
-    "spWebProbe": {
+    "gemininiWebProbe": {
       "type": "string"
     },
     "sqlLBName": {
@@ -78,31 +78,31 @@
   "resources": [
     {
       "apiVersion": "2015-06-15",
-      "name": "[parameters('spCALBName')]",
+      "name": "[parameters('geminiCALBName')]",
       "type": "Microsoft.Network/loadBalancers",
       "location": "[parameters('location')]",
       "properties": {
         "frontendIPConfigurations": [
           {
-            "name": "[parameters('spCALBFE')]",
+            "name": "[parameters('geminiCALBFE')]",
             "properties": {
               "publicIPAddress": {
-                "id": "[parameters('spCAResourceId')]"
+                "id": "[parameters('geminiCAResourceId')]"
               }
             }
           }
         ],
         "backendAddressPools": [
           {
-            "name": "[parameters('spCALBBE')]"
+            "name": "[parameters('geminiCALBBE')]"
           }
         ],
         "inboundNatRules": [
           {
-            "name": "[parameters('spCANAT')]",
+            "name": "[parameters('geminiCANAT')]",
             "properties": {
               "frontendIPConfiguration": {
-                "id": "[parameters('spCAlbFEConfigID')]"
+                "id": "[parameters('geminiCALBFEConfigID')]"
               },
               "protocol": "tcp",
               "frontendPort": 80,
@@ -115,13 +115,13 @@
     },
     {
       "apiVersion": "2015-06-15",
-      "name": "[parameters('spWebLBName')]",
+      "name": "[parameters('geminiWebLBName')]",
       "type": "Microsoft.Network/loadBalancers",
       "location": "[parameters('location')]",
       "properties": {
         "frontendIPConfigurations": [
           {
-            "name": "[parameters('spWebLBFE')]",
+            "name": "[parameters('geminiWebLBFE')]",
             "properties": {
               "publicIPAddress": {
                 "id": "[parameters('spWebResourceId')]"
@@ -131,21 +131,21 @@
         ],
         "backendAddressPools": [
           {
-            "name": "[parameters('spWebLBBE')]"
+            "name": "[parameters('geminiWebLBBE')]"
           }
         ],
         "loadBalancingRules": [
           {
-            "name": "[parameters('spWebLB')]",
+            "name": "[parameters('geminiWebLB')]",
             "properties": {
               "frontendIPConfiguration": {
-                "id": "[parameters('spWebLBFEConfigID')]"
+                "id": "[parameters('geminiWebLBFEConfigID')]"
               },
               "backendAddressPool": {
-                "id": "[parameters('spWebBEAddressPoolID')]"
+                "id": "[parameters('geminiWebBEAddressPoolID')]"
               },
               "probe": {
-                "id": "[parameters('spWebProbeID')]"
+                "id": "[parameters('geminiWebProbeID')]"
               },
               "protocol": "Tcp",
               "frontendPort": 80,
@@ -156,7 +156,7 @@
         ],
         "probes": [
           {
-            "name": "[parameters('spWebProbe')]",
+            "name": "[parameters('gemininiWebProbe')]",
             "properties": {
               "protocol": "Http",
               "port": 8088,

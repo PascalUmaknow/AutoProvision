@@ -107,7 +107,7 @@
       "type": "string",
       "metadata": {
         "group": "Gemini Server settings",
-        "description": "The address range of the SP Web subnet created in the new VNET"
+        "description": "The address range of the Gemini Web subnet created in the new VNET"
       },
       "defaultValue": "10.0.2.0/24"
     },
@@ -115,7 +115,7 @@
       "type": "string",
       "metadata": {
         "group": "Gemini Server settings",
-        "description": "The address range of the SP App subnet created in the new VNET"
+        "description": "The address range of the Gemini App subnet created in the new VNET"
       },
       "defaultValue": "10.0.3.0/24"
     },
@@ -127,6 +127,14 @@
         "description": "The address range of the subnet static IPs are allocated from in the new VNET"
       },
       "defaultValue": "10.0.0.0/24"
+    },
+    "sqlLBIPAddress": {
+      "type": "string",
+      "metadata": {
+        "group": "SQL Server settings",
+        "description": "The IP address of the new SQL ILB"
+      },
+      "defaultValue": "10.0.0.6"
     }
 
     //"GeminiFarmName": {
@@ -191,14 +199,7 @@
     //    "description": "The SQL Server Service account password"
     //  }
     //},
-    //"sqlLBIPAddress": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "group": "SQL Server settings",
-    //    "description": "The IP address of the new SQL ILB"
-    //  },
-    //  "defaultValue": "10.0.0.6"
-    //},
+
 
 
     //"spVMSize": {
@@ -264,17 +265,17 @@
     "lbSettings": {
       "rdpLBFE": "rdpLBFE",
       "sqlLBFE": "sqlLBFE",
-      "spWebLBFE": "spWebLBFE",
-      "spCALBFE": "spCALBFE",
+      "geminiWebLBFE": "geminiWebLBFE",
+      "geminiCALBFE": "geminiCALBFE",
       "sqlLBBE": "sqlLBBE",
-      "spWebLBBE": "spWebLBBE",
-      "spCALBBE": "spCALBBE",
-      "spWebLB": "spWeb",
+      "geminiWebLBBE": "geminiWebLBBE",
+      "geminiCALBBE": "geminiCALBBE",
+      "geminiWebLB": "spWeb",
       "spCALB": "spCALB",
       "sqlLBName": "sqlLoadBalancer",
       "rdpLBName": "rdpLoadBalancer",
-      "spWebLBName": "spWebLoadBalancer",
-      "spCALBName": "spCALoadBalancer"
+      "geminiWebLBName": "spWebLoadBalancer",
+      "geminiCALBName": "spCALoadBalancer"
     },
     "subnetNames": {
       "staticSubnetName": "staticSubnet",
@@ -283,9 +284,9 @@
       "geminiAppSubnetName": "geminiAppSubnet"
     },
     "RDPNAT": "RDP",
-    //"spCANAT": "spCANAT",
-    //"SQLAOProbe": "SQLAlwaysOnEndPointProbe",
-    //"spWebProbe": "spWebProbe",
+    "geminiCANAT": "geminiCANAT",
+    "SQLAOProbe": "SQLAlwaysOnEndPointProbe",
+    "gemininiWebProbe": "gemininiWebProbe",
     "rdpIPAddressName": "rdpIP",
     "vmSettings": {
       "availabilitySets": {
@@ -337,25 +338,25 @@
     //"GeminiWebfqdn": "[concat(parameters('dnsPrefix'),'.',toLower(trim(replace(parameters('location'),' ' ,''))),'.cloudapp.azure.com')]",
     "ids": {  
       "rdplbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').rdpLBName)]",
-      "spWeblbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').spWebLBName)]",
+      "geminiWebLBID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').geminiWebLBName)]",
       "sqllbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').sqlLBName)]",
-      "spCAlbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').spCALBName)]",
-      //"spCAResourceId": "[resourceId('Microsoft.Network/publicIPAddresses',variables('spCAIPAddressName'))]",
+      "spCAlbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').geminiCALBName)]",
+      //"geminiCAResourceId": "[resourceId('Microsoft.Network/publicIPAddresses',variables('spCAIPAddressName'))]",
       "sqlAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.sqlAvailabilitySetName)]",
       "geminiWebAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiWebAvailabilitySetName)]",
       "geminiAppAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiAppAvailabilitySetName)]"
     },
     "derivedIds": {
       "rdplbFEConfigID": "[concat(variables('ids').rdplbID,'/frontendIPConfigurations/',variables('lbSettings').rdpLBFE)]",
-      "spWebLBFEConfigID": "[concat(variables('ids').spWeblbID,'/frontendIPConfigurations/',variables('lbSettings').spWebLBFE)]",
-     // "spWebProbeID": "[concat(variables('ids').spWeblbID,'/probes/',variables('spWebProbe'))]",
-      "spWebBEAddressPoolID": "[concat(variables('ids').spWeblbID,'/backendAddressPools/',variables('lbSettings').spWebLBBE)]",
+      "geminiWebLBFEConfigID": "[concat(variables('ids').geminiWebLBID,'/frontendIPConfigurations/',variables('lbSettings').geminiWebLBFE)]",
+     // "geminiWebProbeID": "[concat(variables('ids').geminiWebLBID,'/probes/',variables('gemininiWebProbe'))]",
+      "geminiWebBEAddressPoolID": "[concat(variables('ids').geminiWebLBID,'/backendAddressPools/',variables('lbSettings').geminiWebLBBE)]",
       "sqlBEAddressPoolID": "[concat(variables('ids').sqllbID,'/backendAddressPools/',variables('lbSettings').sqlLBBE)]",
       "sqllbFEConfigID": "[concat(variables('ids').sqllbID,'/frontendIPConfigurations/',variables('lbSettings').sqlLBFE)]",
    //   "sqllbProbeID": "[concat(variables('ids').sqllbID,'/probes/',variables('SQLAOProbe'))]",
-      "spCABEAddressPoolID": "[concat(variables('ids').spCAlbID,'/backendAddressPools/',variables('lbSettings').spCALBBE)]",
-      "spCAlbFEConfigID": "[concat(variables('ids').spCAlbID,'/frontendIPConfigurations/',variables('lbSettings').spCALBFE)]"
-  //    "spCANATRuleID": "[concat(variables('ids').spCAlbID,'/inboundNatRules/',variables('spCANAT'))]"
+      "spCABEAddressPoolID": "[concat(variables('ids').spCAlbID,'/backendAddressPools/',variables('lbSettings').geminiCALBBE)]",
+      "geminiCALBFEConfigID": "[concat(variables('ids').spCAlbID,'/frontendIPConfigurations/',variables('lbSettings').geminiCALBFE)]"
+  //    "geminiCANATRuleID": "[concat(variables('ids').spCAlbID,'/inboundNatRules/',variables('geminiCANAT'))]"
     },
     "subnets": [
       {
@@ -520,99 +521,99 @@
             }
           }
         }
+      },
+      {
+        "name": "SettingUpLoadBalancers",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2015-01-01",
+        "dependsOn": [
+          "Microsoft.Resources/deployments/SettingUpGeminiCentralAdminPublicIP",
+          "Microsoft.Resources/deployments/SettingUpGeminiWebPublicIP",
+          "Microsoft.Resources/deployments/SettingUpRdp",
+          "Microsoft.Resources/deployments/CreatingVirtualNetwork"
+        ],
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','setupLBs.json', parameters('_artifactsLocationSasToken'))]",
+            "contentVersion": "1.0.0.0"
+          },
+          "parameters": {
+            "location": {
+              "value": "[parameters('location')]"
+            },
+            "geminiCALBName": {
+              "value": "[variables('lbSettings').geminiCALBName]"
+            },
+            "geminiCALBFE": {
+              "value": "[variables('lbSettings').geminiCALBFE]"
+            },
+            "geminiCAResourceId": {
+              "value": "[variables('ids').geminiCAResourceId]"
+            },
+            "geminiCALBBE": {
+              "value": "[variables('lbSettings').geminiCALBBE]"
+            },
+            "geminiCANAT": {
+              "value": "[variables('geminiCANAT')]"
+            },
+            "geminiCALBFEConfigID": {
+              "value": "[variables('derivedIds').geminiCALBFEConfigID]"
+            },
+            "geminiWebLBName": {
+              "value": "[variables('lbSettings').geminiWebLBName]"
+            },
+            "geminiWebLBFE": {
+              "value": "[variables('lbSettings').geminiWebLBFE]"
+            },
+            "spWebResourceId": {
+              "value": "[variables(concat('spWebResourceId',parameters('geminiWebIPNewOrExisting')))]"
+            },
+            "geminiWebLBBE": {
+              "value": "[variables('lbSettings').geminiWebLBBE]"
+            },
+            "geminiWebLB": {
+              "value": "[variables('lbSettings').geminiWebLB]"
+            },
+            "geminiWebLBFEConfigID": {
+              "value": "[variables('derivedIds').geminiWebLBFEConfigID]"
+            },
+            "geminiWebBEAddressPoolID": {
+              "value": "[variables('derivedIds').geminiWebBEAddressPoolID]"
+            },
+            "geminiWebProbeID": {
+              "value": "[variables('derivedIds').geminiWebProbeID]"
+            },
+            "gemininiWebProbe": {
+              "value": "[variables('gemininiWebProbe')]"
+            },
+            "sqlLBName": {
+              "value": "[variables('lbSettings').sqlLBName]"
+            },
+            "sqlLBFE": {
+              "value": "[variables('lbSettings').sqlLBFE]"
+            },
+            "sqlLBIPAddress": {
+              "value": "[parameters('sqlLBIPAddress')]"
+            },
+            "staticSubnetRef": {
+              "value": "[variables('staticSubnetRef')]"
+            },
+            "sqlLBBE": {
+              "value": "[variables('lbSettings').sqlLBBE]"
+            },
+            "sqllbFEConfigID": {
+              "value": "[variables('derivedIds').sqllbFEConfigID]"
+            },
+            "sqllbProbeID": {
+              "value": "[variables('derivedIds').sqllbProbeID]"
+            },
+            "SQLAOProbe": {
+              "value": "[variables('SQLAOProbe')]"
+            }
+          }
+        }
       }
-      //{
-      //  "name": "SettingUpLoadBalancers",
-      //  "type": "Microsoft.Resources/deployments",
-      //  "apiVersion": "2015-01-01",
-      //  "dependsOn": [
-      //    "Microsoft.Resources/deployments/SettingUpGeminiCentralAdminPublicIP",
-      //    "Microsoft.Resources/deployments/SettingUpGeminiWebPublicIP",
-      //    "Microsoft.Resources/deployments/SettingUpRdp",
-      //    "Microsoft.Resources/deployments/CreatingVirtualNetwork"
-      //  ],
-      //  "properties": {
-      //    "mode": "Incremental",
-      //    "templateLink": {
-      //      "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','setupLBs.json', parameters('_artifactsLocationSasToken'))]",
-      //      "contentVersion": "1.0.0.0"
-      //    },
-      //    "parameters": {
-      //      "location": {
-      //        "value": "[parameters('location')]"
-      //      },
-      //      "spCALBName": {
-      //        "value": "[variables('lbSettings').spCALBName]"
-      //      },
-      //      "spCALBFE": {
-      //        "value": "[variables('lbSettings').spCALBFE]"
-      //      },
-      //      "spCAResourceId": {
-      //        "value": "[variables('ids').spCAResourceId]"
-      //      },
-      //      "spCALBBE": {
-      //        "value": "[variables('lbSettings').spCALBBE]"
-      //      },
-      //      "spCANAT": {
-      //        "value": "[variables('spCANAT')]"
-      //      },
-      //      "spCAlbFEConfigID": {
-      //        "value": "[variables('derivedIds').spCAlbFEConfigID]"
-      //      },
-      //      "spWebLBName": {
-      //        "value": "[variables('lbSettings').spWebLBName]"
-      //      },
-      //      "spWebLBFE": {
-      //        "value": "[variables('lbSettings').spWebLBFE]"
-      //      },
-      //      "spWebResourceId": {
-      //        "value": "[variables(concat('spWebResourceId',parameters('geminiWebIPNewOrExisting')))]"
-      //      },
-      //      "spWebLBBE": {
-      //        "value": "[variables('lbSettings').spWebLBBE]"
-      //      },
-      //      "spWebLB": {
-      //        "value": "[variables('lbSettings').spWebLB]"
-      //      },
-      //      "spWebLBFEConfigID": {
-      //        "value": "[variables('derivedIds').spWebLBFEConfigID]"
-      //      },
-      //      "spWebBEAddressPoolID": {
-      //        "value": "[variables('derivedIds').spWebBEAddressPoolID]"
-      //      },
-      //      "spWebProbeID": {
-      //        "value": "[variables('derivedIds').spWebProbeID]"
-      //      },
-      //      "spWebProbe": {
-      //        "value": "[variables('spWebProbe')]"
-      //      },
-      //      "sqlLBName": {
-      //        "value": "[variables('lbSettings').sqlLBName]"
-      //      },
-      //      "sqlLBFE": {
-      //        "value": "[variables('lbSettings').sqlLBFE]"
-      //      },
-      //      "sqlLBIPAddress": {
-      //        "value": "[parameters('sqlLBIPAddress')]"
-      //      },
-      //      "staticSubnetRef": {
-      //        "value": "[variables('staticSubnetRef')]"
-      //      },
-      //      "sqlLBBE": {
-      //        "value": "[variables('lbSettings').sqlLBBE]"
-      //      },
-      //      "sqllbFEConfigID": {
-      //        "value": "[variables('derivedIds').sqllbFEConfigID]"
-      //      },
-      //      "sqllbProbeID": {
-      //        "value": "[variables('derivedIds').sqllbProbeID]"
-      //      },
-      //      "SQLAOProbe": {
-      //        "value": "[variables('SQLAOProbe')]"
-      //      }
-      //    }
-      //  }
-      //},
       //{
       //  "name": "CreatingNetworkInterfaces",
       //  "type": "Microsoft.Resources/deployments",
@@ -668,8 +669,8 @@
       //      "geminiWebSubnetRef": {
       //        "value": "[variables('geminiWebSubnetRef')]"
       //      },
-      //      "spWebBEAddressPoolID": {
-      //        "value": "[variables('derivedIds').spWebBEAddressPoolID]"
+      //      "geminiWebBEAddressPoolID": {
+      //        "value": "[variables('derivedIds').geminiWebBEAddressPoolID]"
       //      },
       //      "spappVMName": {
       //        "value": "[variables('vmSettings').spappVMName]"
@@ -680,8 +681,8 @@
       //      "spCABEAddressPoolID": {
       //        "value": "[variables('derivedIds').spCABEAddressPoolID]"
       //      },
-      //      "spCANATRuleID": {
-      //        "value": "[variables('derivedIds').spCANATRuleID]"
+      //      "geminiCANATRuleID": {
+      //        "value": "[variables('derivedIds').geminiCANATRuleID]"
       //      },
       //      "sqlwNicName": {
       //        "value": "[variables('sqlwNicName')]"
