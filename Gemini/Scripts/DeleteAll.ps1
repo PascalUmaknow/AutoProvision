@@ -2,7 +2,7 @@ Login-AzureRmAccount
  
 
 $allRG = Get-AzureRmResourceGroup
-
+ 
 
 foreach ( $g in $allRG){
 
