@@ -626,12 +626,6 @@
             "geminiAppSubnetRef": {
               "value": "[variables('geminiAppSubnetRef')]"
             },
-            "spCABEAddressPoolID": {
-              "value": "[variables('derivedIds').spCABEAddressPoolID]"
-            },
-            "geminiCANATRuleID": {
-              "value": "[variables('derivedIds').geminiCANATRuleID]"
-            },
             "sqlwNicName": {
               "value": "[variables('sqlwNicName')]"
             }
