@@ -1,4 +1,4 @@
-Login-AzureRmAccount
+#Login-AzureRmAccount
 
 $allRG = Get-AzureRmResourceGroup
 
@@ -24,7 +24,7 @@ if($g.ResourceGroupName.StartsWith("gem"))
 }
 
 
-$lastValidation = Read-Host "Do you wich to delete ALL the resouces previously listed? (YES/ NO)"
+#$lastValidation = Read-Host "Do you wich to delete ALL the resouces previously listed? (YES/ NO)"
 
 if($lastValidation.ToLower().Equals("yes")){
 
