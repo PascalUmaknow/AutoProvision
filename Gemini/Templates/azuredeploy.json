@@ -257,8 +257,8 @@
     //}
   },
   "variables": {
-    //"spCADNSPrefix": "[concat(parameters('dnsPrefix'),'admin')]",
-    //"spCAIPAddressName": "[concat(parameters('geminiWebIPAddressName'),'admin')]",
+    "geminiCADNSPrefix": "[concat(parameters('dnsPrefix'),'admin')]",
+    "geminiCAIPAddressName": "[concat(parameters('geminiWebIPAddressName'),'admin')]",
     //"configDatabaseName": "SP_Config",
     //"administrationContentDatabaseName": "SP_AdminContent",
     //"contentDatabaseName": "spfarm_Content",
@@ -334,14 +334,14 @@
     "geminiAppSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').geminiAppSubnetName)]",
     //"spWebResourceIdexisting": "[resourceId(parameters('geminiWebIPRGName'),concat('Microsoft.Network','/','publicIPAddresses'),parameters('geminiWebIPAddressName'))]",
     //"spWebResourceIdnew": "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),parameters('geminiWebIPAddressName'))]",
-    //"GeminiCAfqdn": "[concat(variables('spCADNSPrefix'),'.',toLower(trim(replace(parameters('location'),' ' ,''))),'.cloudapp.azure.com')]",
-    //"GeminiWebfqdn": "[concat(parameters('dnsPrefix'),'.',toLower(trim(replace(parameters('location'),' ' ,''))),'.cloudapp.azure.com')]",
+    "GeminiCAfqdn": "[concat(variables('geminiCADNSPrefix'),'.',toLower(trim(replace(parameters('location'),' ' ,''))),'.cloudapp.azure.com')]",
+    "GeminiWebfqdn": "[concat(parameters('dnsPrefix'),'.',toLower(trim(replace(parameters('location'),' ' ,''))),'.cloudapp.azure.com')]",
     "ids": {  
       "rdplbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').rdpLBName)]",
       "geminiWebLBID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').geminiWebLBName)]",
       "sqllbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').sqlLBName)]",
       "spCAlbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').geminiCALBName)]",
-      //"geminiCAResourceId": "[resourceId('Microsoft.Network/publicIPAddresses',variables('spCAIPAddressName'))]",
+      "geminiCAResourceId": "[resourceId('Microsoft.Network/publicIPAddresses',variables('geminiCAIPAddressName'))]",
       "sqlAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.sqlAvailabilitySetName)]",
       "geminiWebAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiWebAvailabilitySetName)]",
       "geminiAppAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiAppAvailabilitySetName)]"
@@ -349,14 +349,14 @@
     "derivedIds": {
       "rdplbFEConfigID": "[concat(variables('ids').rdplbID,'/frontendIPConfigurations/',variables('lbSettings').rdpLBFE)]",
       "geminiWebLBFEConfigID": "[concat(variables('ids').geminiWebLBID,'/frontendIPConfigurations/',variables('lbSettings').geminiWebLBFE)]",
-     // "geminiWebProbeID": "[concat(variables('ids').geminiWebLBID,'/probes/',variables('gemininiWebProbe'))]",
+     "geminiWebProbeID": "[concat(variables('ids').geminiWebLBID,'/probes/',variables('gemininiWebProbe'))]",
       "geminiWebBEAddressPoolID": "[concat(variables('ids').geminiWebLBID,'/backendAddressPools/',variables('lbSettings').geminiWebLBBE)]",
       "sqlBEAddressPoolID": "[concat(variables('ids').sqllbID,'/backendAddressPools/',variables('lbSettings').sqlLBBE)]",
       "sqllbFEConfigID": "[concat(variables('ids').sqllbID,'/frontendIPConfigurations/',variables('lbSettings').sqlLBFE)]",
-   //   "sqllbProbeID": "[concat(variables('ids').sqllbID,'/probes/',variables('SQLAOProbe'))]",
+     "sqllbProbeID": "[concat(variables('ids').sqllbID,'/probes/',variables('SQLAOProbe'))]",
       "spCABEAddressPoolID": "[concat(variables('ids').spCAlbID,'/backendAddressPools/',variables('lbSettings').geminiCALBBE)]",
       "geminiCALBFEConfigID": "[concat(variables('ids').spCAlbID,'/frontendIPConfigurations/',variables('lbSettings').geminiCALBFE)]"
-  //    "geminiCANATRuleID": "[concat(variables('ids').spCAlbID,'/inboundNatRules/',variables('geminiCANAT'))]"
+      "geminiCANATRuleID": "[concat(variables('ids').spCAlbID,'/inboundNatRules/',variables('geminiCANAT'))]"
     },
     "subnets": [
       {
