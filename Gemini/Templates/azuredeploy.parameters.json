@@ -36,10 +36,10 @@
     //"GeminiFarmPassphrasePassword": {
     //  "value": "GEN-PASSWORD"
     //},
-    //"spWebIPRGName": {
+    //"geminiWebIPRGName": {
     //  "value": "GEN-UNIQUE-10"
     //},
-    //"spWebIPAddressName": {
+    //"geminiWebIPAddressName": {
     //  "value": "spWebIp"
     //},
     //"spWebIPNewOrExisting": {

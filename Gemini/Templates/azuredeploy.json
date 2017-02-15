@@ -43,7 +43,7 @@
       },
       "defaultValue": "[resourceGroup().location]"
     },
-    "spWebIPAddressName": {
+    "geminiWebIPAddressName": {
       "type": "string",
       "metadata": {
         "group": "Gemini Server settings",
@@ -57,7 +57,7 @@
         "description": "The DNS Prefix for the Public IP Address for the Gemini Web Application"
       }
     },
-    "spWebIPRGName": {
+    "geminiWebIPRGName": {
       "type": "string",
       "defaultValue": "",
       "metadata": {
@@ -252,7 +252,7 @@
   },
   "variables": {
     //"spCADNSPrefix": "[concat(parameters('dnsPrefix'),'admin')]",
-    //"spCAIPAddressName": "[concat(parameters('spWebIPAddressName'),'admin')]",
+    //"spCAIPAddressName": "[concat(parameters('geminiWebIPAddressName'),'admin')]",
     //"configDatabaseName": "SP_Config",
     //"administrationContentDatabaseName": "SP_AdminContent",
     //"contentDatabaseName": "spfarm_Content",
@@ -327,8 +327,8 @@
     //"sqlSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').sqlSubnetName)]",
     //"spWebSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').spWebSubnetName)]",
     //"spAppSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').spAppSubnetName)]",
-    //"spWebResourceIdexisting": "[resourceId(parameters('spWebIPRGName'),concat('Microsoft.Network','/','publicIPAddresses'),parameters('spWebIPAddressName'))]",
-    //"spWebResourceIdnew": "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),parameters('spWebIPAddressName'))]",
+    //"spWebResourceIdexisting": "[resourceId(parameters('geminiWebIPRGName'),concat('Microsoft.Network','/','publicIPAddresses'),parameters('geminiWebIPAddressName'))]",
+    //"spWebResourceIdnew": "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),parameters('geminiWebIPAddressName'))]",
     //"GeminiCAfqdn": "[concat(variables('spCADNSPrefix'),'.',toLower(trim(replace(parameters('location'),' ' ,''))),'.cloudapp.azure.com')]",
     //"GeminiWebfqdn": "[concat(parameters('dnsPrefix'),'.',toLower(trim(replace(parameters('location'),' ' ,''))),'.cloudapp.azure.com')]",
     "ids": {  
@@ -452,7 +452,7 @@
               "value": "[parameters('location')]"
             },
             "publicIPAddressName": {
-              "value": "[parameters('spWebIPAddressName')]"
+              "value": "[parameters('geminiWebIPAddressName')]"
             },
             "publicIPAddressType": {
               "value": "dynamic"
@@ -461,7 +461,7 @@
               "value": "[parameters('dnsPrefix')]"
             },
             "publicIpRGName": {
-              "value": "[parameters('spWebIPRGName')]"
+              "value": "[parameters('geminiWebIPRGName')]"
             }
           }
         }
