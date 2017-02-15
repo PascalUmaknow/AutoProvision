@@ -2,7 +2,7 @@
 
 #TEST
 Test-AzureRmResourceGroupDeployment -ResourceGroupName $rgName -TemplateUri "https://raw.githubusercontent.com/PascalUmaknow/AutoProvision/master/Gemini/Templates/azuredeploy.json"
-exit
+#exit
 
 $allRG = Get-AzureRmResourceGroup
 
@@ -36,7 +36,7 @@ if($lastValidation.ToLower().Equals("yes")){
     if($g.ResourceGroupName.StartsWith("gem"))
 {
         Write-Host "Deleting " $g.ResourceGroupName 
-       Remove-AzureRmResourceGroup -Name $g.ResourceGroupName -Force
+     #  Remove-AzureRmResourceGroup -Name $g.ResourceGroupName -Force
       }
     }
 }
