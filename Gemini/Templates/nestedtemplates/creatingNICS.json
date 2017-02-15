@@ -34,7 +34,7 @@
     }
   },
   "resources": [
-   
+
     {
       "name": "[concat(parameters('sqlVMName'), copyIndex(),'-nic')]",
       "type": "Microsoft.Network/networkInterfaces",
@@ -86,6 +86,26 @@
                   "id": "[parameters('geminiWebBEAddressPoolID')]"
                 }
               ]
+            }
+          }
+        ]
+      }
+    },
+
+    {
+      "name": "[concat(parameters('geminiappVMName'),'0-nic')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[parameters('location')]",
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[parameters('geminiAppSubnetRef')]"
+              }
             }
           }
         ]
