@@ -42,6 +42,28 @@
         "description": "The region to deploy the resources into. Only change if resources need to be deployed to a different location than the resource group."
       },
       "defaultValue": "[resourceGroup().location]"
+    },
+    "spWebIPAddressName": {
+      "type": "string",
+      "metadata": {
+        "group": "Gemini Server settings",
+        "description": "The new or existing - depending on value of spWebIPNewOrExisting parameter - IP address name for SP Web "
+      }
+    },
+    "dnsPrefix": {
+      "type": "string",
+      "metadata": {
+        "group": "Gemini Server settings",
+        "description": "The DNS Prefix for the Public IP Address for the Gemini Web Application"
+      }
+    },
+    "spWebIPRGName": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "group": "Gemini Server settings",
+        "description": "Resource Group containing existing SP Web IP address"
+      }
     }
     //,
     //"GeminiFarmName": {
@@ -161,14 +183,6 @@
     //  },
     //  "defaultValue": "10.0.3.0/24"
     //},
-    //"spWebIPRGName": {
-    //  "type": "string",
-    //  "defaultValue": "",
-    //  "metadata": {
-    //    "group": "Gemini Server settings",
-    //    "description": "Resource Group containing existing SP Web IP address"
-    //  }
-    //},
     //"spWebIPNewOrExisting": {
     //  "type": "string",
     //  "defaultValue": "new",
@@ -181,20 +195,7 @@
     //    "description": "Indicates whether the Gemini farm's IP is new or existing"
     //  }
     //},
-    //"spWebIPAddressName": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "group": "Gemini Server settings",
-    //    "description": "The new or existing - depending on value of spWebIPNewOrExisting parameter - IP address name for SP Web "
-    //  }
-    //},
-    //"dnsPrefix": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "group": "Gemini Server settings",
-    //    "description": "The DNS Prefix for the Public IP Address for the Gemini Web Application"
-    //  }
-    //},
+
     //"spVMSize": {
     //  "type": "string",
     //  "metadata": {
@@ -435,65 +436,36 @@
             }
           }
         }
+      },
+      {
+        "name": "SettingUpGeminiWebPublicIP",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2015-01-01",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','publicip-',parameters('spWebIPNewOrExisting'),'.json', parameters('_artifactsLocationSasToken'))]",
+            "contentVersion": "1.0.0.0"
+          },
+          "parameters": {
+            "location": {
+              "value": "[parameters('location')]"
+            },
+            "publicIPAddressName": {
+              "value": "[parameters('spWebIPAddressName')]"
+            },
+            "publicIPAddressType": {
+              "value": "dynamic"
+            },
+            "dnsPrefix": {
+              "value": "[parameters('dnsPrefix')]"
+            },
+            "publicIpRGName": {
+              "value": "[parameters('spWebIPRGName')]"
+            }
+          }
+        }
       }
-      //{
-      //  "name": "SettingUpGeminiWebPublicIP",
-      //  "type": "Microsoft.Resources/deployments",
-      //  "apiVersion": "2015-01-01",
-      //  "properties": {
-      //    "mode": "Incremental",
-      //    "templateLink": {
-      //      "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','publicip-',parameters('spWebIPNewOrExisting'),'.json', parameters('_artifactsLocationSasToken'))]",
-      //      "contentVersion": "1.0.0.0"
-      //    },
-      //    "parameters": {
-      //      "location": {
-      //        "value": "[parameters('location')]"
-      //      },
-      //      "publicIPAddressName": {
-      //        "value": "[parameters('spWebIPAddressName')]"
-      //      },
-      //      "publicIPAddressType": {
-      //        "value": "dynamic"
-      //      },
-      //      "dnsPrefix": {
-      //        "value": "[parameters('dnsPrefix')]"
-      //      },
-      //      "publicIpRGName": {
-      //        "value": "[parameters('spWebIPRGName')]"
-      //      }
-      //    }
-      //  }
-      //},
-      //{
-      //  "name": "SettingUpGeminiCentralAdminPublicIP",
-      //  "type": "Microsoft.Resources/deployments",
-      //  "apiVersion": "2015-01-01",
-      //  "properties": {
-      //    "mode": "Incremental",
-      //    "templateLink": {
-      //      "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','publicip-new.json', parameters('_artifactsLocationSasToken'))]",
-      //      "contentVersion": "1.0.0.0"
-      //    },
-      //    "parameters": {
-      //      "location": {
-      //        "value": "[parameters('location')]"
-      //      },
-      //      "publicIPAddressName": {
-      //        "value": "[variables('spCAIPAddressName')]"
-      //      },
-      //      "publicIPAddressType": {
-      //        "value": "dynamic"
-      //      },
-      //      "dnsPrefix": {
-      //        "value": "[variables('spCADNSPrefix')]"
-      //      },
-      //      "publicIpRGName": {
-      //        "value": "[resourceGroup().name]"
-      //      }
-      //    }
-      //  }
-      //},
       //{
       //  "name": "CreatingAvailabilitySets",
       //  "type": "Microsoft.Resources/deployments",
