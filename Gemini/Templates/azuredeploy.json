@@ -263,7 +263,7 @@
       "geminiWebLB": "spWeb",
       "sqlLBName": "sqlLoadBalancer",
       "rdpLBName": "rdpLoadBalancer",
-      "geminiWebLBName": "geminiWebLoadBalancer",
+      "geminiWebLBName": "geminiWebLoadBalancer"
     },
     "subnetNames": {
       "staticSubnetName": "staticSubnet",
