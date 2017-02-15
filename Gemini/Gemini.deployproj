@@ -31,6 +31,7 @@
     <None Include="Deployment.targets">
       <Visible>False</Visible>
     </None>
+    <None Include="Scripts\DeleteAll.ps1" />
     <None Include="Scripts\StartProvisioning.ps1" />
     <None Include="Templates\azuredeploy.json" />
     <None Include="Templates\azuredeploy.parameters.json" />
