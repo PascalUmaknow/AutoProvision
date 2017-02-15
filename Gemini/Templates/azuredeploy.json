@@ -43,11 +43,24 @@
       },
       "defaultValue": "[resourceGroup().location]"
     },
+
+    "geminiWebIPNewOrExisting": {
+      "type": "string",
+      "defaultValue": "new",
+      "allowedValues": [
+        "new",
+        "existing"
+      ],
+      "metadata": {
+        "group": "Gemini Server settings",
+        "description": "Indicates whether the Gemini farm's IP is new or existing"
+      }
+    },
     "geminiWebIPAddressName": {
       "type": "string",
       "metadata": {
         "group": "Gemini Server settings",
-        "description": "The new or existing - depending on value of spWebIPNewOrExisting parameter - IP address name for SP Web "
+        "description": "The new or existing - depending on value of geminiWebIPNewOrExisting parameter - IP address name for SP Web "
       }
     },
     "dnsPrefix": {
@@ -182,18 +195,6 @@
     //    "description": "The address range of the SP App subnet created in the new VNET"
     //  },
     //  "defaultValue": "10.0.3.0/24"
-    //},
-    //"spWebIPNewOrExisting": {
-    //  "type": "string",
-    //  "defaultValue": "new",
-    //  "allowedValues": [
-    //    "new",
-    //    "existing"
-    //  ],
-    //  "metadata": {
-    //    "group": "Gemini Server settings",
-    //    "description": "Indicates whether the Gemini farm's IP is new or existing"
-    //  }
     //},
 
     //"spVMSize": {
@@ -444,7 +445,7 @@
         "properties": {
           "mode": "Incremental",
           "templateLink": {
-            "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','publicip-',parameters('spWebIPNewOrExisting'),'.json', parameters('_artifactsLocationSasToken'))]",
+            "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','publicip-',parameters('geminiWebIPNewOrExisting'),'.json', parameters('_artifactsLocationSasToken'))]",
             "contentVersion": "1.0.0.0"
           },
           "parameters": {
@@ -566,7 +567,7 @@
       //        "value": "[variables('lbSettings').spWebLBFE]"
       //      },
       //      "spWebResourceId": {
-      //        "value": "[variables(concat('spWebResourceId',parameters('spWebIPNewOrExisting')))]"
+      //        "value": "[variables(concat('spWebResourceId',parameters('geminiWebIPNewOrExisting')))]"
       //      },
       //      "spWebLBBE": {
       //        "value": "[variables('lbSettings').spWebLBBE]"
