@@ -14,10 +14,10 @@
     "spVMSize": {
       "type": "string"
     },
-    "spWebAvailabilitySet": {
+    "geminiWebAvailabilitySet": {
       "type": "string"
     },
-    "spAppAvailabilitySet": {
+    "geminiAppAvailabilitySet": {
       "type": "string"
     },
     "adminUsername": {
@@ -69,7 +69,7 @@
           "vmSize": "[parameters('spVMSize')]"
         },
         "availabilitySet": {
-          "id": "[parameters('spAppAvailabilitySet')]"
+          "id": "[parameters('geminiAppAvailabilitySet')]"
         },
         "osProfile": {
           "computerName": "[concat(parameters('spappVMName'), copyIndex())]",
@@ -161,7 +161,7 @@
           "vmSize": "[parameters('spVMSize')]"
         },
         "availabilitySet": {
-          "id": "[parameters('spWebAvailabilitySet')]"
+          "id": "[parameters('geminiWebAvailabilitySet')]"
         },
         "osProfile": {
           "computerName": "[concat(parameters('spwebVMName'), copyIndex())]",

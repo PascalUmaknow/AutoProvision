@@ -8,10 +8,10 @@
     "sqlAvailabilitySetName": {
       "type": "string"
     },
-    "spWebAvailabilitySetName": {
+    "geminiWebAvailabilitySetName": {
       "type": "string"
     },
-    "spAppAvailabilitySetName": {
+    "geminiAppAvailabilitySetName": {
       "type": "string"
     },
     "location": {
@@ -39,7 +39,7 @@
     },
     {
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "[parameters('spWebAvailabilitySetName')]",
+      "name": "[parameters('geminiWebAvailabilitySetName')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "properties": {
@@ -47,7 +47,7 @@
     },
     {
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "[parameters('spAppAvailabilitySetName')]",
+      "name": "[parameters('geminiAppAvailabilitySetName')]",
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "properties": {
@@ -63,13 +63,13 @@
       "type": "string",
       "value": "[resourceId('Microsoft.Compute/availabilitySets',parameters('sqlAvailabilitySetName'))]"
     },
-    "spWebAvailabilitySetName": {
+    "geminiWebAvailabilitySetName": {
       "type": "string",
-      "value": "[resourceId('Microsoft.Compute/availabilitySets',parameters('spWebAvailabilitySetName'))]"
+      "value": "[resourceId('Microsoft.Compute/availabilitySets',parameters('geminiWebAvailabilitySetName'))]"
     },
-    "spAppAvailabilitySetName": {
+    "geminiAppAvailabilitySetName": {
       "type": "string",
-      "value": "[resourceId('Microsoft.Compute/availabilitySets',parameters('spAppAvailabilitySetName'))]"
+      "value": "[resourceId('Microsoft.Compute/availabilitySets',parameters('geminiAppAvailabilitySetName'))]"
     }
   }
 }

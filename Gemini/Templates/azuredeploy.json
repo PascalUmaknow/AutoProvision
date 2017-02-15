@@ -284,37 +284,36 @@
     //"SQLAOProbe": "SQLAlwaysOnEndPointProbe",
     //"spWebProbe": "spWebProbe",
     "rdpIPAddressName": "rdpIP",
-    //"vmSettings": {
-    //  "availabilitySets": {
-    //    "sqlAvailabilitySetName": "sqlAvailabilitySet",
-    //    "adAvailabilitySetName": "adAvailabilitySet",
-    //    "spWebAvailabilitySetName": "spWebAvailabilitySet",
-    //    "spAppAvailabilitySetName": "spAppAvailabilitySet"
-    //  },
-    //  "noOfSqlVMs": 2,
-    //  "noOfspRoleVMs": 2,
-    //  "vmContainerName": "vhds",
-    //  "adPDCVMName": "ad-pdc",
-    //  "adBDCVMName": "ad-bdc",
-    //  "sqlVMName": "sql-",
-    //  "sqlwVMName": "sql-w",
-    //  "spwebVMName": "sps-web-",
-    //  "spappVMName": "sps-app-",
-    //  "windowsImagePublisher": "MicrosoftWindowsServer",
-    //  "windowsImageOffer": "WindowsServer",
-    //  "windowsImageSKU": "2012-R2-Datacenter",
-    //  "sqlImagePublisher": "MicrosoftSQLServer",
-    //  "sqlImageOffer": "SQL2014SP1-WS2012R2",
-    //  "sqlImageSKU": "Enterprise",
-    //  "spImagePublisher": "MicrosoftGemini",
-    //  "spImageOffer": "MicrosoftGeminiServer",
-    //  "spImageSKU": "2016",
-    //  "rdpPort": 3389,
-    //  "spCentralAdminPort": 80,
-    //  "windowsDiskSize": 128,
-    //  "sqlDiskSize": 1000,
-    //  "spDiskSize": 128
-    //},
+    "vmSettings": {
+      "availabilitySets": {
+        "sqlAvailabilitySetName": "sqlAvailabilitySet",
+        "geminiWebAvailabilitySetName": "geminiWebAvailabilitySet",
+        "geminiAppAvailabilitySetName": "geminiAppAvailabilitySet"
+      },
+      "noOfSqlVMs": 2,
+      "noOfspRoleVMs": 2,
+      "vmContainerName": "vhds",
+      "adPDCVMName": "ad-pdc",
+      "adBDCVMName": "ad-bdc",
+      "sqlVMName": "sql-",
+      "sqlwVMName": "sql-w",
+      "spwebVMName": "sps-web-",
+      "spappVMName": "sps-app-",
+      "windowsImagePublisher": "MicrosoftWindowsServer",
+      "windowsImageOffer": "WindowsServer",
+      "windowsImageSKU": "2012-R2-Datacenter",
+      "sqlImagePublisher": "MicrosoftSQLServer",
+      "sqlImageOffer": "SQL2014SP1-WS2012R2",
+      "sqlImageSKU": "Enterprise",
+      "spImagePublisher": "MicrosoftGemini",
+      "spImageOffer": "MicrosoftGeminiServer",
+      "spImageSKU": "2016",
+      "rdpPort": 3389,
+      "spCentralAdminPort": 80,
+      "windowsDiskSize": 128,
+      "sqlDiskSize": 1000,
+      "spDiskSize": 128
+    },
     //"prefix": "[tolower(trim(subString(concat(parameters('dnsPrefix'),'           '),0,10)))]",
     //"sqlAOEPName": "[concat(variables('prefix'),'-hadr')]",
     //"sqlAOAGName": "[concat(variables('prefix'),'-ag')]",
@@ -341,8 +340,8 @@
       //"spCAResourceId": "[resourceId('Microsoft.Network/publicIPAddresses',variables('spCAIPAddressName'))]",
       //"adAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.adAvailabilitySetName)]",
       //"sqlAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.sqlAvailabilitySetName)]",
-      //"spWebAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.spWebAvailabilitySetName)]",
-      //"spAppAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.spAppAvailabilitySetName)]"
+      //"geminiWebAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiWebAvailabilitySetName)]",
+      //"geminiAppAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiAppAvailabilitySetName)]"
     },
     "derivedIds": {
       "rdplbFEConfigID": "[concat(variables('ids').rdplbID,'/frontendIPConfigurations/',variables('lbSettings').rdpLBFE)]",
@@ -467,36 +466,33 @@
             }
           }
         }
+      },
+      {
+        "name": "CreatingAvailabilitySets",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2015-01-01",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','availabilitySets.json', parameters('_artifactsLocationSasToken'))]",
+            "contentVersion": "1.0.0.0"
+          },
+          "parameters": {
+            "location": {
+              "value": "[parameters('location')]"
+            },
+            "sqlAvailabilitySetName": {
+              "value": "[variables('vmSettings').availabilitySets.sqlAvailabilitySetName]"
+            },
+            "geminiWebAvailabilitySetName": {
+              "value": "[variables('vmSettings').availabilitySets.geminiWebAvailabilitySetName]"
+            },
+            "geminiAppAvailabilitySetName": {
+              "value": "[variables('vmSettings').availabilitySets.geminiAppAvailabilitySetName]"
+            }
+          }
+        }
       }
-      //{
-      //  "name": "CreatingAvailabilitySets",
-      //  "type": "Microsoft.Resources/deployments",
-      //  "apiVersion": "2015-01-01",
-      //  "properties": {
-      //    "mode": "Incremental",
-      //    "templateLink": {
-      //      "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','availabilitySets.json', parameters('_artifactsLocationSasToken'))]",
-      //      "contentVersion": "1.0.0.0"
-      //    },
-      //    "parameters": {
-      //      "location": {
-      //        "value": "[parameters('location')]"
-      //      },
-      //      "adAvailabilitySetName": {
-      //        "value": "[variables('vmSettings').availabilitySets.adAvailabilitySetName]"
-      //      },
-      //      "sqlAvailabilitySetName": {
-      //        "value": "[variables('vmSettings').availabilitySets.sqlAvailabilitySetName]"
-      //      },
-      //      "spWebAvailabilitySetName": {
-      //        "value": "[variables('vmSettings').availabilitySets.spWebAvailabilitySetName]"
-      //      },
-      //      "spAppAvailabilitySetName": {
-      //        "value": "[variables('vmSettings').availabilitySets.spAppAvailabilitySetName]"
-      //      }
-      //    }
-      //  }
-      //},
       //{
       //  "name": "CreatingVirtualNetwork",
       //  "type": "Microsoft.Resources/deployments",
@@ -906,11 +902,11 @@
       //      "spVMSize": {
       //        "value": "[parameters('spVMSize')]"
       //      },
-      //      "spWebAvailabilitySet": {
-      //        "value": "[variables('ids').spWebAvailabilitySetName]"
+      //      "geminiWebAvailabilitySet": {
+      //        "value": "[variables('ids').geminiWebAvailabilitySetName]"
       //      },
-      //      "spAppAvailabilitySet": {
-      //        "value": "[variables('ids').spAppAvailabilitySetName]"
+      //      "geminiAppAvailabilitySet": {
+      //        "value": "[variables('ids').geminiAppAvailabilitySetName]"
       //      },
       //      "adminUsername": {
       //        "value": "[parameters('adminUsername')]"
