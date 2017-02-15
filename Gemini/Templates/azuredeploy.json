@@ -332,8 +332,8 @@
     "sqlSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').sqlSubnetName)]",
     "geminiWebSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').geminiWebSubnetName)]",
     "geminiAppSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').geminiAppSubnetName)]",
-    //"spWebResourceIdexisting": "[resourceId(parameters('geminiWebIPRGName'),concat('Microsoft.Network','/','publicIPAddresses'),parameters('geminiWebIPAddressName'))]",
-    //"spWebResourceIdnew": "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),parameters('geminiWebIPAddressName'))]",
+    "geminiWebResourceIdexisting": "[resourceId(parameters('geminiWebIPRGName'),concat('Microsoft.Network','/','publicIPAddresses'),parameters('geminiWebIPAddressName'))]",
+    "geminiWebResourceIdnew": "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),parameters('geminiWebIPAddressName'))]",
     "GeminiCAfqdn": "[concat(variables('geminiCADNSPrefix'),'.',toLower(trim(replace(parameters('location'),' ' ,''))),'.cloudapp.azure.com')]",
     "GeminiWebfqdn": "[concat(parameters('dnsPrefix'),'.',toLower(trim(replace(parameters('location'),' ' ,''))),'.cloudapp.azure.com')]",
     "ids": {  
@@ -565,8 +565,8 @@
             "geminiWebLBFE": {
               "value": "[variables('lbSettings').geminiWebLBFE]"
             },
-            "spWebResourceId": {
-              "value": "[variables(concat('spWebResourceId',parameters('geminiWebIPNewOrExisting')))]"
+            "geminiWebResourceId": {
+              "value": "[variables(concat('geminiWebResourceId',parameters('geminiWebIPNewOrExisting')))]"
             },
             "geminiWebLBBE": {
               "value": "[variables('lbSettings').geminiWebLBBE]"

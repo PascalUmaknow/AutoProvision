@@ -29,7 +29,7 @@
     "geminiWebLBFE": {
       "type": "string"
     },
-    "spWebResourceId": {
+    "geminiWebResourceId": {
       "type": "string"
     },
     "geminiWebLBBE": {
@@ -124,7 +124,7 @@
             "name": "[parameters('geminiWebLBFE')]",
             "properties": {
               "publicIPAddress": {
-                "id": "[parameters('spWebResourceId')]"
+                "id": "[parameters('geminiWebResourceId')]"
               }
             }
           }
