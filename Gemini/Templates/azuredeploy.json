@@ -527,7 +527,6 @@
         "type": "Microsoft.Resources/deployments",
         "apiVersion": "2015-01-01",
         "dependsOn": [
-          "Microsoft.Resources/deployments/SettingUpGeminiCentralAdminPublicIP",
           "Microsoft.Resources/deployments/SettingUpGeminiWebPublicIP",
           "Microsoft.Resources/deployments/SettingUpRdp",
           "Microsoft.Resources/deployments/CreatingVirtualNetwork"
