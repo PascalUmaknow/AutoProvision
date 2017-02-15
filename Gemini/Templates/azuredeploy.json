@@ -93,7 +93,7 @@
         "group": "Infrastructure settings",
         "description": "The address range of the new VNET in CIDR format"
       },
-      "defaultValue": "10.0.0.0/16"
+      "defaultValue": "10.156.1.0/24"
     },
     "sqlSubnet": {
       "type": "string",
@@ -101,7 +101,7 @@
         "group": "SQL Server settings",
         "description": "The address range of the SQL subnet created in the new VNET"
       },
-      "defaultValue": "10.0.1.0/24"
+      "defaultValue": "10.156.1.1/27"
     },
     "geminiWebSubnet": {
       "type": "string",
@@ -109,7 +109,7 @@
         "group": "Gemini Server settings",
         "description": "The address range of the Gemini Web subnet created in the new VNET"
       },
-      "defaultValue": "10.0.2.0/24"
+      "defaultValue": "10.156.1.40/27"
     },
     "geminiAppSubnet": {
       "type": "string",
@@ -117,7 +117,7 @@
         "group": "Gemini Server settings",
         "description": "The address range of the Gemini App subnet created in the new VNET"
       },
-      "defaultValue": "10.0.3.0/24"
+      "defaultValue": "10.156.1.80/27"
     },
 
     "staticSubnet": {
