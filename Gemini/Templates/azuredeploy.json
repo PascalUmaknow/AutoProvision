@@ -134,7 +134,7 @@
         "group": "SQL Server settings",
         "description": "The IP address of the new SQL ILB"
       },
-      "defaultValue": "10.0.0.6"
+      "defaultValue": "10.156.1.121"
     },
     "sqlVMSize": {
       "type": "string",
