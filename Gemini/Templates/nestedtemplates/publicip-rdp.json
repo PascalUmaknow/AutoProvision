@@ -14,9 +14,6 @@
     "rdpLBFE": {
       "type": "string"
     },
-    "adLBBE": {
-      "type": "string"
-    },
     "RDPNAT": {
       "type": "string"
     },
@@ -52,11 +49,7 @@
               }
             }
           }
-        ],
-        "backendAddressPools": [
-          {
-            "name": "[parameters('adLBBE')]"
-          }
+        
         ],
         "inboundNatRules": [
           {

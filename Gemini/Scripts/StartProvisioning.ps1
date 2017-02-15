@@ -24,7 +24,7 @@ if($g.ResourceGroupName.StartsWith("gem"))
 }
 
 
-#$lastValidation = Read-Host "Do you wich to delete ALL the resouces previously listed? (YES/ NO)"
+$lastValidation = Read-Host "Do you wich to delete ALL the resouces previously listed? (YES/ NO)"
 
 if($lastValidation.ToLower().Equals("yes")){
 
@@ -32,7 +32,7 @@ if($lastValidation.ToLower().Equals("yes")){
     if($g.ResourceGroupName.StartsWith("gem"))
 {
         Write-Host "Deleting " $g.ResourceGroupName 
-    ##    Remove-AzureRmResourceGroup -Name $g.ResourceGroupName -Force
+       Remove-AzureRmResourceGroup -Name $g.ResourceGroupName -Force
       }
     }
 }
