@@ -135,8 +135,38 @@
         "description": "The IP address of the new SQL ILB"
       },
       "defaultValue": "10.0.0.6"
+    },
+    "sqlVMSize": {
+      "type": "string",
+      "metadata": {
+        "group": "SQL Server settings",
+        "description": "The size of the SQL VMs created"
+      },
+      "defaultValue": "Standard_DS3"
+    },
+    "witnessVMSize": {
+      "type": "string",
+      "metadata": {
+        "group": "SQL Server settings",
+        "description": "The size of the witness VM created"
+      },
+      "defaultValue": "Standard_DS1"
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "group": "Infrastructure settings",
+        "description": "The name of the administrator account of the new VMs"
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "group": "Infrastructure settings",
+        "description": "The password for the administrator account of the new VMs"
+      }
     }
-
+    //,
     //"GeminiFarmName": {
     //  "type": "string",
     //  "metadata": {
@@ -145,20 +175,7 @@
     //  },
     //  "defaultValue": "spfarm"
     //},
-    //"adminUsername": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "group": "Infrastructure settings",
-    //    "description": "The name of the administrator account of the new VMs and Domain"
-    //  }
-    //},
-    //"adminPassword": {
-    //  "type": "securestring",
-    //  "metadata": {
-    //    "group": "Infrastructure settings",
-    //    "description": "The password for the administrator account of the new VMs and Domain"
-    //  }
-    //},
+
 
     //"domainName": {
     //  "type": "string",
@@ -168,22 +185,7 @@
     //  },
     //  "defaultValue": "sphafarm.local"
     //},
-    //"sqlVMSize": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "group": "SQL Server settings",
-    //    "description": "The size of the SQL VMs created"
-    //  },
-    //  "defaultValue": "Standard_DS3"
-    //},
-    //"witnessVMSize": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "group": "SQL Server settings",
-    //    "description": "The size of the witness VM created"
-    //  },
-    //  "defaultValue": "Standard_DS1"
-    //},
+
     //"sqlServerServiceAccountUserName": {
     //  "type": "string",
     //  "metadata": {
@@ -631,104 +633,104 @@
             }
           }
         }
+      },
+      {
+        "name": "ProvisioningSQLVirtualMachines",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2015-01-01",
+        "dependsOn": [
+          "Microsoft.Resources/deployments/CreatingStorageAccounts",
+          "Microsoft.Resources/deployments/CreatingNetworkInterfaces",
+          "Microsoft.Resources/deployments/CreatingAvailabilitySets"
+        ],
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','provisioningSQLVMs.json', parameters('_artifactsLocationSasToken'))]",
+            "contentVersion": "1.0.0.0"
+          },
+          "parameters": {
+            "sqlVMName": {
+              "value": "[variables('vmSettings').sqlVMName]"
+            },
+            "location": {
+              "value": "[parameters('location')]"
+            },
+            "storageAccountNamePrefix": {
+              "value": "[parameters('storageAccountNamePrefix')]"
+            },
+            "availabilitySet": {
+              "value": "[variables('ids').sqlAvailabilitySetName]"
+            },
+            "sqlVMSize": {
+              "value": "[parameters('sqlVMSize')]"
+            },
+            "adminUsername": {
+              "value": "[parameters('adminUsername')]"
+            },
+            "adminPassword": {
+              "value": "[parameters('adminPassword')]"
+            },
+            "windowsImagePublisher": {
+              "value": "[variables('vmSettings').windowsImagePublisher]"
+            },
+            "windowsImageOffer": {
+              "value": "[variables('vmSettings').windowsImageOffer]"
+            },
+            "windowsImageSKU": {
+              "value": "[variables('vmSettings').windowsImageSKU]"
+            },
+            "vmContainerName": {
+              "value": "[variables('vmSettings').vmContainerName]"
+            },
+            "sqlImagePublisher": {
+              "value": "[variables('vmSettings').sqlImagePublisher]"
+            },
+            "sqlImageOffer": {
+              "value": "[variables('vmSettings').sqlImageOffer]"
+            },
+            "sqlImageSKU": {
+              "value": "[variables('vmSettings').sqlImageSKU]"
+            },
+            "domainName": {
+              "value": "[parameters('domainName')]"
+            },
+            "sqlAOPrepareModulesURL": {
+              "value": "[concat(parameters('_artifactsLocation'),'/','dscv2','/','PrepareAlwaysOnSqlServer.ps1.zip', parameters('_artifactsLocationSasToken'))]"
+            },
+            "sqlAOPrepareFunction": {
+              "value": "PrepareAlwaysOnSqlServer.ps1\\PrepareAlwaysOnSqlServer"
+            },
+            "prepareClusterModulesURL": {
+              "value": "[concat(parameters('_artifactsLocation'),'/','dscv2','/','PrepareFailoverCluster.ps1.zip', parameters('_artifactsLocationSasToken'))]"
+            },
+            "prepareClusterConfigurationFunction": {
+              "value": "PrepareFailoverCluster.ps1\\PrepareFailoverCluster"
+            },
+            "sharePath": {
+              "value": "[variables('sharePath')]"
+            },
+            "witnessVMSize": {
+              "value": "[parameters('witnessVMSize')]"
+            },
+            "sqlwVMName": {
+              "value": "[variables('vmSettings').sqlwVMName]"
+            },
+            "sqlwNicName": {
+              "value": "[variables('sqlwNicName')]"
+            },
+            "fswPreparationModulesURL": {
+              "value": "[concat(parameters('_artifactsLocation'),'/','dscv2','/','PrepareFileShareWitness.ps1.zip', parameters('_artifactsLocationSasToken'))]"
+            },
+            "fswPreparationFunction": {
+              "value": "PrepareFileShareWitness.ps1\\PrepareFileShareWitness"
+            },
+            "DNSServer": {
+              "value": "[parameters('adPdcNicIPAddress')]"
+            }
+          }
+        }
       }
-      //{
-      //  "name": "ProvisioningSQLVirtualMachines",
-      //  "type": "Microsoft.Resources/deployments",
-      //  "apiVersion": "2015-01-01",
-      //  "dependsOn": [
-      //    "Microsoft.Resources/deployments/CreatingStorageAccounts",
-      //    "Microsoft.Resources/deployments/CreatingNetworkInterfaces",
-      //    "Microsoft.Resources/deployments/CreatingAvailabilitySets"
-      //  ],
-      //  "properties": {
-      //    "mode": "Incremental",
-      //    "templateLink": {
-      //      "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','provisioningSQLVMs.json', parameters('_artifactsLocationSasToken'))]",
-      //      "contentVersion": "1.0.0.0"
-      //    },
-      //    "parameters": {
-      //      "sqlVMName": {
-      //        "value": "[variables('vmSettings').sqlVMName]"
-      //      },
-      //      "location": {
-      //        "value": "[parameters('location')]"
-      //      },
-      //      "storageAccountNamePrefix": {
-      //        "value": "[parameters('storageAccountNamePrefix')]"
-      //      },
-      //      "availabilitySet": {
-      //        "value": "[variables('ids').sqlAvailabilitySetName]"
-      //      },
-      //      "sqlVMSize": {
-      //        "value": "[parameters('sqlVMSize')]"
-      //      },
-      //      "adminUsername": {
-      //        "value": "[parameters('adminUsername')]"
-      //      },
-      //      "adminPassword": {
-      //        "value": "[parameters('adminPassword')]"
-      //      },
-      //      "windowsImagePublisher": {
-      //        "value": "[variables('vmSettings').windowsImagePublisher]"
-      //      },
-      //      "windowsImageOffer": {
-      //        "value": "[variables('vmSettings').windowsImageOffer]"
-      //      },
-      //      "windowsImageSKU": {
-      //        "value": "[variables('vmSettings').windowsImageSKU]"
-      //      },
-      //      "vmContainerName": {
-      //        "value": "[variables('vmSettings').vmContainerName]"
-      //      },
-      //      "sqlImagePublisher": {
-      //        "value": "[variables('vmSettings').sqlImagePublisher]"
-      //      },
-      //      "sqlImageOffer": {
-      //        "value": "[variables('vmSettings').sqlImageOffer]"
-      //      },
-      //      "sqlImageSKU": {
-      //        "value": "[variables('vmSettings').sqlImageSKU]"
-      //      },
-      //      "domainName": {
-      //        "value": "[parameters('domainName')]"
-      //      },
-      //      "sqlAOPrepareModulesURL": {
-      //        "value": "[concat(parameters('_artifactsLocation'),'/','dscv2','/','PrepareAlwaysOnSqlServer.ps1.zip', parameters('_artifactsLocationSasToken'))]"
-      //      },
-      //      "sqlAOPrepareFunction": {
-      //        "value": "PrepareAlwaysOnSqlServer.ps1\\PrepareAlwaysOnSqlServer"
-      //      },
-      //      "prepareClusterModulesURL": {
-      //        "value": "[concat(parameters('_artifactsLocation'),'/','dscv2','/','PrepareFailoverCluster.ps1.zip', parameters('_artifactsLocationSasToken'))]"
-      //      },
-      //      "prepareClusterConfigurationFunction": {
-      //        "value": "PrepareFailoverCluster.ps1\\PrepareFailoverCluster"
-      //      },
-      //      "sharePath": {
-      //        "value": "[variables('sharePath')]"
-      //      },
-      //      "witnessVMSize": {
-      //        "value": "[parameters('witnessVMSize')]"
-      //      },
-      //      "sqlwVMName": {
-      //        "value": "[variables('vmSettings').sqlwVMName]"
-      //      },
-      //      "sqlwNicName": {
-      //        "value": "[variables('sqlwNicName')]"
-      //      },
-      //      "fswPreparationModulesURL": {
-      //        "value": "[concat(parameters('_artifactsLocation'),'/','dscv2','/','PrepareFileShareWitness.ps1.zip', parameters('_artifactsLocationSasToken'))]"
-      //      },
-      //      "fswPreparationFunction": {
-      //        "value": "PrepareFileShareWitness.ps1\\PrepareFileShareWitness"
-      //      },
-      //      "DNSServer": {
-      //        "value": "[parameters('adPdcNicIPAddress')]"
-      //      }
-      //    }
-      //  }
-      //},
       //{
       //  "name": "ConfiguringSQLAlwaysOnCluster",
       //  "type": "Microsoft.Resources/deployments",

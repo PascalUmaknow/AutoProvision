@@ -44,21 +44,6 @@
     "sqlImageSKU": {
       "type": "string"
     },
-    "domainName": {
-      "type": "string"
-    },
-    "sqlAOPrepareModulesURL": {
-      "type": "string"
-    },
-    "sqlAOPrepareFunction": {
-      "type": "string"
-    },
-    "prepareClusterModulesURL": {
-      "type": "string"
-    },
-    "prepareClusterConfigurationFunction": {
-      "type": "string"
-    },
     "sharePath": {
       "type": "string"
     },
@@ -69,12 +54,6 @@
       "type": "string"
     },
     "sqlwNicName": {
-      "type": "string"
-    },
-    "fswPreparationModulesURL": {
-      "type": "string"
-    },
-    "fswPreparationFunction": {
       "type": "string"
     },
     "DNSServer": {
@@ -151,19 +130,7 @@
             "[resourceId('Microsoft.Compute/virtualMachines/', parameters('sqlwVMName'))]"
           ],
           "properties": {
-            "publisher": "Microsoft.Powershell",
-            "type": "DSC",
-            "typeHandlerVersion": "2.17",
-            "autoUpgradeMinorVersion": true,
-            "settings": {
-              "modulesURL": "[parameters('fswPreparationModulesURL')]",
-              "wmfVersion": "4.0",
-              "configurationFunction": "[parameters('fswPreparationFunction')]",
-              "properties": {
-                "DNSServer": "[parameters('DNSServer')]",
-                "SharePath": "[parameters('sharePath')]"
-              }
-            }
+          
           }
         }
       ]
@@ -238,51 +205,6 @@
           "bootDiagnostics": {
             "enabled": "true",
             "storageUri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', concat(parameters('storageAccountNamePrefix'), '4')), '2016-01-01').primaryEndpoints.blob)]"
-          }
-        }
-      }
-    },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('sqlVMName'), '0/SQLAOSetup')]",
-      "apiVersion": "2015-06-15",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', concat(parameters('sqlVMName'),'0'))]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.17",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "modulesURL": "[parameters('sqlAOPrepareModulesURL')]",
-          "configurationFunction": "[parameters('sqlAOPrepareFunction')]",
-          "properties": {
-            "DNSServer": "[parameters('DNSServer')]"
-          }
-        }
-      }
-    },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('sqlVMName'), '1/CreateCluster')]",
-      "apiVersion": "2015-06-15",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/', concat(parameters('sqlVMName'),'1'))]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Powershell",
-        "type": "DSC",
-        "typeHandlerVersion": "2.17",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "modulesURL": "[parameters('prepareClusterModulesURL')]",
-          "configurationFunction": "[parameters('prepareClusterConfigurationFunction')]",
-          "properties": {
-            "DNSServer": "[parameters('DNSServer')]",
-            "DomainName": "[parameters('domainName')]"
           }
         }
       }
