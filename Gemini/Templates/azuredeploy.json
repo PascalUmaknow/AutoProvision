@@ -78,8 +78,57 @@
         "group": "Gemini Server settings",
         "description": "Resource Group containing existing SP Web IP address"
       }
+    },
+    "virtualNetworkName": {
+      "type": "string",
+      "defaultValue": "spfarmhaVNET",
+      "metadata": {
+        "group": "Infrastructure settings",
+        "description": "Name of virtual network to be created"
+      }
+    },
+    "virtualNetworkAddressRange": {
+      "type": "string",
+      "metadata": {
+        "group": "Infrastructure settings",
+        "description": "The address range of the new VNET in CIDR format"
+      },
+      "defaultValue": "10.0.0.0/16"
+    },
+    "sqlSubnet": {
+      "type": "string",
+      "metadata": {
+        "group": "SQL Server settings",
+        "description": "The address range of the SQL subnet created in the new VNET"
+      },
+      "defaultValue": "10.0.1.0/24"
+    },
+    "geminiWebSubnet": {
+      "type": "string",
+      "metadata": {
+        "group": "Gemini Server settings",
+        "description": "The address range of the SP Web subnet created in the new VNET"
+      },
+      "defaultValue": "10.0.2.0/24"
+    },
+    "geminiAppSubnet": {
+      "type": "string",
+      "metadata": {
+        "group": "Gemini Server settings",
+        "description": "The address range of the SP App subnet created in the new VNET"
+      },
+      "defaultValue": "10.0.3.0/24"
+    },
+
+    "staticSubnet": {
+      "type": "string",
+      "metadata": {
+        "group": "Infrastructure settings",
+        "description": "The address range of the subnet static IPs are allocated from in the new VNET"
+      },
+      "defaultValue": "10.0.0.0/24"
     }
-    //,
+
     //"GeminiFarmName": {
     //  "type": "string",
     //  "metadata": {
@@ -102,30 +151,7 @@
     //    "description": "The password for the administrator account of the new VMs and Domain"
     //  }
     //},
-    //"virtualNetworkName": {
-    //  "type": "string",
-    //  "defaultValue": "spfarmhaVNET",
-    //  "metadata": {
-    //    "group": "Infrastructure settings",
-    //    "description": "Name of virtual network to be created"
-    //  }
-    //},
-    //"virtualNetworkAddressRange": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "group": "Infrastructure settings",
-    //    "description": "The address range of the new VNET in CIDR format"
-    //  },
-    //  "defaultValue": "10.0.0.0/16"
-    //},
-    //"staticSubnet": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "group": "Infrastructure settings",
-    //    "description": "The address range of the subnet static IPs are allocated from in the new VNET"
-    //  },
-    //  "defaultValue": "10.0.0.0/24"
-    //},
+
     //"domainName": {
     //  "type": "string",
     //  "metadata": {
@@ -173,30 +199,7 @@
     //  },
     //  "defaultValue": "10.0.0.6"
     //},
-    //"sqlSubnet": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "group": "SQL Server settings",
-    //    "description": "The address range of the SQL subnet created in the new VNET"
-    //  },
-    //  "defaultValue": "10.0.1.0/24"
-    //},
-    //"spWebSubnet": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "group": "Gemini Server settings",
-    //    "description": "The address range of the SP Web subnet created in the new VNET"
-    //  },
-    //  "defaultValue": "10.0.2.0/24"
-    //},
-    //"spAppSubnet": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "group": "Gemini Server settings",
-    //    "description": "The address range of the SP App subnet created in the new VNET"
-    //  },
-    //  "defaultValue": "10.0.3.0/24"
-    //},
+
 
     //"spVMSize": {
     //  "type": "string",
@@ -273,12 +276,12 @@
       "spWebLBName": "spWebLoadBalancer",
       "spCALBName": "spCALoadBalancer"
     },
-    //"subnetNames": {
-    //  "staticSubnetName": "staticSubnet",
-    //  "sqlSubnetName": "sqlSubnet",
-    //  "spWebSubnetName": "spWebSubnet",
-    //  "spAppSubnetName": "spAppSubnet"
-    //},
+    "subnetNames": {
+      "staticSubnetName": "staticSubnet",
+      "sqlSubnetName": "sqlSubnet",
+      "geminiWebSubnetName": "geminiWebSubnet",
+      "geminiAppSubnetName": "geminiAppSubnet"
+    },
     "RDPNAT": "RDP",
     //"spCANAT": "spCANAT",
     //"SQLAOProbe": "SQLAlwaysOnEndPointProbe",
@@ -323,11 +326,11 @@
     //"adPdcNicName": "[concat(variables('vmSettings').adPDCVMName,'-nic')]",
     //"adBdcNicName": "[concat(variables('vmSettings').adBDCVMName,'-nic')]",
     //"sqlwNicName": "[concat(variables('vmSettings').sqlwVMName,'-nic')]",
-    //"VnetID": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-    //"staticSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').staticSubnetName)]",
-    //"sqlSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').sqlSubnetName)]",
-    //"spWebSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').spWebSubnetName)]",
-    //"spAppSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').spAppSubnetName)]",
+    "VnetID": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+    "staticSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').staticSubnetName)]",
+    "sqlSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').sqlSubnetName)]",
+    "geminiWebSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').geminiWebSubnetName)]",
+    "geminiAppSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').geminiAppSubnetName)]",
     //"spWebResourceIdexisting": "[resourceId(parameters('geminiWebIPRGName'),concat('Microsoft.Network','/','publicIPAddresses'),parameters('geminiWebIPAddressName'))]",
     //"spWebResourceIdnew": "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),parameters('geminiWebIPAddressName'))]",
     //"GeminiCAfqdn": "[concat(variables('spCADNSPrefix'),'.',toLower(trim(replace(parameters('location'),' ' ,''))),'.cloudapp.azure.com')]",
@@ -353,33 +356,33 @@
       "spCABEAddressPoolID": "[concat(variables('ids').spCAlbID,'/backendAddressPools/',variables('lbSettings').spCALBBE)]",
       "spCAlbFEConfigID": "[concat(variables('ids').spCAlbID,'/frontendIPConfigurations/',variables('lbSettings').spCALBFE)]"
   //    "spCANATRuleID": "[concat(variables('ids').spCAlbID,'/inboundNatRules/',variables('spCANAT'))]"
-    }
-    //"subnets": [
-    //  {
-    //    "name": "[variables('subnetNames').staticSubnetName]",
-    //    "properties": {
-    //      "addressPrefix": "[parameters('staticSubnet')]"
-    //    }
-    //  },
-    //  {
-    //    "name": "[variables('subnetNames').sqlSubnetName]",
-    //    "properties": {
-    //      "addressPrefix": "[parameters('sqlSubnet')]"
-    //    }
-    //  },
-    //  {
-    //    "name": "[variables('subnetNames').spWebSubnetName]",
-    //    "properties": {
-    //      "addressPrefix": "[parameters('spWebSubnet')]"
-    //    }
-    //  },
-    //  {
-    //    "name": "[variables('subnetNames').spAppSubnetName]",
-    //    "properties": {
-    //      "addressPrefix": "[parameters('spAppSubnet')]"
-    //    }
-    //  }
-    //]
+    },
+    "subnets": [
+      {
+        "name": "[variables('subnetNames').staticSubnetName]",
+        "properties": {
+          "addressPrefix": "[parameters('staticSubnet')]"
+        }
+      },
+      {
+        "name": "[variables('subnetNames').sqlSubnetName]",
+        "properties": {
+          "addressPrefix": "[parameters('sqlSubnet')]"
+        }
+      },
+      {
+        "name": "[variables('subnetNames').geminiWebSubnetName]",
+        "properties": {
+          "addressPrefix": "[parameters('geminiWebSubnet')]"
+        }
+      },
+      {
+        "name": "[variables('subnetNames').geminiAppSubnetName]",
+        "properties": {
+          "addressPrefix": "[parameters('geminiAppSubnet')]"
+        }
+      }
+    ]
   },
   "resources": [
     {
@@ -491,33 +494,33 @@
             }
           }
         }
+      },
+      {
+        "name": "CreatingVirtualNetwork",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2015-01-01",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','vnet-new.json', parameters('_artifactsLocationSasToken'))]",
+            "contentVersion": "1.0.0.0"
+          },
+          "parameters": {
+            "location": {
+              "value": "[parameters('location')]"
+            },
+            "virtualNetworkName": {
+              "value": "[parameters('virtualNetworkName')]"
+            },
+            "virtualNetworkAddressRange": {
+              "value": "[parameters('virtualNetworkAddressRange')]"
+            },
+            "subnets": {
+              "value": "[variables('subnets')]"
+            }
+          }
+        }
       }
-      //{
-      //  "name": "CreatingVirtualNetwork",
-      //  "type": "Microsoft.Resources/deployments",
-      //  "apiVersion": "2015-01-01",
-      //  "properties": {
-      //    "mode": "Incremental",
-      //    "templateLink": {
-      //      "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','vnet-new.json', parameters('_artifactsLocationSasToken'))]",
-      //      "contentVersion": "1.0.0.0"
-      //    },
-      //    "parameters": {
-      //      "location": {
-      //        "value": "[parameters('location')]"
-      //      },
-      //      "virtualNetworkName": {
-      //        "value": "[parameters('virtualNetworkName')]"
-      //      },
-      //      "virtualNetworkAddressRange": {
-      //        "value": "[parameters('virtualNetworkAddressRange')]"
-      //      },
-      //      "subnets": {
-      //        "value": "[variables('subnets')]"
-      //      }
-      //    }
-      //  }
-      //},
       //{
       //  "name": "SettingUpLoadBalancers",
       //  "type": "Microsoft.Resources/deployments",
@@ -662,8 +665,8 @@
       //      "spwebVMName": {
       //        "value": "[variables('vmSettings').spwebVMName]"
       //      },
-      //      "spWebSubnetRef": {
-      //        "value": "[variables('spWebSubnetRef')]"
+      //      "geminiWebSubnetRef": {
+      //        "value": "[variables('geminiWebSubnetRef')]"
       //      },
       //      "spWebBEAddressPoolID": {
       //        "value": "[variables('derivedIds').spWebBEAddressPoolID]"
@@ -671,8 +674,8 @@
       //      "spappVMName": {
       //        "value": "[variables('vmSettings').spappVMName]"
       //      },
-      //      "spAppSubnetRef": {
-      //        "value": "[variables('spAppSubnetRef')]"
+      //      "geminiAppSubnetRef": {
+      //        "value": "[variables('geminiAppSubnetRef')]"
       //      },
       //      "spCABEAddressPoolID": {
       //        "value": "[variables('derivedIds').spCABEAddressPoolID]"

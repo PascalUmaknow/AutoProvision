@@ -38,7 +38,7 @@
     "spwebVMName": {
       "type": "string"
     },
-    "spWebSubnetRef": {
+    "geminiWebSubnetRef": {
       "type": "string"
     },
     "spWebBEAddressPoolID": {
@@ -47,7 +47,7 @@
     "spappVMName": {
       "type": "string"
     },
-    "spAppSubnetRef": {
+    "geminiAppSubnetRef": {
       "type": "string"
     },
     "spCABEAddressPoolID": {
@@ -174,7 +174,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
-                "id": "[parameters('spWebSubnetRef')]"
+                "id": "[parameters('geminiWebSubnetRef')]"
               },
               "loadBalancerBackendAddressPools": [
                 {
@@ -198,7 +198,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
-                "id": "[parameters('spAppSubnetRef')]"
+                "id": "[parameters('geminiAppSubnetRef')]"
               },
               "loadBalancerBackendAddressPools": [
                 {
@@ -227,7 +227,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
-                "id": "[parameters('spAppSubnetRef')]"
+                "id": "[parameters('geminiAppSubnetRef')]"
               }
             }
           }
