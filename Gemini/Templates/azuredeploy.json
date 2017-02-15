@@ -287,7 +287,6 @@
       "adPDCVMName": "ad-pdc",
       "adBDCVMName": "ad-bdc",
       "sqlVMName": "sql-",
-      "sqlwVMName": "sql-w",
       "geminiwebVMName": "gemini-web-",
       "geminiappVMName": "gemini-app-",
       "windowsImagePublisher": "MicrosoftWindowsServer",
@@ -306,7 +305,6 @@
       "spDiskSize": 128
     },
     //"prefix": "[tolower(trim(subString(concat(parameters('dnsPrefix'),'           '),0,10)))]",
-    "sqlwNicName": "[concat(variables('vmSettings').sqlwVMName,'-nic')]",
     "VnetID": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
     "staticSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').staticSubnetName)]",
     "sqlSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').sqlSubnetName)]",
@@ -614,9 +612,6 @@
             },
             "geminiAppSubnetRef": {
               "value": "[variables('geminiAppSubnetRef')]"
-            },
-            "sqlwNicName": {
-              "value": "[variables('sqlwNicName')]"
             }
           }
         }
