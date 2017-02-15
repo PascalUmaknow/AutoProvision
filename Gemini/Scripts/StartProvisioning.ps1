@@ -1,4 +1,8 @@
-#Login-AzureRmAccount
+Login-AzureRmAccount
+
+#TEST
+Test-AzureRmResourceGroupDeployment -ResourceGroupName $rgName -TemplateUri "https://raw.githubusercontent.com/PascalUmaknow/AutoProvision/master/Gemini/Templates/azuredeploy.json"
+exit
 
 $allRG = Get-AzureRmResourceGroup
 
