@@ -26,6 +26,9 @@
     "geminiWebBEAddressPoolID": {
       "type": "string"
     },
+    "geminiRDPBEAddressPoolID": {
+      "type": "string"
+    },
     "geminiappVMName": {
       "type": "string"
     },
@@ -105,7 +108,13 @@
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
                 "id": "[parameters('geminiAppSubnetRef')]"
-              }
+              },
+
+              "loadBalancerBackendAddressPools": [
+                {
+                  "id": "[parameters('geminiRDPBEAddressPoolID')]"
+                }
+              ]
             }
           }
         ]

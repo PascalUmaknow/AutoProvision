@@ -261,6 +261,7 @@
       "geminiWebLBFE": "geminiWebLBFE",
       "sqlLBBE": "sqlLBBE",
       "geminiWebLBBE": "geminiWebLBBE",
+      "geminiRDPLBBE": "geminiRDPLBBE",
       "geminiWebLB": "spWeb",
       "sqlLBName": "sqlLoadBalancer",
       "rdpLBName": "rdpLoadBalancer",
@@ -324,13 +325,14 @@
     },
     "derivedIds": {
       "rdplbFEConfigID": "[concat(variables('ids').rdplbID,'/frontendIPConfigurations/',variables('lbSettings').rdpLBFE)]",
+      "geminiRDPBEAddressPoolID": "[concat(variables('ids').rdplbID,'/backendAddressPools/',variables('lbSettings').rdpLBFE)]",
       "geminiWebLBFEConfigID": "[concat(variables('ids').geminiWebLBID,'/frontendIPConfigurations/',variables('lbSettings').geminiWebLBFE)]",
-     "geminiWebProbeID": "[concat(variables('ids').geminiWebLBID,'/probes/',variables('gemininiWebProbe'))]",
+      "geminiWebProbeID": "[concat(variables('ids').geminiWebLBID,'/probes/',variables('gemininiWebProbe'))]",
       "geminiWebBEAddressPoolID": "[concat(variables('ids').geminiWebLBID,'/backendAddressPools/',variables('lbSettings').geminiWebLBBE)]",
       "sqlBEAddressPoolID": "[concat(variables('ids').sqllbID,'/backendAddressPools/',variables('lbSettings').sqlLBBE)]",
       "sqllbFEConfigID": "[concat(variables('ids').sqllbID,'/frontendIPConfigurations/',variables('lbSettings').sqlLBFE)]",
-     "sqllbProbeID": "[concat(variables('ids').sqllbID,'/probes/',variables('SQLAOProbe'))]"
-     },
+      "sqllbProbeID": "[concat(variables('ids').sqllbID,'/probes/',variables('SQLAOProbe'))]"
+    },
     "subnets": [
       {
         "name": "[variables('subnetNames').staticSubnetName]",
@@ -411,8 +413,8 @@
             "rdplbFEConfigID": {
               "value": "[variables('derivedIds').rdplbFEConfigID]"
             },
-            "geminiWebLBBE": {
-              "value": "[variables('lbSettings').geminiWebLBBE]"
+            "geminiRDPLBBE": {
+              "value": "[variables('lbSettings').geminiRDPLBBE]"
             }
           }
         }
@@ -610,6 +612,9 @@
             },
             "geminiWebBEAddressPoolID": {
               "value": "[variables('derivedIds').geminiWebBEAddressPoolID]"
+            },
+            "geminiRDPBEAddressPoolID": {
+              "value": "[variables('derivedIds').geminiRDPBEAddressPoolID]"
             },
             "geminiappVMName": {
               "value": "[variables('vmSettings').geminiappVMName]"

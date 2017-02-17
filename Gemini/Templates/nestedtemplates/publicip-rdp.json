@@ -20,7 +20,7 @@
     "rdplbFEConfigID": {
       "type": "string"
     },
-    "geminiWebLBBE": {
+    "geminiRDPLBBE": {
       "type": "string"
     }
   },
@@ -57,7 +57,7 @@
 
         "backendAddressPools": [
           {
-            "name": "[parameters('geminiWebLBBE')]"
+            "name": "[parameters('geminiRDPLBBE')]"
           }
         ],
         "inboundNatRules": [
