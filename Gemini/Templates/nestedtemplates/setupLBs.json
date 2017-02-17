@@ -111,6 +111,21 @@
               "requestPath": "/iisstart.htm"
             }
           }
+        ],
+        "inboundNatRules": [
+          {
+            "name": "rdpinboundnatrule",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[parameters('geminiWebLBFEConfigID')]"
+              },
+
+              "protocol": "tcp",
+              "frontendPort": 443,
+              "backendPort": 3389,
+              "enableFloatingIP": false
+            }
+          }
         ]
       }
     },

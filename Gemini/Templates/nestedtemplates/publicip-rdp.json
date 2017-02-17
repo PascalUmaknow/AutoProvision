@@ -67,6 +67,7 @@
               "frontendIPConfiguration": {
                 "id": "[parameters('rdplbFEConfigID')]"
               },
+              
               "protocol": "tcp",
               "frontendPort": 80,
               "backendPort": 3389,
