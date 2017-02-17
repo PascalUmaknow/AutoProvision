@@ -19,6 +19,9 @@
     },
     "rdplbFEConfigID": {
       "type": "string"
+    },
+    "geminiWebLBBE": {
+      "type": "string"
     }
   },
   "resources": [
@@ -49,7 +52,13 @@
               }
             }
           }
-        
+
+        ],
+
+        "backendAddressPools": [
+          {
+            "name": "[parameters('geminiWebLBBE')]"
+          }
         ],
         "inboundNatRules": [
           {
