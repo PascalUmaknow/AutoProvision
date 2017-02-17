@@ -108,13 +108,7 @@
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
                 "id": "[parameters('geminiAppSubnetRef')]"
-              },
-
-              "loadBalancerBackendAddressPools": [
-                {
-                  "id": "[parameters('geminiRDPBEAddressPoolID')]"
-                }
-              ]
+              }
             }
           }
         ]
