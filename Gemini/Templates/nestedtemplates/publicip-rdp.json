@@ -68,7 +68,7 @@
                 "id": "[parameters('rdplbFEConfigID')]"
               },
               "protocol": "tcp",
-              "frontendPort": 3389,
+              "frontendPort": 80,
               "backendPort": 3389,
               "enableFloatingIP": false
             }
