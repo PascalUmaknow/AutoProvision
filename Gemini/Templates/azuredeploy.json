@@ -256,15 +256,12 @@
     //"administrationContentDatabaseName": "SP_AdminContent",
     //"contentDatabaseName": "spfarm_Content",
     "lbSettings": {
-      "rdpLBFE": "rdpLBFE",
       "sqlLBFE": "sqlLBFE",
       "geminiWebLBFE": "geminiWebLBFE",
       "sqlLBBE": "sqlLBBE",
       "geminiWebLBBE": "geminiWebLBBE",
-      "geminiRDPLBBE": "geminiRDPLBBE",
       "geminiWebLB": "spWeb",
       "sqlLBName": "sqlLoadBalancer",
-      "rdpLBName": "rdpLoadBalancer",
       "geminiWebLBName": "geminiWebLoadBalancer"
     },
     "subnetNames": {
@@ -273,10 +270,8 @@
       "geminiWebSubnetName": "geminiWebSubnet",
       "geminiAppSubnetName": "geminiAppSubnet"
     },
-    "RDPNAT": "RDP",
     "SQLAOProbe": "SQLAlwaysOnEndPointProbe",
     "gemininiWebProbe": "gemininiWebProbe",
-    "rdpIPAddressName": "rdpIP",
     "vmSettings": {
       "availabilitySets": {
         "sqlAvailabilitySetName": "sqlAvailabilitySet",
@@ -316,7 +311,6 @@
     "geminiWebResourceIdnew": "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),parameters('geminiWebIPAddressName'))]",
     "GeminiWebfqdn": "[concat(parameters('dnsPrefix'),'.',toLower(trim(replace(parameters('location'),' ' ,''))),'.cloudapp.azure.com')]",
     "ids": {  
-      "rdplbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').rdpLBName)]",
       "geminiWebLBID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').geminiWebLBName)]",
       "sqllbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').sqlLBName)]",
       "sqlAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.sqlAvailabilitySetName)]",
@@ -324,9 +318,7 @@
       "geminiAppAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiAppAvailabilitySetName)]"
     },
     "derivedIds": {
-      "rdplbFEConfigID": "[concat(variables('ids').rdplbID,'/frontendIPConfigurations/',variables('lbSettings').rdpLBFE)]",
-      "geminiRDPBEAddressPoolID": "[concat(variables('ids').rdplbID,'/backendAddressPools/',variables('lbSettings').geminiRDPLBBE)]",
-      "geminiWebLBFEConfigID": "[concat(variables('ids').geminiWebLBID,'/frontendIPConfigurations/',variables('lbSettings').geminiWebLBFE)]",
+       "geminiWebLBFEConfigID": "[concat(variables('ids').geminiWebLBID,'/frontendIPConfigurations/',variables('lbSettings').geminiWebLBFE)]",
       "geminiWebProbeID": "[concat(variables('ids').geminiWebLBID,'/probes/',variables('gemininiWebProbe'))]",
       "geminiWebBEAddressPoolID": "[concat(variables('ids').geminiWebLBID,'/backendAddressPools/',variables('lbSettings').geminiWebLBBE)]",
       "sqlBEAddressPoolID": "[concat(variables('ids').sqllbID,'/backendAddressPools/',variables('lbSettings').sqlLBBE)]",
@@ -506,7 +498,6 @@
         "apiVersion": "2015-01-01",
         "dependsOn": [
           "Microsoft.Resources/deployments/SettingUpGeminiWebPublicIP",
-          "Microsoft.Resources/deployments/SettingUpRdp",
           "Microsoft.Resources/deployments/CreatingVirtualNetwork"
         ],
         "properties": {
@@ -579,7 +570,6 @@
         "apiVersion": "2015-01-01",
         "dependsOn": [
           "Microsoft.Resources/deployments/CreatingVirtualNetwork",
-          "Microsoft.Resources/deployments/SettingUpRdp",
           "Microsoft.Resources/deployments/SettingUpLoadBalancers"
         ],
         "properties": {
@@ -612,9 +602,6 @@
             },
             "geminiWebBEAddressPoolID": {
               "value": "[variables('derivedIds').geminiWebBEAddressPoolID]"
-            },
-            "geminiRDPBEAddressPoolID": {
-              "value": "[variables('derivedIds').geminiRDPBEAddressPoolID]"
             },
             "geminiappVMName": {
               "value": "[variables('vmSettings').geminiappVMName]"

@@ -26,9 +26,6 @@
     "geminiWebBEAddressPoolID": {
       "type": "string"
     },
-    "geminiRDPBEAddressPoolID": {
-      "type": "string"
-    },
     "geminiappVMName": {
       "type": "string"
     },
