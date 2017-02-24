@@ -294,7 +294,7 @@
       "sqlImageSKU": "Enterprise",
       "geminiImagePublisher": "MicrosoftWindowsServer",
       "geminiImageOffer": "WindowsServer",
-      "geminiImageSKU": "2008-R2-SP1",
+      "geminiImageSKU": "2012-R2-Datacenter",
       "rdpPort": 3389,
       "spCentralAdminPort": 80,
       "windowsDiskSize": 128,
