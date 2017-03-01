@@ -31,6 +31,8 @@
     <None Include="Deployment.targets">
       <Visible>False</Visible>
     </None>
+    <None Include="DSC\GeminiWebDSC.ps1" />
+    <None Include="DSC\GeminiWebDSC.zip" />
     <None Include="Scripts\DeleteAll.ps1" />
     <None Include="Scripts\StartProvisioning.ps1" />
     <None Include="Templates\azuredeploy.json" />
