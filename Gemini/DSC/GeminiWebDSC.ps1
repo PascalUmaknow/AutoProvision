@@ -1,7 +1,7 @@
 #
 # GeminiWebDSC.ps1
 #
-Configuration ContosoWebsite
+Configuration GeminiWebsite
 {
   param ($MachineName)
 

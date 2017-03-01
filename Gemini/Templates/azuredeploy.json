@@ -376,367 +376,395 @@
         }
       }
     },
-      //{
-      //  "name": "SettingUpRdp",
-      //  "type": "Microsoft.Resources/deployments",
-      //  "apiVersion": "2015-01-01",
-      //  "properties": {
-      //    "mode": "Incremental",
-      //    "templateLink": {
-      //      "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','publicip-rdp.json', parameters('_artifactsLocationSasToken'))]",
-      //      "contentVersion": "1.0.0.0"
-      //    },
-      //    "parameters": {
-      //      "location": {
-      //        "value": "[parameters('location')]"
-      //      },
-      //      "rdpIPAddressName": {
-      //        "value": "[variables('rdpIPAddressName')]"
-      //      },
-      //      "rdpLBName": {
-      //        "value": "[variables('lbSettings').rdpLBName]"
-      //      },
-      //      "rdpLBFE": {
-      //        "value": "[variables('lbSettings').rdpLBFE]"
-      //      },
-      //      "RDPNAT": {
-      //        "value": "[variables('RDPNAT')]"
-      //      },
-      //      "rdplbFEConfigID": {
-      //        "value": "[variables('derivedIds').rdplbFEConfigID]"
-      //      },
-      //      "geminiRDPLBBE": {
-      //        "value": "[variables('lbSettings').geminiRDPLBBE]"
-      //      }
-      //    }
-      //  }
-      //},
-      {
-        "name": "SettingUpGeminiWebPublicIP",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2015-01-01",
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','publicip-',parameters('geminiWebIPNewOrExisting'),'.json', parameters('_artifactsLocationSasToken'))]",
-            "contentVersion": "1.0.0.0"
+    //{
+    //  "name": "SettingUpRdp",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2015-01-01",
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','publicip-rdp.json', parameters('_artifactsLocationSasToken'))]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+    //      "location": {
+    //        "value": "[parameters('location')]"
+    //      },
+    //      "rdpIPAddressName": {
+    //        "value": "[variables('rdpIPAddressName')]"
+    //      },
+    //      "rdpLBName": {
+    //        "value": "[variables('lbSettings').rdpLBName]"
+    //      },
+    //      "rdpLBFE": {
+    //        "value": "[variables('lbSettings').rdpLBFE]"
+    //      },
+    //      "RDPNAT": {
+    //        "value": "[variables('RDPNAT')]"
+    //      },
+    //      "rdplbFEConfigID": {
+    //        "value": "[variables('derivedIds').rdplbFEConfigID]"
+    //      },
+    //      "geminiRDPLBBE": {
+    //        "value": "[variables('lbSettings').geminiRDPLBBE]"
+    //      }
+    //    }
+    //  }
+    //},
+    {
+      "name": "SettingUpGeminiWebPublicIP",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','publicip-',parameters('geminiWebIPNewOrExisting'),'.json', parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
           },
-          "parameters": {
-            "location": {
-              "value": "[parameters('location')]"
-            },
-            "publicIPAddressName": {
-              "value": "[parameters('geminiWebIPAddressName')]"
-            },
-            "publicIPAddressType": {
-              "value": "dynamic"
-            },
-            "dnsPrefix": {
-              "value": "[parameters('dnsPrefix')]"
-            },
-            "publicIpRGName": {
-              "value": "[parameters('geminiWebIPRGName')]"
-            }
-          }
-        }
-      },
-      {
-        "name": "CreatingAvailabilitySets",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2015-01-01",
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','availabilitySets.json', parameters('_artifactsLocationSasToken'))]",
-            "contentVersion": "1.0.0.0"
+          "publicIPAddressName": {
+            "value": "[parameters('geminiWebIPAddressName')]"
           },
-          "parameters": {
-            "location": {
-              "value": "[parameters('location')]"
-            },
-            "sqlAvailabilitySetName": {
-              "value": "[variables('vmSettings').availabilitySets.sqlAvailabilitySetName]"
-            },
-            "geminiWebAvailabilitySetName": {
-              "value": "[variables('vmSettings').availabilitySets.geminiWebAvailabilitySetName]"
-            },
-            "geminiAppAvailabilitySetName": {
-              "value": "[variables('vmSettings').availabilitySets.geminiAppAvailabilitySetName]"
-            }
-          }
-        }
-      },
-      {
-        "name": "CreatingVirtualNetwork",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2015-01-01",
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','vnet-new.json', parameters('_artifactsLocationSasToken'))]",
-            "contentVersion": "1.0.0.0"
+          "publicIPAddressType": {
+            "value": "dynamic"
           },
-          "parameters": {
-            "location": {
-              "value": "[parameters('location')]"
-            },
-            "virtualNetworkName": {
-              "value": "[parameters('virtualNetworkName')]"
-            },
-            "virtualNetworkAddressRange": {
-              "value": "[parameters('virtualNetworkAddressRange')]"
-            },
-            "subnets": {
-              "value": "[variables('subnets')]"
-            }
-          }
-        }
-      },
-      {
-        "name": "SettingUpLoadBalancers",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2015-01-01",
-        "dependsOn": [
-          "Microsoft.Resources/deployments/SettingUpGeminiWebPublicIP",
-          "Microsoft.Resources/deployments/CreatingVirtualNetwork"
-        ],
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','setupLBs.json', parameters('_artifactsLocationSasToken'))]",
-            "contentVersion": "1.0.0.0"
+          "dnsPrefix": {
+            "value": "[parameters('dnsPrefix')]"
           },
-          "parameters": {
-            "location": {
-              "value": "[parameters('location')]"
-            },
-            "geminiWebLBName": {
-              "value": "[variables('lbSettings').geminiWebLBName]"
-            },
-            "geminiWebLBFE": {
-              "value": "[variables('lbSettings').geminiWebLBFE]"
-            },
-            "geminiWebResourceId": {
-              "value": "[variables(concat('geminiWebResourceId',parameters('geminiWebIPNewOrExisting')))]"
-            },
-            "geminiWebLBBE": {
-              "value": "[variables('lbSettings').geminiWebLBBE]"
-            },
-            "geminiWebLB": {
-              "value": "[variables('lbSettings').geminiWebLB]"
-            },
-            "geminiWebLBFEConfigID": {
-              "value": "[variables('derivedIds').geminiWebLBFEConfigID]"
-            },
-            "geminiWebBEAddressPoolID": {
-              "value": "[variables('derivedIds').geminiWebBEAddressPoolID]"
-            },
-            "geminiWebProbeID": {
-              "value": "[variables('derivedIds').geminiWebProbeID]"
-            },
-            "gemininiWebProbe": {
-              "value": "[variables('gemininiWebProbe')]"
-            },
-            "sqlLBName": {
-              "value": "[variables('lbSettings').sqlLBName]"
-            },
-            "sqlLBFE": {
-              "value": "[variables('lbSettings').sqlLBFE]"
-            },
-            "sqlLBIPAddress": {
-              "value": "[parameters('sqlLBIPAddress')]"
-            },
-            "staticSubnetRef": {
-              "value": "[variables('staticSubnetRef')]"
-            },
-            "sqlLBBE": {
-              "value": "[variables('lbSettings').sqlLBBE]"
-            },
-            "sqllbFEConfigID": {
-              "value": "[variables('derivedIds').sqllbFEConfigID]"
-            },
-            "sqllbProbeID": {
-              "value": "[variables('derivedIds').sqllbProbeID]"
-            },
-            "SQLAOProbe": {
-              "value": "[variables('SQLAOProbe')]"
-            }
-          }
-        }
-      },
-      {
-        "name": "CreatingNetworkInterfaces",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2015-01-01",
-        "dependsOn": [
-          "Microsoft.Resources/deployments/CreatingVirtualNetwork",
-          "Microsoft.Resources/deployments/SettingUpLoadBalancers"
-        ],
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','creatingNICS.json', parameters('_artifactsLocationSasToken'))]",
-            "contentVersion": "1.0.0.0"
-          },
-          "parameters": {
-            "location": {
-              "value": "[parameters('location')]"
-            },
-            "staticSubnetRef": {
-              "value": "[variables('staticSubnetRef')]"
-            },
-            "sqlVMName": {
-              "value": "[variables('vmSettings').sqlVMName]"
-            },
-            "sqlSubnetRef": {
-              "value": "[variables('sqlSubnetRef')]"
-            },
-            "sqlBEAddressPoolID": {
-              "value": "[variables('derivedIds').sqlBEAddressPoolID]"
-            },
-            "geminiwebVMName": {
-              "value": "[variables('vmSettings').geminiwebVMName]"
-            },
-            "geminiWebSubnetRef": {
-              "value": "[variables('geminiWebSubnetRef')]"
-            },
-            "geminiWebBEAddressPoolID": {
-              "value": "[variables('derivedIds').geminiWebBEAddressPoolID]"
-            },
-            "geminiappVMName": {
-              "value": "[variables('vmSettings').geminiappVMName]"
-            },
-            "geminiAppSubnetRef": {
-              "value": "[variables('geminiAppSubnetRef')]"
-            }
-          }
-        }
-      },
-      {
-        "name": "ProvisioningSQLVirtualMachines",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2015-01-01",
-        "dependsOn": [
-          "Microsoft.Resources/deployments/CreatingStorageAccounts",
-          "Microsoft.Resources/deployments/CreatingNetworkInterfaces",
-          "Microsoft.Resources/deployments/CreatingAvailabilitySets"
-        ],
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','provisioningSQLVMs.json', parameters('_artifactsLocationSasToken'))]",
-            "contentVersion": "1.0.0.0"
-          },
-          "parameters": {
-            "sqlVMName": {
-              "value": "[variables('vmSettings').sqlVMName]"
-            },
-            "location": {
-              "value": "[parameters('location')]"
-            },
-            "storageAccountNamePrefix": {
-              "value": "[parameters('storageAccountNamePrefix')]"
-            },
-            "availabilitySet": {
-              "value": "[variables('ids').sqlAvailabilitySetName]"
-            },
-            "sqlVMSize": {
-              "value": "[parameters('sqlVMSize')]"
-            },
-            "adminUsername": {
-              "value": "[parameters('adminUsername')]"
-            },
-            "adminPassword": {
-              "value": "[parameters('adminPassword')]"
-            },
-            "windowsImagePublisher": {
-              "value": "[variables('vmSettings').windowsImagePublisher]"
-            },
-            "windowsImageOffer": {
-              "value": "[variables('vmSettings').windowsImageOffer]"
-            },
-            "windowsImageSKU": {
-              "value": "[variables('vmSettings').windowsImageSKU]"
-            },
-            "vmContainerName": {
-              "value": "[variables('vmSettings').vmContainerName]"
-            },
-            "sqlImagePublisher": {
-              "value": "[variables('vmSettings').sqlImagePublisher]"
-            },
-            "sqlImageOffer": {
-              "value": "[variables('vmSettings').sqlImageOffer]"
-            },
-            "sqlImageSKU": {
-              "value": "[variables('vmSettings').sqlImageSKU]"
-            }
-          }
-        }
-      },
-      {
-        "name": "CreatingGeminiVirtualMachines",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2015-01-01",
-        "dependsOn": [
-          "Microsoft.Resources/deployments/CreatingStorageAccounts",
-          "Microsoft.Resources/deployments/CreatingNetworkInterfaces",
-          "Microsoft.Resources/deployments/CreatingAvailabilitySets"
-        ],
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','provisioningGeminiVMs.json', parameters('_artifactsLocationSasToken'))]",
-            "contentVersion": "1.0.0.0"
-          },
-          "parameters": {
-            "geminiappVMName": {
-              "value": "[variables('vmSettings').geminiappVMName]"
-            },
-            "geminiwebVMName": {
-              "value": "[variables('vmSettings').geminiwebVMName]"
-            },
-            "location": {
-              "value": "[parameters('location')]"
-            },
-            "geminiVMSize": {
-              "value": "[parameters('geminiVMSize')]"
-            },
-            "geminiWebAvailabilitySet": {
-              "value": "[variables('ids').geminiWebAvailabilitySetName]"
-            },
-            "geminiAppAvailabilitySet": {
-              "value": "[variables('ids').geminiAppAvailabilitySetName]"
-            },
-            "adminUsername": {
-              "value": "[parameters('adminUsername')]"
-            },
-            "adminPassword": {
-              "value": "[parameters('adminPassword')]"
-            },
-            "geminiImagePublisher": {
-              "value": "[variables('vmSettings').geminiImagePublisher]"
-            },
-            "geminiImageOffer": {
-              "value": "[variables('vmSettings').geminiImageOffer]"
-            },
-            "geminiImageSKU": {
-              "value": "[variables('vmSettings').geminiImageSKU]"
-            },
-            "vmContainerName": {
-              "value": "[variables('vmSettings').vmContainerName]"
-            },
-            "storageAccountNamePrefix": {
-              "value": "[parameters('storageAccountNamePrefix')]"
-            }
+          "publicIpRGName": {
+            "value": "[parameters('geminiWebIPRGName')]"
           }
         }
       }
-     
-  ],
-  "outputs": {
-    "fqdn": {
-      "value": "[variables('GeminiWebfqdn')]",
-      "type": "string"
+    },
+    {
+      "name": "CreatingAvailabilitySets",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','availabilitySets.json', parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "sqlAvailabilitySetName": {
+            "value": "[variables('vmSettings').availabilitySets.sqlAvailabilitySetName]"
+          },
+          "geminiWebAvailabilitySetName": {
+            "value": "[variables('vmSettings').availabilitySets.geminiWebAvailabilitySetName]"
+          },
+          "geminiAppAvailabilitySetName": {
+            "value": "[variables('vmSettings').availabilitySets.geminiAppAvailabilitySetName]"
+          }
+        }
+      }
+    },
+    {
+      "name": "CreatingVirtualNetwork",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','vnet-new.json', parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "virtualNetworkName": {
+            "value": "[parameters('virtualNetworkName')]"
+          },
+          "virtualNetworkAddressRange": {
+            "value": "[parameters('virtualNetworkAddressRange')]"
+          },
+          "subnets": {
+            "value": "[variables('subnets')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "SettingUpLoadBalancers",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "Microsoft.Resources/deployments/SettingUpGeminiWebPublicIP",
+        "Microsoft.Resources/deployments/CreatingVirtualNetwork"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','setupLBs.json', parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "geminiWebLBName": {
+            "value": "[variables('lbSettings').geminiWebLBName]"
+          },
+          "geminiWebLBFE": {
+            "value": "[variables('lbSettings').geminiWebLBFE]"
+          },
+          "geminiWebResourceId": {
+            "value": "[variables(concat('geminiWebResourceId',parameters('geminiWebIPNewOrExisting')))]"
+          },
+          "geminiWebLBBE": {
+            "value": "[variables('lbSettings').geminiWebLBBE]"
+          },
+          "geminiWebLB": {
+            "value": "[variables('lbSettings').geminiWebLB]"
+          },
+          "geminiWebLBFEConfigID": {
+            "value": "[variables('derivedIds').geminiWebLBFEConfigID]"
+          },
+          "geminiWebBEAddressPoolID": {
+            "value": "[variables('derivedIds').geminiWebBEAddressPoolID]"
+          },
+          "geminiWebProbeID": {
+            "value": "[variables('derivedIds').geminiWebProbeID]"
+          },
+          "gemininiWebProbe": {
+            "value": "[variables('gemininiWebProbe')]"
+          },
+          "sqlLBName": {
+            "value": "[variables('lbSettings').sqlLBName]"
+          },
+          "sqlLBFE": {
+            "value": "[variables('lbSettings').sqlLBFE]"
+          },
+          "sqlLBIPAddress": {
+            "value": "[parameters('sqlLBIPAddress')]"
+          },
+          "staticSubnetRef": {
+            "value": "[variables('staticSubnetRef')]"
+          },
+          "sqlLBBE": {
+            "value": "[variables('lbSettings').sqlLBBE]"
+          },
+          "sqllbFEConfigID": {
+            "value": "[variables('derivedIds').sqllbFEConfigID]"
+          },
+          "sqllbProbeID": {
+            "value": "[variables('derivedIds').sqllbProbeID]"
+          },
+          "SQLAOProbe": {
+            "value": "[variables('SQLAOProbe')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "CreatingNetworkInterfaces",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "Microsoft.Resources/deployments/CreatingVirtualNetwork",
+        "Microsoft.Resources/deployments/SettingUpLoadBalancers"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','creatingNICS.json', parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "staticSubnetRef": {
+            "value": "[variables('staticSubnetRef')]"
+          },
+          "sqlVMName": {
+            "value": "[variables('vmSettings').sqlVMName]"
+          },
+          "sqlSubnetRef": {
+            "value": "[variables('sqlSubnetRef')]"
+          },
+          "sqlBEAddressPoolID": {
+            "value": "[variables('derivedIds').sqlBEAddressPoolID]"
+          },
+          "geminiwebVMName": {
+            "value": "[variables('vmSettings').geminiwebVMName]"
+          },
+          "geminiWebSubnetRef": {
+            "value": "[variables('geminiWebSubnetRef')]"
+          },
+          "geminiWebBEAddressPoolID": {
+            "value": "[variables('derivedIds').geminiWebBEAddressPoolID]"
+          },
+          "geminiappVMName": {
+            "value": "[variables('vmSettings').geminiappVMName]"
+          },
+          "geminiAppSubnetRef": {
+            "value": "[variables('geminiAppSubnetRef')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "ProvisioningSQLVirtualMachines",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "Microsoft.Resources/deployments/CreatingStorageAccounts",
+        "Microsoft.Resources/deployments/CreatingNetworkInterfaces",
+        "Microsoft.Resources/deployments/CreatingAvailabilitySets"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','provisioningSQLVMs.json', parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "sqlVMName": {
+            "value": "[variables('vmSettings').sqlVMName]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "storageAccountNamePrefix": {
+            "value": "[parameters('storageAccountNamePrefix')]"
+          },
+          "availabilitySet": {
+            "value": "[variables('ids').sqlAvailabilitySetName]"
+          },
+          "sqlVMSize": {
+            "value": "[parameters('sqlVMSize')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "windowsImagePublisher": {
+            "value": "[variables('vmSettings').windowsImagePublisher]"
+          },
+          "windowsImageOffer": {
+            "value": "[variables('vmSettings').windowsImageOffer]"
+          },
+          "windowsImageSKU": {
+            "value": "[variables('vmSettings').windowsImageSKU]"
+          },
+          "vmContainerName": {
+            "value": "[variables('vmSettings').vmContainerName]"
+          },
+          "sqlImagePublisher": {
+            "value": "[variables('vmSettings').sqlImagePublisher]"
+          },
+          "sqlImageOffer": {
+            "value": "[variables('vmSettings').sqlImageOffer]"
+          },
+          "sqlImageSKU": {
+            "value": "[variables('vmSettings').sqlImageSKU]"
+          }
+        }
+      }
+    },
+    {
+      "name": "CreatingGeminiVirtualMachines",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "Microsoft.Resources/deployments/CreatingStorageAccounts",
+        "Microsoft.Resources/deployments/CreatingNetworkInterfaces",
+        "Microsoft.Resources/deployments/CreatingAvailabilitySets"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','provisioningGeminiVMs.json', parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "geminiappVMName": {
+            "value": "[variables('vmSettings').geminiappVMName]"
+          },
+          "geminiwebVMName": {
+            "value": "[variables('vmSettings').geminiwebVMName]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "geminiVMSize": {
+            "value": "[parameters('geminiVMSize')]"
+          },
+          "geminiWebAvailabilitySet": {
+            "value": "[variables('ids').geminiWebAvailabilitySetName]"
+          },
+          "geminiAppAvailabilitySet": {
+            "value": "[variables('ids').geminiAppAvailabilitySetName]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "geminiImagePublisher": {
+            "value": "[variables('vmSettings').geminiImagePublisher]"
+          },
+          "geminiImageOffer": {
+            "value": "[variables('vmSettings').geminiImageOffer]"
+          },
+          "geminiImageSKU": {
+            "value": "[variables('vmSettings').geminiImageSKU]"
+          },
+          "vmContainerName": {
+            "value": "[variables('vmSettings').vmContainerName]"
+          },
+          "storageAccountNamePrefix": {
+            "value": "[parameters('storageAccountNamePrefix')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "ConfiguringGemini",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "Microsoft.Resources/deployments/CreatingGeminiVirtualMachines"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','configuringGemini.json', parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vmName": {
+            "value": "[concat(variables('vmSettings').geminiwebVMName, '0')]"
+          },
+          "modulesUrl": {
+            "value": "[concat(parameters('_artifactsLocation'),'/','DSC','/','GeminiWebDSC.zip', parameters('_artifactsLocationSasToken'))]"
+          },
+          "configurationFunction": {
+            "value": "GeminiWebDSC.ps1\\GeminiWebsite"
+          }
+        }
+      }
     }
-  }
-}
+      ],
+
+
+
+      "outputs": {
+        "fqdn": {
+          "value": "[variables('GeminiWebfqdn')]",
+          "type": "string"
+        }
+      }
+    }
