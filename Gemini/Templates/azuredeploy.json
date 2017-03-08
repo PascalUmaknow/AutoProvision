@@ -711,10 +711,6 @@
           "geminiRDPSubnetRef": {
             "value": "[variables('geminiRDPSubnetRef')]"
           },
-
-          "rdpBEAddressPoolID": {
-            "value": "[variables('derivedIds').rdpBEAddressPoolID]"
-          },
           "location": {
             "value": "[parameters('location')]"
           },
