@@ -89,6 +89,7 @@
             }
           },
           "osProfile": {
+            "computerNamePrefix": "geminiweb",
             "computerName": "[parameters('geminiappVMName')]",
             "adminUsername": "[parameters('adminUsername')]",
             "adminPassword": "[parameters('adminPassword')]"
