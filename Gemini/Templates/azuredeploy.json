@@ -323,6 +323,7 @@
     },
     "derivedIds": {
       "geminiWebLBFEConfigID": "[concat(variables('ids').geminiWebLBID,'/frontendIPConfigurations/',variables('lbSettings').geminiWebLBFE)]",
+      "rdplbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').rdpLBName)]",
       "geminiWebProbeID": "[concat(variables('ids').geminiWebLBID,'/probes/',variables('gemininiWebProbe'))]",
       "geminiWebBEAddressPoolID": "[concat(variables('ids').geminiWebLBID,'/backendAddressPools/',variables('lbSettings').geminiWebLBBE)]",
       "sqlBEAddressPoolID": "[concat(variables('ids').sqllbID,'/backendAddressPools/',variables('lbSettings').sqlLBBE)]",
