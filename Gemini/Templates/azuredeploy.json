@@ -272,6 +272,8 @@
     },
     "SQLAOProbe": "SQLAlwaysOnEndPointProbe",
     "gemininiWebProbe": "gemininiWebProbe",
+    "rdpIPAddressName": "rdpIP",
+    "RDPNAT": "RDP",
     "vmSettings": {
       "availabilitySets": {
         "sqlAvailabilitySetName": "sqlAvailabilitySet",
@@ -310,7 +312,7 @@
     "geminiWebResourceIdexisting": "[resourceId(parameters('geminiWebIPRGName'),concat('Microsoft.Network','/','publicIPAddresses'),parameters('geminiWebIPAddressName'))]",
     "geminiWebResourceIdnew": "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),parameters('geminiWebIPAddressName'))]",
     "GeminiWebfqdn": "[concat(parameters('dnsPrefix'),'.',toLower(trim(replace(parameters('location'),' ' ,''))),'.cloudapp.azure.com')]",
-    "ids": {  
+    "ids": {
       "geminiWebLBID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').geminiWebLBName)]",
       "sqllbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').sqlLBName)]",
       "sqlAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.sqlAvailabilitySetName)]",
@@ -318,7 +320,7 @@
       "geminiAppAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiAppAvailabilitySetName)]"
     },
     "derivedIds": {
-       "geminiWebLBFEConfigID": "[concat(variables('ids').geminiWebLBID,'/frontendIPConfigurations/',variables('lbSettings').geminiWebLBFE)]",
+      "geminiWebLBFEConfigID": "[concat(variables('ids').geminiWebLBID,'/frontendIPConfigurations/',variables('lbSettings').geminiWebLBFE)]",
       "geminiWebProbeID": "[concat(variables('ids').geminiWebLBID,'/probes/',variables('gemininiWebProbe'))]",
       "geminiWebBEAddressPoolID": "[concat(variables('ids').geminiWebLBID,'/backendAddressPools/',variables('lbSettings').geminiWebLBBE)]",
       "sqlBEAddressPoolID": "[concat(variables('ids').sqllbID,'/backendAddressPools/',variables('lbSettings').sqlLBBE)]",
@@ -376,41 +378,41 @@
         }
       }
     },
-    //{
-    //  "name": "SettingUpRdp",
-    //  "type": "Microsoft.Resources/deployments",
-    //  "apiVersion": "2015-01-01",
-    //  "properties": {
-    //    "mode": "Incremental",
-    //    "templateLink": {
-    //      "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','publicip-rdp.json', parameters('_artifactsLocationSasToken'))]",
-    //      "contentVersion": "1.0.0.0"
-    //    },
-    //    "parameters": {
-    //      "location": {
-    //        "value": "[parameters('location')]"
-    //      },
-    //      "rdpIPAddressName": {
-    //        "value": "[variables('rdpIPAddressName')]"
-    //      },
-    //      "rdpLBName": {
-    //        "value": "[variables('lbSettings').rdpLBName]"
-    //      },
-    //      "rdpLBFE": {
-    //        "value": "[variables('lbSettings').rdpLBFE]"
-    //      },
-    //      "RDPNAT": {
-    //        "value": "[variables('RDPNAT')]"
-    //      },
-    //      "rdplbFEConfigID": {
-    //        "value": "[variables('derivedIds').rdplbFEConfigID]"
-    //      },
-    //      "geminiRDPLBBE": {
-    //        "value": "[variables('lbSettings').geminiRDPLBBE]"
-    //      }
-    //    }
-    //  }
-    //},
+    {
+      "name": "SettingUpRdp",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','publicip-rdp.json', parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "rdpIPAddressName": {
+            "value": "[variables('rdpIPAddressName')]"
+          },
+          "rdpLBName": {
+            "value": "[variables('lbSettings').rdpLBName]"
+          },
+          "rdpLBFE": {
+            "value": "[variables('lbSettings').rdpLBFE]"
+          },
+          "RDPNAT": {
+            "value": "[variables('RDPNAT')]"
+          },
+          "rdplbFEConfigID": {
+            "value": "[variables('derivedIds').rdplbFEConfigID]"
+          },
+          "geminiRDPLBBE": {
+            "value": "[variables('lbSettings').geminiRDPLBBE]"
+          }
+        }
+      }
+    },
     {
       "name": "SettingUpGeminiWebPublicIP",
       "type": "Microsoft.Resources/deployments",
