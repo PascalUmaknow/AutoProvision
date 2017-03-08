@@ -26,12 +26,12 @@
     "geminiVMSize": {
       "type": "string"
     },
-    "geminiWebAvailabilitySet": {
-      "type": "string"
-    },
-    "geminiAppAvailabilitySet": {
-      "type": "string"
-    },
+    //"geminiWebAvailabilitySet": {
+    //  "type": "string"
+    //},
+    //"geminiAppAvailabilitySet": {
+    //  "type": "string"
+    //},
     "adminUsername": {
       "type": "string"
     },

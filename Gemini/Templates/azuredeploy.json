@@ -279,11 +279,11 @@
     "rdpIPAddressName": "rdpIP",
     "RDPNAT": "RDP",
     "vmSettings": {
-      "availabilitySets": {
-        "sqlAvailabilitySetName": "sqlAvailabilitySet",
-        "geminiWebAvailabilitySetName": "geminiWebAvailabilitySet",
-        "geminiAppAvailabilitySetName": "geminiAppAvailabilitySet"
-      },
+      //"availabilitySets": {
+      //  "sqlAvailabilitySetName": "sqlAvailabilitySet",
+      //  "geminiWebAvailabilitySetName": "geminiWebAvailabilitySet",
+      //  "geminiAppAvailabilitySetName": "geminiAppAvailabilitySet"
+      //},
       "noOfSqlVMs": 1,
       "noOfspRoleVMs": 2,
       "vmContainerName": "vhds",
@@ -320,10 +320,10 @@
     "ids": {
       "geminiWebLBID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').geminiWebLBName)]",
       "sqllbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').sqlLBName)]",
-      "sqlAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.sqlAvailabilitySetName)]",
-      "geminiWebAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiWebAvailabilitySetName)]",
+     // "sqlAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.sqlAvailabilitySetName)]",
+   //   "geminiWebAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiWebAvailabilitySetName)]",
       "rdplbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbSettings').rdpLBName)]",
-      "geminiAppAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiAppAvailabilitySetName)]"
+   //   "geminiAppAvailabilitySetName": "[resourceId('Microsoft.Compute/availabilitySets',variables('vmSettings').availabilitySets.geminiAppAvailabilitySetName)]"
     },
     "derivedIds": {
       "geminiWebLBFEConfigID": "[concat(variables('ids').geminiWebLBID,'/frontendIPConfigurations/',variables('lbSettings').geminiWebLBFE)]",
@@ -659,9 +659,9 @@
           "storageAccountNamePrefix": {
             "value": "[parameters('storageAccountNamePrefix')]"
           },
-          "availabilitySet": {
-            "value": "[variables('ids').sqlAvailabilitySetName]"
-          },
+          //"availabilitySet": {
+          //  "value": "[variables('ids').sqlAvailabilitySetName]"
+          //},
           "sqlVMSize": {
             "value": "[parameters('sqlVMSize')]"
           },
@@ -788,12 +788,12 @@
           "geminiVMSize": {
             "value": "[parameters('geminiVMSize')]"
           },
-          "geminiWebAvailabilitySet": {
-            "value": "[variables('ids').geminiWebAvailabilitySetName]"
-          },
-          "geminiAppAvailabilitySet": {
-            "value": "[variables('ids').geminiAppAvailabilitySetName]"
-          },
+          //"geminiWebAvailabilitySet": {
+          //  "value": "[variables('ids').geminiWebAvailabilitySetName]"
+          //},
+          //"geminiAppAvailabilitySet": {
+          //  "value": "[variables('ids').geminiAppAvailabilitySetName]"
+          //},
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
           },

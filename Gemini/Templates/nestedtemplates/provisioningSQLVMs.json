@@ -11,9 +11,9 @@
     "storageAccountNamePrefix": {
       "type": "string"
     },
-    "availabilitySet": {
-      "type": "string"
-    },
+    //"availabilitySet": {
+    //  "type": "string"
+    //},
     "sqlVMSize": {
       "type": "string"
     },
@@ -59,9 +59,9 @@
         "hardwareProfile": {
           "vmSize": "[parameters('sqlVMSize')]"
         },
-        "availabilitySet": {
-          "id": "[parameters('availabilitySet')]"
-        },
+        //"availabilitySet": {
+        //  "id": "[parameters('availabilitySet')]"
+        //},
         "osProfile": {
           "computerName": "[concat(parameters('sqlVMName'), copyIndex())]",
           "adminUsername": "[parameters('adminUsername')]",
