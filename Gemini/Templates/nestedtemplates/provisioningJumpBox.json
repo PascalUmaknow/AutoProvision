@@ -1,0 +1,92 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+
+    "rdpBEAddressPoolID": {
+      "type": "string"
+    },
+    "geminiRDPSubnetRef": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "geminiVMSize": {
+      "type": "string"
+    },
+    "adminUsername": {
+      "type": "string"
+    },
+    "adminPassword": {
+      "type": "securestring"
+    },
+    "geminiImagePublisher": {
+      "type": "string"
+    },
+    "geminiImageOffer": {
+      "type": "string"
+    },
+    "geminiImageSKU": {
+      "type": "string"
+    },
+    "vmContainerName": {
+      "type": "string"
+    },
+    "storageAccountNamePrefix": {
+      "type": "string"
+    } 
+  },
+  "resources": [  
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "geminijumpbox",
+      "location": "[parameters('location')]",
+      
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('geminiVMSize')]"
+        },
+        "osProfile": {
+          "computerName": "geminijumpbox",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[parameters('geminiImagePublisher')]",
+            "offer": "[parameters('geminiImageOffer')]",
+            "sku": "[parameters('geminiImageSKU')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "osdisk",
+            "vhd": {
+              "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', concat(parameters('storageAccountNamePrefix'), '3')), '2016-01-01').primaryEndpoints.blob, parameters('vmContainerName'),'/','jumpbox','-osdisk.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',concat(parameters('geminiRDPSubnetRef'), 'geminijumboxnic'))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "true",
+            "storageUri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', concat(parameters('storageAccountNamePrefix'), '4')), '2016-01-01').primaryEndpoints.blob)]"
+          }
+        }
+      }
+    }
+    
+  ],
+  "outputs": {
+
+  }
+}

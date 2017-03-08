@@ -258,6 +258,7 @@
     "lbSettings": {
       "sqlLBFE": "sqlLBFE",
       "rdpLBFE": "rdpLBFE",
+      "rdpLBBE": "rdpLBBE",
       "geminiWebLBFE": "geminiWebLBFE",
       "sqlLBBE": "sqlLBBE",
       "geminiWebLBBE": "geminiWebLBBE",
@@ -270,7 +271,8 @@
       "staticSubnetName": "staticSubnet",
       "sqlSubnetName": "sqlSubnet",
       "geminiWebSubnetName": "geminiWebSubnet",
-      "geminiAppSubnetName": "geminiAppSubnet"
+      "geminiAppSubnetName": "geminiAppSubnet",
+      "rdpSubNameName": "jumboxSubnet"
     },
     "SQLAOProbe": "SQLAlwaysOnEndPointProbe",
     "gemininiWebProbe": "gemininiWebProbe",
@@ -310,6 +312,7 @@
     "staticSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').staticSubnetName)]",
     "sqlSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').sqlSubnetName)]",
     "geminiWebSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').geminiWebSubnetName)]",
+    "geminiRDPSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').rdpSubNameName)]",
     "geminiAppSubnetRef": "[concat(variables('VnetID'),'/subnets/',variables('subnetNames').geminiAppSubnetName)]",
     "geminiWebResourceIdexisting": "[resourceId(parameters('geminiWebIPRGName'),concat('Microsoft.Network','/','publicIPAddresses'),parameters('geminiWebIPAddressName'))]",
     "geminiWebResourceIdnew": "[resourceId(concat('Microsoft.Network','/','publicIPAddresses'),parameters('geminiWebIPAddressName'))]",
@@ -329,7 +332,8 @@
       "sqlBEAddressPoolID": "[concat(variables('ids').sqllbID,'/backendAddressPools/',variables('lbSettings').sqlLBBE)]",
       "sqllbFEConfigID": "[concat(variables('ids').sqllbID,'/frontendIPConfigurations/',variables('lbSettings').sqlLBFE)]",
       "sqllbProbeID": "[concat(variables('ids').sqllbID,'/probes/',variables('SQLAOProbe'))]",
-      "rdplbFEConfigID": "[concat(variables('ids').rdplbID,'/frontendIPConfigurations/',variables('lbSettings').rdpLBFE)]"
+      "rdplbFEConfigID": "[concat(variables('ids').rdplbID,'/frontendIPConfigurations/',variables('lbSettings').rdpLBFE)]",
+      "rdpBEAddressPoolID": "[concat(variables('ids').rdplbID,'/backendAddressPools/',variables('lbSettings').rdpLBBE)]"
     },
     "subnets": [
       {
@@ -410,10 +414,14 @@
           },
           "rdplbFEConfigID": {
             "value": "[variables('derivedIds').rdplbFEConfigID]"
+          },
+          "rdpLBBE": {
+            "value": "[variables('lbSettings').rdpLBBE]"
           }
         }
       }
     },
+
     {
       "name": "SettingUpGeminiWebPublicIP",
       "type": "Microsoft.Resources/deployments",
@@ -603,8 +611,15 @@
           "geminiWebSubnetRef": {
             "value": "[variables('geminiWebSubnetRef')]"
           },
+          "geminiRDPSubnetRef": {
+            "value": "[variables('geminiRDPSubnetRef')]"
+          },
           "geminiWebBEAddressPoolID": {
             "value": "[variables('derivedIds').geminiWebBEAddressPoolID]"
+          },
+
+          "rdpBEAddressPoolID": {
+            "value": "[variables('derivedIds').rdpBEAddressPoolID]"
           },
           "geminiappVMName": {
             "value": "[variables('vmSettings').geminiappVMName]"
@@ -677,46 +692,34 @@
     //    }
     //  }
     //},
-    ,{
-      "name": "CreatingGeminiVirtualMachines",
+    ,
+    {
+      "name": "CreatingGeminiJumpBox",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
-        "Microsoft.Resources/deployments/CreatingStorageAccounts",
-        "Microsoft.Resources/deployments/CreatingNetworkInterfaces",
-        "Microsoft.Resources/deployments/CreatingAvailabilitySets"
+        "Microsoft.Resources/deployments/SettingUpRdp"
       ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','provisioningGeminiVMs.json', parameters('_artifactsLocationSasToken'))]",
+          "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','provisioningJumpBox.json', parameters('_artifactsLocationSasToken'))]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "geminiappVMName": {
-            "value": "[variables('vmSettings').geminiappVMName]"
-          },
-          "geminiwebVMName": {
-            "value": "[variables('vmSettings').geminiwebVMName]"
-          },
-          "geminiWebSubnetRef": {
-            "value": "[variables('geminiWebSubnetRef')]"
+
+          "geminiRDPSubnetRef": {
+            "value": "[variables('geminiRDPSubnetRef')]"
           },
 
-          "geminiWebBEAddressPoolID": {
-            "value": "[variables('derivedIds').geminiWebBEAddressPoolID]"
+          "rdpBEAddressPoolID": {
+            "value": "[variables('derivedIds').rdpBEAddressPoolID]"
           },
           "location": {
             "value": "[parameters('location')]"
           },
           "geminiVMSize": {
             "value": "[parameters('geminiVMSize')]"
-          },
-          "geminiWebAvailabilitySet": {
-            "value": "[variables('ids').geminiWebAvailabilitySetName]"
-          },
-          "geminiAppAvailabilitySet": {
-            "value": "[variables('ids').geminiAppAvailabilitySetName]"
           },
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
@@ -742,6 +745,71 @@
         }
       }
     }
+    //,{
+    //  "name": "CreatingGeminiVirtualMachines",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2015-01-01",
+    //  "dependsOn": [
+    //    "Microsoft.Resources/deployments/CreatingStorageAccounts",
+    //    "Microsoft.Resources/deployments/CreatingNetworkInterfaces",
+    //    "Microsoft.Resources/deployments/CreatingAvailabilitySets"
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','provisioningGeminiVMs.json', parameters('_artifactsLocationSasToken'))]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+    //      "geminiappVMName": {
+    //        "value": "[variables('vmSettings').geminiappVMName]"
+    //      },
+    //      "geminiwebVMName": {
+    //        "value": "[variables('vmSettings').geminiwebVMName]"
+    //      },
+    //      "geminiWebSubnetRef": {
+    //        "value": "[variables('geminiWebSubnetRef')]"
+    //      },
+
+    //      "geminiWebBEAddressPoolID": {
+    //        "value": "[variables('derivedIds').geminiWebBEAddressPoolID]"
+    //      },
+    //      "location": {
+    //        "value": "[parameters('location')]"
+    //      },
+    //      "geminiVMSize": {
+    //        "value": "[parameters('geminiVMSize')]"
+    //      },
+    //      "geminiWebAvailabilitySet": {
+    //        "value": "[variables('ids').geminiWebAvailabilitySetName]"
+    //      },
+    //      "geminiAppAvailabilitySet": {
+    //        "value": "[variables('ids').geminiAppAvailabilitySetName]"
+    //      },
+    //      "adminUsername": {
+    //        "value": "[parameters('adminUsername')]"
+    //      },
+    //      "adminPassword": {
+    //        "value": "[parameters('adminPassword')]"
+    //      },
+    //      "geminiImagePublisher": {
+    //        "value": "[variables('vmSettings').geminiImagePublisher]"
+    //      },
+    //      "geminiImageOffer": {
+    //        "value": "[variables('vmSettings').geminiImageOffer]"
+    //      },
+    //      "geminiImageSKU": {
+    //        "value": "[variables('vmSettings').geminiImageSKU]"
+    //      },
+    //      "vmContainerName": {
+    //        "value": "[variables('vmSettings').vmContainerName]"
+    //      },
+    //      "storageAccountNamePrefix": {
+    //        "value": "[parameters('storageAccountNamePrefix')]"
+    //      }
+    //    }
+    //  }
+    //}
     //,
     //{
     //  "name": "ConfiguringGemini",
@@ -769,7 +837,7 @@
     //    }
     //  }
     //}
-      ],
+  ],
 
 
 

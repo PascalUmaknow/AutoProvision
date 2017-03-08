@@ -43,6 +43,7 @@
     <None Include="Templates\nestedtemplates\creatingNICS.json" />
     <None Include="Templates\nestedtemplates\creatingStorageAccounts.json" />
     <None Include="Templates\nestedtemplates\nic.json" />
+    <None Include="Templates\nestedtemplates\provisioningJumpBox.json" />
     <None Include="Templates\nestedtemplates\provisioningGeminiVMs.json" />
     <None Include="Templates\nestedtemplates\provisioningSQLVMs.json" />
     <None Include="Templates\nestedtemplates\publicip-existing.json" />
