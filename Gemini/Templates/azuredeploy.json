@@ -33,7 +33,7 @@
         "group": "Infrastructure settings",
         "description": "The type of storage account"
       },
-      "defaultValue": "Premium_LRS"
+      "defaultValue": "Standard_LRS"
     },
     "location": {
       "type": "string",
