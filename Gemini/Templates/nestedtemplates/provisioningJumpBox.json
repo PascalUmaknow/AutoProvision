@@ -69,7 +69,8 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',concat(parameters('geminiRDPSubnetRef'), 'geminijumboxnic'))]"
+
+                "id": "[resourceId(resourceGroup().name,'Microsoft.Network/networkInterfaces',concat(parameters('geminiRDPSubnetRef'), '/geminijumboxnic'))]"
             }
           ]
         },

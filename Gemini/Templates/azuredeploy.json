@@ -612,7 +612,7 @@
             "value": "[variables('geminiWebSubnetRef')]"
           },
           "geminiRDPSubnetRef": {
-            "value": "[variables('geminiRDPSubnetRef')]"
+            "value": "[variables('geminiWebSubnetRef')]" //Temp
           },
           "geminiWebBEAddressPoolID": {
             "value": "[variables('derivedIds').geminiWebBEAddressPoolID]"
@@ -711,7 +711,8 @@
         "parameters": {
 
           "geminiRDPSubnetRef": {
-            "value": "[variables('geminiRDPSubnetRef')]"
+            "value": "[variables('geminiWebSubnetRef')]"//Temp
+         //   "value": "[variables('geminiRDPSubnetRef')]"
           },
           "location": {
             "value": "[parameters('location')]"

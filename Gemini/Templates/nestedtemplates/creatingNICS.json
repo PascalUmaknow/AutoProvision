@@ -148,9 +148,8 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
-                "id": "[parameters('geminiWebSubnetRef')]"//for now to change for line after when redeploy
-                
-                //    "id": "[parameters('geminiRDPSubnetRef')]"
+                 
+                      "id": "[parameters('geminiRDPSubnetRef')]"
               },
               "loadBalancerBackendAddressPools": [
                 {
