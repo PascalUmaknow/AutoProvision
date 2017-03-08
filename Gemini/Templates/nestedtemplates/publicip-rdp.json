@@ -61,18 +61,18 @@
             "name": "[parameters('rdpLBBE')]"
           }
         ],
-        "inboundNatRules": [
+        "inboundNatPools": [
           {
             "name": "[parameters('RDPNAT')]",
             "properties": {
               "frontendIPConfiguration": {
                 "id": "[parameters('rdplbFEConfigID')]"
               },
-              
+
               "protocol": "tcp",
-              "frontendPort": 80,
-              "backendPort": 3389,
-              "enableFloatingIP": false
+              "frontendPortRangeStart": 5000,
+              "frontendPortRangeEnd": 6000,
+              "backendPort": 3389
             }
           }
         ]
