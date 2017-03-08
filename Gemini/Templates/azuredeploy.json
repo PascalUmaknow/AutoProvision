@@ -696,6 +696,13 @@
           "geminiwebVMName": {
             "value": "[variables('vmSettings').geminiwebVMName]"
           },
+          "geminiWebSubnetRef": {
+            "value": "[variables('geminiWebSubnetRef')]"
+          },
+
+          "geminiWebBEAddressPoolID": {
+            "value": "[variables('derivedIds').geminiWebBEAddressPoolID]"
+          },
           "location": {
             "value": "[parameters('location')]"
           },

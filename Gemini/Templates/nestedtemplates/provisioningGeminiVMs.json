@@ -8,6 +8,12 @@
     "geminiwebVMName": {
       "type": "string"
     },
+    "geminiWebBEAddressPoolID": {
+      "value": "string"
+    },
+    "geminiWebSubnetRef": {
+      "value": "string"
+    },
     "location": {
       "type": "string"
     },
@@ -86,37 +92,36 @@
             "computerName": "[parameters('geminiappVMName')]",
             "adminUsername": "[parameters('adminUsername')]",
             "adminPassword": "[parameters('adminPassword')]"
+          },
+            "networkProfile": {
+              "networkInterfaceConfigurations": [
+          {
+            "name": "networkconfig1",
+            "properties": {
+              "primary": "true",
+              "ipConfigurations": [
+                {
+                  "name": "ip1",
+                  "properties": {
+                    "subnet": {
+                      "id": "parameters('geminiWebSubnetRef')"
+
+                    },
+                    "loadBalancerBackendAddressPools": [
+                      {
+                        "id": "parameters('geminiWebBEAddressPoolID')"
+                      }
+                    ],
+                    "loadBalancerInboundNatPools": [
+                      
+                    ]
+                  }
+                }
+              ]
+            }
           }
-          //  "networkProfile": {
-          //    "networkInterfaceConfigurations": [
-          //{
-          //  "name": "networkconfig1",
-          //  "properties": {
-          //    "primary": "true",
-          //    "ipConfigurations": [
-          //      {
-          //        "name": "ip1",
-          //        "properties": {
-          //          "subnet": {
-          //            "id": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Network/virtualNetworks/',variables('virtualNetworkName'),'/subnets/subnet1')]"
-          //          },
-          //          "loadBalancerBackendAddressPools": [
-          //            {
-          //              "id": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Network/loadBalancers/',variables('loadBalancerName'),'/backendAddressPools/bepool1')]"
-          //            }
-          //          ],
-          //          "loadBalancerInboundNatPools": [
-          //            {
-          //              "id": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Network/loadBalancers/',variables('loadBalancerName'),'/inboundNatPools/natpool1')]"
-          //            }
-          //          ]
-          //        }
-          //      }
-          //    ]
-          //  }
-          //}
-          //  ]
-          // }
+            ]
+           }
           //,"extensionProfile": {
           //  "extensions": [
           //    {

@@ -12,7 +12,7 @@ $rgName = "GeminiPOC1"
 #exit
 
 #New-AzureRmResourceGroup -Name $rgName -Location "East US"
-New-AzureRmResourceGroupDeployment -Name ExampleDeployment -ResourceGroupName $rgName  -TemplateUri "https://raw.githubusercontent.com/PascalUmaknow/AutoProvision/master/Gemini/Templates/azuredeploy.json" -Verbose 
+New-AzureRmResourceGroupDeployment -Name ExampleDeployment -ResourceGroupName $rgName  -TemplateUri "https://raw.githubusercontent.com/PascalUmaknow/AutoProvision/master/Gemini/Templates/azuredeploy.json" -Verbose -storageAccountNamePrefix "geminipoc1" -dnsPrefix "geminipoc1" -adminUserName "pascal"
  
  
  #secured deployment
