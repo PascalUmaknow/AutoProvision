@@ -12,7 +12,7 @@ Test-AzureRmResourceGroupDeployment -ResourceGroupName $rgName -TemplateUri "htt
 #exit
 
 #New-AzureRmResourceGroup -Name $rgName -Location "East US"
-#New-AzureRmResourceGroupDeployment -Name ExampleDeployment -ResourceGroupName $rgName  -Mode Complete -TemplateUri "https://raw.githubusercontent.com/PascalUmaknow/AutoProvision/master/Gemini/Templates/azuredeploy.json" -Verbose 
+New-AzureRmResourceGroupDeployment -Name ExampleDeployment -ResourceGroupName $rgName  -Mode Complete -TemplateUri "https://raw.githubusercontent.com/PascalUmaknow/AutoProvision/master/Gemini/Templates/azuredeploy.json" -Verbose 
  
  
  #secured deployment

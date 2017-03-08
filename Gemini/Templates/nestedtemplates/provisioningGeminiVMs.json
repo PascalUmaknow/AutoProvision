@@ -83,7 +83,7 @@
             }
           },
           "osProfile": {
-            "computerName": "[concat(parameters('geminiappVMName'), copyIndex())]",
+            "computerName": "[parameters('geminiappVMName')]",
             "adminUsername": "[parameters('adminUsername')]",
             "adminPassword": "[parameters('adminPassword')]"
           }
