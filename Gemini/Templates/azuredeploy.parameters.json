@@ -6,7 +6,7 @@
     "storageAccountNamePrefix": {
       "value": "GEN-UNIQUE"
     },
-    "storageAccountType": {
+    "storageAccountType": { 
       "value": "Standard_LRS"
     }
     //"adminUsername": {

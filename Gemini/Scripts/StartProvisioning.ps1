@@ -13,7 +13,7 @@ $rgName = "GeminiPOC1"
 
 #New-AzureRmResourceGroup -Name $rgName -Location "East US"
 $thepwd = "geminitest123temppws!" | ConvertTo-SecureString -AsPlainText -Force
-New-AzureRmResourceGroupDeployment -Name ExampleDeployment -ResourceGroupName $rgName  -TemplateUri "https://raw.githubusercontent.com/PascalUmaknow/AutoProvision/master/Gemini/Templates/azuredeploy.json?test=1" -Verbose -storageAccountNamePrefix "geminipoc1" -dnsPrefix "geminipoc1" -adminUserName "pascal" -adminPassword $thepwd
+New-AzureRmResourceGroupDeployment -Name ExampleDeployment -ResourceGroupName $rgName  -TemplateUri "https://raw.githubusercontent.com/PascalUmaknow/AutoProvision/master/Gemini/Templates/azuredeploy.json?test=2" -Verbose -storageAccountNamePrefix "geminipoc1" -dnsPrefix "geminipoc1" -adminUserName "pascal" -adminPassword $thepwd
  
  
  #secured deployment
