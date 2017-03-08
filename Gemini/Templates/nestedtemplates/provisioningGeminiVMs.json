@@ -9,10 +9,10 @@
       "type": "string"
     },
     "geminiWebBEAddressPoolID": {
-      "value": "string"
+      "type": "string"
     },
     "geminiWebSubnetRef": {
-      "value": "string"
+      "type": "string"
     },
     "location": {
       "type": "string"
