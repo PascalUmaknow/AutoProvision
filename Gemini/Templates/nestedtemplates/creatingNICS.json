@@ -58,12 +58,13 @@
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
                 "id": "[parameters('sqlSubnetRef')]"
-              },
-              "loadBalancerBackendAddressPools": [
-                {
-                  "id": "[parameters('sqlBEAddressPoolID')]"
-                }
-              ]
+              }
+              //,
+              //"loadBalancerBackendAddressPools": [
+              //  {
+              //    "id": "[parameters('sqlBEAddressPoolID')]"
+              //  }
+              //]
             }
           }
         ]
@@ -135,32 +136,33 @@
           }
         ]
       }
-    },
-    {
-      "name": "geminijumboxnic",
-      "type": "Microsoft.Network/networkInterfaces",
-      "location": "[parameters('location')]",
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "ipConfigurations": [
-          {
-            "name": "ipconfig1",
-            "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "subnet": {
-                 
-                      "id": "[parameters('geminiRDPSubnetRef')]"
-              },
-              "loadBalancerBackendAddressPools": [
-                {
-                  "id": "[parameters('rdpBEAddressPoolID')]"
-                }
-              ]
-            }
-          }
-        ]
-      }
     }
+    ,
+    //{
+    //  "name": "geminijumboxnic",
+    //  "type": "Microsoft.Network/networkInterfaces",
+    //  "location": "[parameters('location')]",
+    //  "apiVersion": "2015-06-15",
+    //  "properties": {
+    //    "ipConfigurations": [
+    //      {
+    //        "name": "ipconfig1",
+    //        "properties": {
+    //          "privateIPAllocationMethod": "Dynamic",
+    //          "subnet": {
+                 
+    //                  "id": "[parameters('geminiRDPSubnetRef')]"
+    //          },
+    //          "loadBalancerBackendAddressPools": [
+    //            {
+    //              "id": "[parameters('rdpBEAddressPoolID')]"
+    //            }
+    //          ]
+    //        }
+    //      }
+    //    ]
+    //  }
+    
   ],
   "outputs": {}
 }
