@@ -8,7 +8,7 @@
     "geminiwebVMName": {
       "type": "string"
     },
-    "geminiRDPBEAddressPoolID": {
+    "rdpBEAddressPoolID": {
       "type": "string"
     },
     "geminiRDPSubnetRef": {
@@ -116,7 +116,7 @@
                     },
                     "loadBalancerBackendAddressPools": [
                       {
-                        "id": "[parameters('geminiRDPBEAddressPoolID')]"
+                        "id": "[parameters('rdpBEAddressPoolID')]"
                       }
                     ],
                     "loadBalancerInboundNatPools": [

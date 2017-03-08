@@ -772,8 +772,8 @@
           "rdpLBName": {
             "value": "[variables('lbSettings').rdpLBName]"
           },
-          "geminiRDPBEAddressPoolID": {
-            "value": "[variables('derivedIds').geminiRDPBEAddressPoolID]"
+          "rdpBEAddressPoolID": {
+            "value": "[variables('derivedIds').rdpBEAddressPoolID]"
           },
           "RDPNAT": {
             "value": "[variables('RDPNAT')]"
