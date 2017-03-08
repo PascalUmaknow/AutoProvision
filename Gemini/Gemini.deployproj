@@ -51,7 +51,6 @@
     <None Include="Templates\nestedtemplates\publicip-rdp.json" />
     <None Include="Templates\nestedtemplates\setupLBs.json" />
     <None Include="Templates\nestedtemplates\vnet-new.json" />
-    <None Include="Templates\nestedtemplates\vnet-with-dns-server.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Tools\AzCopy.exe" />

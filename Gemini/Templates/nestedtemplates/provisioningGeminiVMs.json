@@ -8,10 +8,16 @@
     "geminiwebVMName": {
       "type": "string"
     },
-    "geminiWebBEAddressPoolID": {
+    "geminiRDPBEAddressPoolID": {
       "type": "string"
     },
-    "geminiWebSubnetRef": {
+    "geminiRDPSubnetRef": {
+      "type": "string"
+    },
+    "RDPNAT": {
+      "type": "string"
+    },
+    "geminiRDPLBName": {
       "type": "string"
     },
     "location": {
@@ -105,16 +111,18 @@
                   "name": "ip1",
                   "properties": {
                     "subnet": {
-                      "id": "[parameters('geminiWebSubnetRef')]"
+                      "id": "[parameters('geminiRDPSubnetRef')]"
 
                     },
                     "loadBalancerBackendAddressPools": [
                       {
-                        "id": "[parameters('geminiWebBEAddressPoolID')]"
+                        "id": "[parameters('geminiRDPBEAddressPoolID')]"
                       }
                     ],
                     "loadBalancerInboundNatPools": [
-                      
+                      {
+                        "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', variables('geminiRDPLBName'), '/inboundNatPools/', variables('RDPNAT'))]"
+                      }
                     ]
                   }
                 }
