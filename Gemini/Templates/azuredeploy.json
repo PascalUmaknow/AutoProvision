@@ -257,6 +257,7 @@
     //"contentDatabaseName": "spfarm_Content",
     "lbSettings": {
       "sqlLBFE": "sqlLBFE",
+      "rdpLBFE": "rdpLBFE",
       "geminiWebLBFE": "geminiWebLBFE",
       "sqlLBBE": "sqlLBBE",
       "geminiWebLBBE": "geminiWebLBBE",
