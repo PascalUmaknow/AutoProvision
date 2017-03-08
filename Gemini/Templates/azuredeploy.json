@@ -641,7 +641,7 @@
       "dependsOn": [
         "Microsoft.Resources/deployments/CreatingStorageAccounts",
         "Microsoft.Resources/deployments/CreatingNetworkInterfaces",
-        "Microsoft.Resources/deployments/CreatingAvailabilitySets"
+        //"Microsoft.Resources/deployments/CreatingAvailabilitySets"
       ],
       "properties": {
         "mode": "Incremental",
@@ -755,7 +755,7 @@
       "dependsOn": [
         "Microsoft.Resources/deployments/CreatingStorageAccounts",
         "Microsoft.Resources/deployments/CreatingNetworkInterfaces",
-        "Microsoft.Resources/deployments/CreatingAvailabilitySets"
+        //"Microsoft.Resources/deployments/CreatingAvailabilitySets"
       ],
       "properties": {
         "mode": "Incremental",
