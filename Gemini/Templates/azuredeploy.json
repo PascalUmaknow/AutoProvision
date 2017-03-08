@@ -633,8 +633,7 @@
           }
         }
       }
-    }
-    ,
+    },
     {
       "name": "ProvisioningSQLVirtualMachines",
       "type": "Microsoft.Resources/deployments",
@@ -748,7 +747,7 @@
     //    }
     //  }
     //}
-    ,
+    //,
     {
       "name": "CreatingGeminiVirtualMachines",
       "type": "Microsoft.Resources/deployments",
