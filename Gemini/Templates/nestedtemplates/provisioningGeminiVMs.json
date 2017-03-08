@@ -104,12 +104,12 @@
                   "name": "ip1",
                   "properties": {
                     "subnet": {
-                      "id": "parameters('geminiWebSubnetRef')"
+                      "id": "[parameters('geminiWebSubnetRef')]"
 
                     },
                     "loadBalancerBackendAddressPools": [
                       {
-                        "id": "parameters('geminiWebBEAddressPoolID')"
+                        "id": "[parameters('geminiWebBEAddressPoolID')]"
                       }
                     ],
                     "loadBalancerInboundNatPools": [
@@ -270,5 +270,7 @@
     //}
     
   ],
-  "outputs": {}
+  "outputs": {
+
+  }
 }
