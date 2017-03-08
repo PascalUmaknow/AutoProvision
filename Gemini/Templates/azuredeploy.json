@@ -769,8 +769,8 @@
           "geminiRDPSubnetRef": {
             "value": "[variables('geminiWebSubnetRef')]"
           },
-          "geminiRDPLBName": {
-            "value": "[variables('lbSettings').geminiRDPLBName]"
+          "rdpLBName": {
+            "value": "[variables('lbSettings').rdpLBName]"
           },
           "geminiRDPBEAddressPoolID": {
             "value": "[variables('derivedIds').geminiRDPBEAddressPoolID]"

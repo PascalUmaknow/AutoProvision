@@ -17,7 +17,7 @@
     "RDPNAT": {
       "type": "string"
     },
-    "geminiRDPLBName": {
+    "rdpLBName": {
       "type": "string"
     },
     "location": {
@@ -121,7 +121,7 @@
                     ],
                     "loadBalancerInboundNatPools": [
                       {
-                        "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', variables('geminiRDPLBName'), '/inboundNatPools/', variables('RDPNAT'))]"
+                        "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', parameters('rdpLBName'), '/inboundNatPools/', parameters('RDPNAT'))]"
                       }
                     ]
                   }
