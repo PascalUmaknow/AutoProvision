@@ -386,41 +386,6 @@
         }
       }
     },
-    {
-      "name": "SettingUpRdp",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','publicip-rdp.json', parameters('_artifactsLocationSasToken'))]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "location": {
-            "value": "[parameters('location')]"
-          },
-          "rdpIPAddressName": {
-            "value": "[variables('rdpIPAddressName')]"
-          },
-          "rdpLBName": {
-            "value": "[variables('lbSettings').rdpLBName]"
-          },
-          "rdpLBFE": {
-            "value": "[variables('lbSettings').rdpLBFE]"
-          },
-          "RDPNAT": {
-            "value": "[variables('RDPNAT')]"
-          },
-          "rdplbFEConfigID": {
-            "value": "[variables('derivedIds').rdplbFEConfigID]"
-          },
-          "rdpLBBE": {
-            "value": "[variables('lbSettings').rdpLBBE]"
-          }
-        }
-      }
-    },
 
     {
       "name": "SettingUpGeminiWebPublicIP",
@@ -451,32 +416,32 @@
         }
       }
     },
-    {
-      "name": "CreatingAvailabilitySets",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','availabilitySets.json', parameters('_artifactsLocationSasToken'))]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "location": {
-            "value": "[parameters('location')]"
-          },
-          "sqlAvailabilitySetName": {
-            "value": "[variables('vmSettings').availabilitySets.sqlAvailabilitySetName]"
-          },
-          "geminiWebAvailabilitySetName": {
-            "value": "[variables('vmSettings').availabilitySets.geminiWebAvailabilitySetName]"
-          },
-          "geminiAppAvailabilitySetName": {
-            "value": "[variables('vmSettings').availabilitySets.geminiAppAvailabilitySetName]"
-          }
-        }
-      }
-    },
+    //{
+    //  "name": "CreatingAvailabilitySets",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2015-01-01",
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','availabilitySets.json', parameters('_artifactsLocationSasToken'))]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+    //    "parameters": {
+    //      "location": {
+    //        "value": "[parameters('location')]"
+    //      },
+    //      "sqlAvailabilitySetName": {
+    //        "value": "[variables('vmSettings').availabilitySets.sqlAvailabilitySetName]"
+    //      },
+    //      "geminiWebAvailabilitySetName": {
+    //        "value": "[variables('vmSettings').availabilitySets.geminiWebAvailabilitySetName]"
+    //      },
+    //      "geminiAppAvailabilitySetName": {
+    //        "value": "[variables('vmSettings').availabilitySets.geminiAppAvailabilitySetName]"
+    //      }
+    //    }
+    //  }
+    //},
     {
       "name": "CreatingVirtualNetwork",
       "type": "Microsoft.Resources/deployments",
@@ -499,6 +464,45 @@
           },
           "subnets": {
             "value": "[variables('subnets')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "SettingUpRdp",
+      "type": "Microsoft.Resources/deployments",
+      "dependsOn": [
+        "Microsoft.Resources/deployments/SettingUpGeminiWebPublicIP",
+        "Microsoft.Resources/deployments/CreatingVirtualNetwork"
+      ],
+      "apiVersion": "2015-01-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','publicip-rdp.json', parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "rdpIPAddressName": {
+            "value": "[variables('rdpIPAddressName')]"
+          },
+          "rdpLBName": {
+            "value": "[variables('lbSettings').rdpLBName]"
+          },
+          "rdpLBFE": {
+            "value": "[variables('lbSettings').rdpLBFE]"
+          },
+          "RDPNAT": {
+            "value": "[variables('RDPNAT')]"
+          },
+          "rdplbFEConfigID": {
+            "value": "[variables('derivedIds').rdplbFEConfigID]"
+          },
+          "rdpLBBE": {
+            "value": "[variables('lbSettings').rdpLBBE]"
           }
         }
       }
@@ -630,68 +634,68 @@
         }
       }
     }
-    //,
-    //{
-    //  "name": "ProvisioningSQLVirtualMachines",
-    //  "type": "Microsoft.Resources/deployments",
-    //  "apiVersion": "2015-01-01",
-    //  "dependsOn": [
-    //    "Microsoft.Resources/deployments/CreatingStorageAccounts",
-    //    "Microsoft.Resources/deployments/CreatingNetworkInterfaces",
-    //    "Microsoft.Resources/deployments/CreatingAvailabilitySets"
-    //  ],
-    //  "properties": {
-    //    "mode": "Incremental",
-    //    "templateLink": {
-    //      "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','provisioningSQLVMs.json', parameters('_artifactsLocationSasToken'))]",
-    //      "contentVersion": "1.0.0.0"
-    //    },
-    //    "parameters": {
-    //      "sqlVMName": {
-    //        "value": "[variables('vmSettings').sqlVMName]"
-    //      },
-    //      "location": {
-    //        "value": "[parameters('location')]"
-    //      },
-    //      "storageAccountNamePrefix": {
-    //        "value": "[parameters('storageAccountNamePrefix')]"
-    //      },
-    //      "availabilitySet": {
-    //        "value": "[variables('ids').sqlAvailabilitySetName]"
-    //      },
-    //      "sqlVMSize": {
-    //        "value": "[parameters('sqlVMSize')]"
-    //      },
-    //      "adminUsername": {
-    //        "value": "[parameters('adminUsername')]"
-    //      },
-    //      "adminPassword": {
-    //        "value": "[parameters('adminPassword')]"
-    //      },
-    //      "windowsImagePublisher": {
-    //        "value": "[variables('vmSettings').windowsImagePublisher]"
-    //      },
-    //      "windowsImageOffer": {
-    //        "value": "[variables('vmSettings').windowsImageOffer]"
-    //      },
-    //      "windowsImageSKU": {
-    //        "value": "[variables('vmSettings').windowsImageSKU]"
-    //      },
-    //      "vmContainerName": {
-    //        "value": "[variables('vmSettings').vmContainerName]"
-    //      },
-    //      "sqlImagePublisher": {
-    //        "value": "[variables('vmSettings').sqlImagePublisher]"
-    //      },
-    //      "sqlImageOffer": {
-    //        "value": "[variables('vmSettings').sqlImageOffer]"
-    //      },
-    //      "sqlImageSKU": {
-    //        "value": "[variables('vmSettings').sqlImageSKU]"
-    //      }
-    //    }
-    //  }
-    //},
+    ,
+    {
+      "name": "ProvisioningSQLVirtualMachines",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "Microsoft.Resources/deployments/CreatingStorageAccounts",
+        "Microsoft.Resources/deployments/CreatingNetworkInterfaces",
+        "Microsoft.Resources/deployments/CreatingAvailabilitySets"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'),'/','nestedtemplates','/','provisioningSQLVMs.json', parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "sqlVMName": {
+            "value": "[variables('vmSettings').sqlVMName]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "storageAccountNamePrefix": {
+            "value": "[parameters('storageAccountNamePrefix')]"
+          },
+          "availabilitySet": {
+            "value": "[variables('ids').sqlAvailabilitySetName]"
+          },
+          "sqlVMSize": {
+            "value": "[parameters('sqlVMSize')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "windowsImagePublisher": {
+            "value": "[variables('vmSettings').windowsImagePublisher]"
+          },
+          "windowsImageOffer": {
+            "value": "[variables('vmSettings').windowsImageOffer]"
+          },
+          "windowsImageSKU": {
+            "value": "[variables('vmSettings').windowsImageSKU]"
+          },
+          "vmContainerName": {
+            "value": "[variables('vmSettings').vmContainerName]"
+          },
+          "sqlImagePublisher": {
+            "value": "[variables('vmSettings').sqlImagePublisher]"
+          },
+          "sqlImageOffer": {
+            "value": "[variables('vmSettings').sqlImageOffer]"
+          },
+          "sqlImageSKU": {
+            "value": "[variables('vmSettings').sqlImageSKU]"
+          }
+        }
+      }
+    },
     //,
     //{
     //  "name": "CreatingGeminiJumpBox",
@@ -744,7 +748,8 @@
     //    }
     //  }
     //}
-    ,{
+    ,
+    {
       "name": "CreatingGeminiVirtualMachines",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",

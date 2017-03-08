@@ -5,7 +5,7 @@
 
  
   
-$rgName = "GeminiPOC1"
+$rgName = "GeminiPOC2"
 
 #TEST
 #Test-AzureRmResourceGroupDeployment -ResourceGroupName $rgName -TemplateUri "https://raw.githubusercontent.com/PascalUmaknow/AutoProvision/master/Gemini/Templates/azuredeploy.json"
