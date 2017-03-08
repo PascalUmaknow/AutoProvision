@@ -410,9 +410,6 @@
           },
           "rdplbFEConfigID": {
             "value": "[variables('derivedIds').rdplbFEConfigID]"
-          },
-          "geminiRDPLBBE": {
-            "value": "[variables('lbSettings').geminiRDPLBBE]"
           }
         }
       }
