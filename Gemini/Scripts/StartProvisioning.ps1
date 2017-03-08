@@ -8,11 +8,11 @@
 $rgName = "GeminiPOC1"
 
 #TEST
-Test-AzureRmResourceGroupDeployment -ResourceGroupName $rgName -TemplateUri "https://raw.githubusercontent.com/PascalUmaknow/AutoProvision/master/Gemini/Templates/azuredeploy.json"
+#Test-AzureRmResourceGroupDeployment -ResourceGroupName $rgName -TemplateUri "https://raw.githubusercontent.com/PascalUmaknow/AutoProvision/master/Gemini/Templates/azuredeploy.json"
 #exit
 
 #New-AzureRmResourceGroup -Name $rgName -Location "East US"
-New-AzureRmResourceGroupDeployment -Name ExampleDeployment -ResourceGroupName $rgName  -Mode Complete -TemplateUri "https://raw.githubusercontent.com/PascalUmaknow/AutoProvision/master/Gemini/Templates/azuredeploy.json" -Verbose 
+New-AzureRmResourceGroupDeployment -Name ExampleDeployment -ResourceGroupName $rgName  -TemplateUri "https://raw.githubusercontent.com/PascalUmaknow/AutoProvision/master/Gemini/Templates/azuredeploy.json" -Verbose 
  
  
  #secured deployment
