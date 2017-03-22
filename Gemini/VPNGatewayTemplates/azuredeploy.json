@@ -241,7 +241,7 @@
       "name": "[parameters('gatewayPublicIPName')]",
       "location": "[resourceGroup().location]",
       "properties": {
-        "publicIPAllocationMethod": "Static"
+        "publicIPAllocationMethod": "Dynamic"
       }
     },
     {
@@ -250,7 +250,7 @@
       "name": "[variables('vmPublicIPName')]",
       "location": "[resourceGroup().location]",
       "properties": {
-        "publicIPAllocationMethod": "Static"
+        "publicIPAllocationMethod": "Dynamic"
       }
     },
     {
