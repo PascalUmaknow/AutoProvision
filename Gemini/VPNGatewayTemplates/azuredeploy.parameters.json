@@ -11,6 +11,9 @@
     "localAddressPrefix": {
       "value": "10.0.0.0/24"
     },
+    "virtualNetworkName": {
+      "value": "geminiVNET"
+    },
     "azureVNetAddressPrefix": {
       "value": "10.156.1.0/24"
     },
@@ -29,5 +32,6 @@
     "sharedKey": {
       "value": "thekeytousetoconnectothevpnonprem"
     }
+
   }
 }
