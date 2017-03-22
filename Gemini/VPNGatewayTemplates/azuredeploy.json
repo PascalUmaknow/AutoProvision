@@ -172,6 +172,34 @@
     "storage-api-version": "2015-05-01-preview"
   },
   "resources": [
+    //VNETtodelete
+    {
+      "apiVersion": "[variables('api-version')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('virtualNetworkName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('azureVNetAddressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('subnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnetPrefix')]"
+            }
+          },
+          {
+            "name": "GatewaySubnet",
+            "properties": {
+              "addressPrefix": "[parameters('gatewaySubnetPrefix')]"
+            }
+          }
+        ]
+      }
+    },
     {
       "apiVersion": "[variables('api-version')]",
       "type": "Microsoft.Network/localNetworkGateways",
@@ -207,33 +235,6 @@
         "sharedKey": "[parameters('sharedKey')]"
       }
     },
-    //{
-    //  "apiVersion": "[variables('api-version')]",
-    //  "type": "Microsoft.Network/virtualNetworks",
-    //  "name": "[parameters('virtualNetworkName')]",
-    //  "location": "[resourceGroup().location]",
-    //  "properties": {
-    //    "addressSpace": {
-    //      "addressPrefixes": [
-    //        "[parameters('azureVNetAddressPrefix')]"
-    //      ]
-    //    },
-    //    "subnets": [
-    //      {
-    //        "name": "[parameters('subnetName')]",
-    //        "properties": {
-    //          "addressPrefix": "[parameters('subnetPrefix')]"
-    //        }
-    //      },
-    //      {
-    //        "name": "GatewaySubnet",
-    //        "properties": {
-    //          "addressPrefix": "[parameters('gatewaySubnetPrefix')]"
-    //        }
-    //      }
-    //    ]
-    //  }
-    //},
     {
       "apiVersion": "[variables('api-version')]",
       "type": "Microsoft.Network/publicIPAddresses",
