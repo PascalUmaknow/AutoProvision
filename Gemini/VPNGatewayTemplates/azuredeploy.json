@@ -95,7 +95,7 @@
     },
     "vmName": {
       "type": "string",
-      "defaultValue": "gemini-gateway-1",
+      "defaultValue": "gemgate1",
       "metadata": {
         "description": "Name of the sample VM to create"
       }
