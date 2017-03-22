@@ -95,7 +95,7 @@
     },
     "vmName": {
       "type": "string",
-      "defaultValue": "node-1",
+      "defaultValue": "gemini-gateway-1",
       "metadata": {
         "description": "Name of the sample VM to create"
       }
@@ -241,7 +241,7 @@
       "name": "[parameters('gatewayPublicIPName')]",
       "location": "[resourceGroup().location]",
       "properties": {
-        "publicIPAllocationMethod": "Dynamic"
+        "publicIPAllocationMethod": "Static"
       }
     },
     {
@@ -250,7 +250,7 @@
       "name": "[variables('vmPublicIPName')]",
       "location": "[resourceGroup().location]",
       "properties": {
-        "publicIPAllocationMethod": "Dynamic"
+        "publicIPAllocationMethod": "Static"
       }
     },
     {
