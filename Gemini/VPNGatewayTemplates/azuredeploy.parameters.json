@@ -6,10 +6,10 @@
       "value": "geminiadminpoc"
     },
     "localGatewayIpAddress": {
-      "value": "52.25.48.88"
+      "value": "142.39.200.180"
     },
     "localAddressPrefix": {
-      "value": "10.0.0.0/24"
+      "value": "142.39.0.0/16"
     },
     "virtualNetworkName": {
       "value": "geminiVNET"
@@ -27,10 +27,10 @@
       "value": "geminiadminpoc123!strng#@@DEDWERqwewq"
     },
     "newStorageAccountName": {
-      "value": "geminipocvpnstore"
+      "value": "geminipocvpnstor"
     },
     "sharedKey": {
-      "value": "thekeytousetoconnectothevpnonprem"
+      "value": "83f30327e4f5840b971a3d44e34581cu"
     }
 
   }

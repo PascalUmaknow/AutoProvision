@@ -34,7 +34,7 @@
     },
     "virtualNetworkName": {
       "type": "string",
-      "defaultValue": "azureVnet",
+      "defaultValue": "geminiVNET",
       "metadata": {
         "description": "Arbitrary name for the Azure Virtual Network"
       }
@@ -173,33 +173,33 @@
   },
   "resources": [
     //VNETtodelete
-    {
-      "apiVersion": "[variables('api-version')]",
-      "type": "Microsoft.Network/virtualNetworks",
-      "name": "[parameters('virtualNetworkName')]",
-      "location": "[resourceGroup().location]",
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[parameters('azureVNetAddressPrefix')]"
-          ]
-        },
-        "subnets": [
-          {
-            "name": "[parameters('subnetName')]",
-            "properties": {
-              "addressPrefix": "[parameters('subnetPrefix')]"
-            }
-          },
-          {
-            "name": "GatewaySubnet",
-            "properties": {
-              "addressPrefix": "[parameters('gatewaySubnetPrefix')]"
-            }
-          }
-        ]
-      }
-    },
+    //{
+    //  "apiVersion": "[variables('api-version')]",
+    //  "type": "Microsoft.Network/virtualNetworks",
+    //  "name": "[parameters('virtualNetworkName')]",
+    //  "location": "[resourceGroup().location]",
+    //  "properties": {
+    //    "addressSpace": {
+    //      "addressPrefixes": [
+    //        "[parameters('azureVNetAddressPrefix')]"
+    //      ]
+    //    },
+    //    "subnets": [
+    //      {
+    //        "name": "[parameters('subnetName')]",
+    //        "properties": {
+    //          "addressPrefix": "[parameters('subnetPrefix')]"
+    //        }
+    //      },
+    //      {
+    //        "name": "GatewaySubnet",
+    //        "properties": {
+    //          "addressPrefix": "[parameters('gatewaySubnetPrefix')]"
+    //        }
+    //      }
+    //    ]
+    //  }
+    //},
     {
       "apiVersion": "[variables('api-version')]",
       "type": "Microsoft.Network/localNetworkGateways",
@@ -268,8 +268,7 @@
       "name": "[parameters('gatewayName')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', parameters('gatewayPublicIPName'))]",
-        "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+        "[concat('Microsoft.Network/publicIPAddresses/', parameters('gatewayPublicIPName'))]"
       ],
       "properties": {
         "ipConfigurations": [
@@ -298,7 +297,6 @@
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('vmPublicIPName'))]",
-        "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
         "[concat('Microsoft.Network/virtualNetworkGateways/', parameters('gatewayName'))]"
       ],
       "properties": {
